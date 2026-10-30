@@ -9,4 +9,5 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 <!-- END:nextjs-agent-rules -->
 
 
-read @docs to understand the project
+- read @docs to understand the project.
+- use single source of truth feature based architecture.
