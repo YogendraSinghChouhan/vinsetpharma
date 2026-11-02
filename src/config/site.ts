@@ -53,11 +53,11 @@ export const SOCIAL_LINKS: readonly {
 
 export const MAIN_NAV = [
   { label: "Home", href: ROUTES.home },
-  { label: "About Us", href: ROUTES.aboutUs },
-  { label: "Why Us", href: ROUTES.whyUs },
-  { label: "Contact Us", href: ROUTES.contactUs },
   { label: "Our Products", href: ROUTES.products },
   { label: "Blog", href: ROUTES.blog },
+  { label: "Why Us", href: ROUTES.whyUs },
+  { label: "About Us", href: ROUTES.aboutUs },
+  { label: "Contact Us", href: ROUTES.contactUs },
 ] as const;
 
 export const FOOTER_NAV = [

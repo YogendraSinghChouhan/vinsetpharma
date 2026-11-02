@@ -5,7 +5,6 @@ import { Container } from "@/components/layout/container";
 import { Logo } from "@/components/layout/logo";
 import {
   CONTACT,
-  CONTACT_FALLBACKS,
   COPYRIGHT_YEAR,
   FOOTER_NAV,
   LEGAL_NAV,
@@ -125,17 +124,6 @@ export function SiteFooter() {
                   </a>
                 </div>
               ) : null}
-
-              {/* Working Hours */}
-              <div className="flex flex-col gap-1 pt-2 border-t border-[oklch(1_0_0/10%)]">
-                <span className="text-xs font-semibold uppercase tracking-wider text-accent-light">
-                  Working Hours
-                </span>
-                <p className="text-brand-dark-muted text-xs">
-                  {CONTACT.workingHours?.value ??
-                    CONTACT_FALLBACKS.workingHours}
-                </p>
-              </div>
             </div>
           </div>
 

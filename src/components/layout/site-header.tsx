@@ -59,12 +59,6 @@ export function SiteHeader() {
           {/* Desktop Nav (lg: 1024px+) */}
           <div className="hidden items-center gap-6 lg:flex">
             <MainNav />
-            <Link
-              href={ROUTES.products}
-              className="inline-flex min-h-[44px] items-center justify-center rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground shadow-xs transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-            >
-              Our Products
-            </Link>
           </div>
 
           {/* Mobile Nav (< lg: 1024px) */}
