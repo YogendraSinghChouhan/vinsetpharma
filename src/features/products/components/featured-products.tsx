@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { SectionHeading } from "@/components/brand/section-heading";
 import { Container } from "@/components/layout/container";
+import { CarouselItem } from "@/components/ui/carousel";
 import { ROUTES } from "@/config/site";
 import { FEATURED_PRODUCTS_LIMIT } from "../constants";
 import { getFeaturedProducts } from "../public-data";
-import { ProductGrid } from "./product-grid";
+import { ProductCard } from "./product-card";
+import { ProductCarousel } from "./product-carousel";
 
 export async function FeaturedProductsSection() {
   const products = await getFeaturedProducts(FEATURED_PRODUCTS_LIMIT);
@@ -13,8 +15,17 @@ export async function FeaturedProductsSection() {
     return null;
   }
 
+  // Ensure sufficient slides for seamless infinite loop
+  const displayProducts =
+    products.length > 0 && products.length < 6
+      ? [...products, ...products]
+      : products;
+
   return (
-    <section id="featured-products" className="py-12 sm:py-16 lg:py-20">
+    <section
+      id="featured-products"
+      className="py-12 sm:py-16 lg:py-20 overflow-hidden"
+    >
       <Container>
         <div className="flex flex-col gap-10">
           <SectionHeading
@@ -22,7 +33,18 @@ export async function FeaturedProductsSection() {
             description="Explore our essential pharmaceutical formulations developed to meet high clinical standards."
           />
 
-          <ProductGrid products={products} />
+          <ProductCarousel>
+            {displayProducts.map((product, index) => (
+              <CarouselItem
+                key={`${product.id}-${index}`}
+                className="pl-4 sm:pl-6 basis-full sm:basis-1/2 lg:basis-1/3 xl:basis-1/4"
+              >
+                <div className="h-full">
+                  <ProductCard product={product} priority={index < 4} />
+                </div>
+              </CarouselItem>
+            ))}
+          </ProductCarousel>
 
           <div className="flex justify-center pt-2">
             <Link

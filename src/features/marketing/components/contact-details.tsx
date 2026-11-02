@@ -1,10 +1,5 @@
-import {
-  IconClock,
-  IconMail,
-  IconMapPin,
-  IconPhone,
-} from "@tabler/icons-react";
-import { CONTACT, CONTACT_FALLBACKS } from "@/config/site";
+import { IconMail, IconMapPin, IconPhone } from "@tabler/icons-react";
+import { CONTACT } from "@/config/site";
 
 export function ContactDetails() {
   const primaryPhone = CONTACT.phones[0];
@@ -89,19 +84,6 @@ export function ContactDetails() {
             </div>
           </div>
         ) : null}
-
-        {/* Working Hours (unset) */}
-        <div className="flex flex-col gap-3 rounded-xl border bg-card p-6 shadow-sm">
-          <div className="flex items-center gap-3">
-            <IconClock className="size-5 text-primary" aria-hidden="true" />
-            <p className="font-heading text-sm font-semibold tracking-wide text-muted-foreground uppercase">
-              Working Hours
-            </p>
-          </div>
-          <p className="text-muted-foreground">
-            {CONTACT.workingHours?.value ?? CONTACT_FALLBACKS.workingHours}
-          </p>
-        </div>
       </div>
     </section>
   );

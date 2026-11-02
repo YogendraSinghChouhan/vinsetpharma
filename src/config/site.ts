@@ -10,15 +10,15 @@ export const SITE_DESCRIPTION =
  * Single source of truth for brand colors across CSS tokens, SVG artwork, and OpenGraph.
  */
 export const BRAND_COLORS = {
-  primary: "#00485a",
-  primaryDark: "#06232b",
-  accent: "#0b7c6e",
-  accentLight: "#33c2a9",
-  surfaceTint: "#ecf3f4",
-  background: "#f6f9fa",
-  foreground: "#132328",
-  foregroundOnDark: "#f6f9fa",
-  mutedOnDark: "#b8c8cc",
+  primary: "#004ab8",
+  primaryDark: "#06152d",
+  accent: "#0056cc",
+  accentLight: "#38bdf8",
+  surfaceTint: "#f0f4f9",
+  background: "#f7f9fc",
+  foreground: "#111827",
+  foregroundOnDark: "#f7f9fc",
+  mutedOnDark: "#94a3b8",
 } as const;
 
 export const COPYRIGHT_YEAR = new Date().getFullYear();

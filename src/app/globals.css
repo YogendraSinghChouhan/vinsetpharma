@@ -57,34 +57,34 @@
 
 :root {
   /* =========================================================================
-     BRAND COLOR PALETTE (Blister Pack Design System)
-     Single block mapping hex brand standards to OKLCH tokens.
-     Primary #00485a | Dark #06232b | Accent #0b7c6e | Spark #33c2a9 | Tint #ecf3f4
+     BRAND COLOR PALETTE (Logo-Aligned Clinical Blue & Slate System)
+     Single block mapping logo hex brand standards to OKLCH tokens.
+     Primary #004ab8 | Dark #06152d | Accent #0056cc | Spark #38bdf8 | Tint #f0f4f9
      ========================================================================= */
-  --background: oklch(0.98 0.004 210);
-  --foreground: oklch(0.23 0.022 220);
+  --background: oklch(0.985 0.005 255);
+  --foreground: oklch(0.21 0.02 255);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.23 0.022 220);
+  --card-foreground: oklch(0.21 0.02 255);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.23 0.022 220);
-  --primary: oklch(0.36 0.08 215);
-  --primary-foreground: oklch(0.99 0.002 210);
-  --brand-dark: oklch(0.2 0.035 215);
-  --brand-dark-foreground: oklch(0.98 0.004 210);
-  --brand-dark-muted: oklch(0.78 0.015 210);
-  --secondary: oklch(0.955 0.008 210);
-  --secondary-foreground: oklch(0.23 0.022 220);
-  --muted: oklch(0.955 0.008 210);
-  --muted-foreground: oklch(0.47 0.028 218);
-  --accent: oklch(0.52 0.11 178);
-  --accent-foreground: oklch(0.99 0.002 210);
-  --accent-light: oklch(0.74 0.14 175);
-  --surface-tint: oklch(0.955 0.008 210);
+  --popover-foreground: oklch(0.21 0.02 255);
+  --primary: oklch(0.44 0.2 258);
+  --primary-foreground: oklch(0.99 0.002 255);
+  --brand-dark: oklch(0.18 0.045 258);
+  --brand-dark-foreground: oklch(0.98 0.005 255);
+  --brand-dark-muted: oklch(0.74 0.025 255);
+  --secondary: oklch(0.965 0.01 255);
+  --secondary-foreground: oklch(0.21 0.02 255);
+  --muted: oklch(0.965 0.01 255);
+  --muted-foreground: oklch(0.48 0.03 255);
+  --accent: oklch(0.48 0.19 258);
+  --accent-foreground: oklch(0.99 0.002 255);
+  --accent-light: oklch(0.75 0.14 235);
+  --surface-tint: oklch(0.965 0.01 255);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.89 0.012 210);
-  --input: oklch(0.61 0.02 215);
-  --input-border: oklch(0.61 0.02 215);
-  --ring: oklch(0.36 0.08 215);
+  --border: oklch(0.9 0.012 255);
+  --input: oklch(0.62 0.025 255);
+  --input-border: oklch(0.62 0.025 255);
+  --ring: oklch(0.44 0.2 258);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);

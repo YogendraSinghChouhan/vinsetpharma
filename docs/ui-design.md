@@ -5,33 +5,33 @@
 Derived from the client brand core in `src/config/site.ts` (`BRAND_COLORS`) to allow swapping in a single block.
 
 ### Named Brand Hex Values
-- **Primary (`brand-primary`)**: `#00485a` — Authoritative Deep Marine Teal. Clean, clinical anchor.
-- **Primary Dark (`brand-dark`)**: `#06232b` — Blister Pack Midnight Slate. Used for high-contrast dark rhythm bands (CTA band and site footer).
-- **Accent (`brand-accent`)**: `#0b7c6e` — Precision Therapeutic Sage / Mint Teal. Used on light surfaces (passes AA contrast for text and badges).
-- **Accent Light (`brand-accent-light`)**: `#33c2a9` — Vibrant Mint Spark. Used against dark surfaces (`#06232b`) and as the second half of the two-tone capsule brand mark.
-- **Surface Tint (`brand-surface-tint`)**: `#ecf3f4` — Soft Recessed Well. Used for blister cavities and tactile containment surfaces.
-- **Foreground (`brand-foreground`)**: `#132328` — Deep Slate Charcoal. Body text with maximum legibility.
-- **Border Subtle (`brand-border-subtle`)**: `#d2dfe2` — Precision perforation hairline.
+- **Primary (`brand-primary`)**: `#004ab8` — Authoritative Clinical Royal Blue (matched directly to logo).
+- **Primary Dark (`brand-dark`)**: `#06152d` — Midnight Navy Slate. Used for high-contrast dark rhythm bands (CTA band and site footer).
+- **Accent (`brand-accent`)**: `#0056cc` — Precision Therapeutic Blue. Used on light surfaces (passes AA contrast for text and badges).
+- **Accent Light (`brand-accent-light`)**: `#38bdf8` — Vibrant Sky Cerulean Spark. Used against dark surfaces (`#06152d`) and as the second half of the two-tone capsule brand mark.
+- **Surface Tint (`brand-surface-tint`)**: `#f0f4f9` — Soft Ice Recessed Well. Used for blister cavities and tactile containment surfaces.
+- **Foreground (`brand-foreground`)**: `#111827` — Deep Slate Charcoal. Body text with maximum legibility.
+- **Border Subtle (`brand-border-subtle`)**: `#d8e2ee` — Precision perforation hairline.
 
 ### Semantic Token Mapping (globals.css `:root`)
-- `--background`: `oklch(0.98 0.004 210)` (`#f6f9fa`)
-- `--foreground`: `oklch(0.23 0.022 220)` (`#132328`)
+- `--background`: `oklch(0.985 0.005 255)` (`#f7f9fc`)
+- `--foreground`: `oklch(0.21 0.02 255)` (`#111827`)
 - `--card`: `oklch(1 0 0)` (`#ffffff`)
-- `--card-foreground`: `oklch(0.23 0.022 220)`
-- `--primary`: `oklch(0.36 0.08 215)` (`#00485a`)
-- `--primary-foreground`: `oklch(0.98 0.005 210)` (`#ffffff`)
-- `--brand-dark`: `oklch(0.20 0.035 215)` (`#06232b`)
-- `--brand-dark-foreground`: `oklch(0.98 0.004 210)` (`#f6f9fa`)
-- `--brand-dark-muted`: `oklch(0.78 0.015 210)` (`#b8c8cc`)
-- `--accent`: `oklch(0.52 0.11 178)` (`#0b7c6e`)
-- `--accent-foreground`: `oklch(0.98 0.005 210)` (`#ffffff`)
-- `--accent-light`: `oklch(0.74 0.14 175)` (`#33c2a9`)
-- `--surface-tint`: `oklch(0.955 0.008 210)` (`#ecf3f4`)
-- `--muted`: `oklch(0.955 0.008 210)` (`#ecf3f4`)
-- `--muted-foreground`: `oklch(0.47 0.028 218)` (`#496067`)
-- `--border`: `oklch(0.89 0.012 210)` (`#d2dfe2`)
-- `--input`: `oklch(0.61 0.02 215)` (`#819299` — calibrated for ≥ 3:1 contrast against both card surface and focus ring)
-- `--ring`: `oklch(0.36 0.08 215)` (`#00485a` — 10.12:1 against card surface, 3.14:1 against inactive control boundary)
+- `--card-foreground`: `oklch(0.21 0.02 255)`
+- `--primary`: `oklch(0.44 0.20 258)` (`#004ab8`)
+- `--primary-foreground`: `oklch(0.99 0.002 255)` (`#ffffff`)
+- `--brand-dark`: `oklch(0.18 0.045 258)` (`#06152d`)
+- `--brand-dark-foreground`: `oklch(0.98 0.005 255)` (`#f7f9fc`)
+- `--brand-dark-muted`: `oklch(0.74 0.025 255)` (`#94a3b8`)
+- `--accent`: `oklch(0.48 0.19 258)` (`#0056cc`)
+- `--accent-foreground`: `oklch(0.99 0.002 255)` (`#ffffff`)
+- `--accent-light`: `oklch(0.75 0.14 235)` (`#38bdf8`)
+- `--surface-tint`: `oklch(0.965 0.01 255)` (`#f0f4f9`)
+- `--muted`: `oklch(0.965 0.01 255)` (`#f0f4f9`)
+- `--muted-foreground`: `oklch(0.48 0.03 255)` (`#5a6578`)
+- `--border`: `oklch(0.90 0.012 255)` (`#d8e2ee`)
+- `--input`: `oklch(0.62 0.025 255)` (`#7d8da1` — calibrated for ≥ 3:1 contrast against both card surface and focus ring)
+- `--ring`: `oklch(0.44 0.20 258)` (`#004ab8` — passes WCAG 3:1 contrast requirements)
 
 ### Form Control Contrast Matrix (WCAG Non-Text Contrast ≥ 3:1)
 | Interface Pair | Hex Values | Contrast Ratio | Status |

@@ -56,14 +56,14 @@ export function HeroArtwork({ className }: HeroArtworkProps) {
 
           {/* Primary capsule cap gradient for subtle volume without flat wash */}
           <linearGradient id="capGrad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#00586e" />
-            <stop offset="100%" stopColor="#003e4d" />
+            <stop offset="0%" stopColor="#004ab8" />
+            <stop offset="100%" stopColor="#00358a" />
           </linearGradient>
 
-          {/* Mint body gradient */}
+          {/* Sky Cerulean body gradient */}
           <linearGradient id="bodyGrad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#3cd7bb" />
-            <stop offset="100%" stopColor="#1fb096" />
+            <stop offset="0%" stopColor="#38bdf8" />
+            <stop offset="100%" stopColor="#0284c7" />
           </linearGradient>
 
           {/* Pill foil cavity clip */}
@@ -152,7 +152,7 @@ export function HeroArtwork({ className }: HeroArtworkProps) {
               y1="-2"
               x2="38"
               y2="-2"
-              stroke="#002b36"
+              stroke="#002266"
               strokeWidth="2"
             />
           </g>

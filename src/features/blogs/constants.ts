@@ -20,7 +20,7 @@ export const POST_LIMITS = {
 
 export const ADMIN_POSTS_PAGE_SIZE = 20;
 export const PUBLIC_POSTS_PAGE_SIZE = 9;
-export const HOME_LATEST_POSTS_LIMIT = 3;
+export const HOME_LATEST_POSTS_LIMIT = 6;
 
 export const BLOG_CACHE_TAGS = {
   list: "blogs:list",
