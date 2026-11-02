@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
+import { Logo } from "@/components/layout/logo";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ROUTES } from "@/config/site";
@@ -38,7 +39,10 @@ async function LoginCheck() {
 
 export default function AdminLoginPage() {
   return (
-    <div className="flex min-h-screen items-center justify-center p-4 bg-background">
+    <div className="flex min-h-screen flex-col items-center justify-center p-4 bg-background">
+      <div className="mb-6 flex justify-center">
+        <Logo />
+      </div>
       <Suspense fallback={<LoginFormSkeleton />}>
         <LoginCheck />
       </Suspense>

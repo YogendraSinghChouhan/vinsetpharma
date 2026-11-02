@@ -1,71 +1,47 @@
-import { IconPill } from "@tabler/icons-react";
 import { ROUTES } from "@/config/site";
-import { PageHeader } from "@/features/marketing/components/page-header";
-import { Section } from "@/features/marketing/components/section";
-import { ABOUT } from "@/features/marketing/content";
+import { AboutContactPoints } from "@/features/marketing/components/about-contact-points";
+import { AboutHero } from "@/features/marketing/components/about-hero";
+import { AboutMissionVision } from "@/features/marketing/components/about-mission-vision";
+import { AboutValues } from "@/features/marketing/components/about-values";
+import { AboutWhatWeDo } from "@/features/marketing/components/about-what-we-do";
+import { AboutWhoWeAre } from "@/features/marketing/components/about-who-we-are";
+import { AboutWorkflow } from "@/features/marketing/components/about-workflow";
+import { CtaBanner } from "@/features/marketing/components/cta-banner";
+import { PAGE_META } from "@/features/marketing/content";
 import { createPageMetadata } from "@/lib/metadata";
 
 export const metadata = createPageMetadata({
-  title: ABOUT.introduction.heading,
-  description:
-    "Learn about Vinsent Pharma, its preparation and quality approach, mission and values.",
+  title: PAGE_META.about.title,
+  description: PAGE_META.about.description,
   path: ROUTES.aboutUs,
 });
 
 export default function AboutPage() {
   return (
     <>
-      <PageHeader
-        title={ABOUT.introduction.heading}
-        description="Vinsent Pharma is a pharmaceutical company focused on careful preparation and quality of its products."
-        crumbs={[
-          { label: "Home", href: ROUTES.home },
-          { label: ABOUT.introduction.heading },
-        ]}
-      />
-      <Section heading={ABOUT.introduction.heading}>
-        <div className="grid gap-10 lg:grid-cols-2">
-          <div className="flex flex-col gap-4">
-            <p className="text-lg text-muted-foreground">
-              {ABOUT.introduction.text}
-            </p>
-            <p>{ABOUT.introduction.history}</p>
-          </div>
-          <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-gradient-to-br from-primary/15 via-secondary to-primary/5 ring-1 ring-border">
-            <IconPill className="absolute top-1/2 left-1/2 size-16 -translate-x-1/2 -translate-y-1/2 text-primary/30" />
-            <span className="absolute bottom-4 left-4 text-sm text-muted-foreground">
-              Image placeholder
-            </span>
-          </div>
-        </div>
-      </Section>
-      <Section heading={ABOUT.mission.heading}>
-        <div className="max-w-3xl">
-          <p className="text-lg text-muted-foreground">
-            {ABOUT.mission.statement}
-          </p>
-        </div>
-      </Section>
-      <Section heading={ABOUT.values.heading}>
-        <dl className="grid gap-6 sm:grid-cols-3">
-          {ABOUT.values.items.map((value) => (
-            <div
-              key={value.title}
-              className="flex flex-col gap-2 rounded-xl border bg-card p-6 shadow-sm"
-            >
-              <dt className="text-lg font-semibold text-foreground">
-                {value.title}
-              </dt>
-              <dd className="text-sm text-muted-foreground">{value.text}</dd>
-            </div>
-          ))}
-        </dl>
-      </Section>
-      <Section heading={ABOUT.whatWeDo.heading}>
-        <div className="max-w-3xl">
-          <p className="text-lg text-muted-foreground">{ABOUT.whatWeDo.text}</p>
-        </div>
-      </Section>
+      {/* 1. Hero with intro paragraph & wide hero image in pocket-style frame */}
+      <AboutHero />
+
+      {/* 2. Who we are narrative */}
+      <AboutWhoWeAre />
+
+      {/* 3. Mission and Vision contrasting panels */}
+      <AboutMissionVision />
+
+      {/* 4. What we do platform function cards */}
+      <AboutWhatWeDo />
+
+      {/* 5. Our values ruled list with supporting glassware image */}
+      <AboutValues />
+
+      {/* 6. How working with us looks 4-step sequence with supporting capsules image */}
+      <AboutWorkflow />
+
+      {/* 7. Where to find us regional contact points */}
+      <AboutContactPoints />
+
+      {/* 8. Dark enquiry call-to-action band */}
+      <CtaBanner />
     </>
   );
 }

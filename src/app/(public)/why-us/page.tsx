@@ -1,9 +1,11 @@
 import { ROUTES } from "@/config/site";
 import { CtaBanner } from "@/features/marketing/components/cta-banner";
-import { PageHeader } from "@/features/marketing/components/page-header";
-import { Section } from "@/features/marketing/components/section";
-import { WhyUsGrid } from "@/features/marketing/components/why-us-grid";
-import { PAGE_META, WHY_US } from "@/features/marketing/content";
+import { WhyUsCommitments } from "@/features/marketing/components/why-us-commitments";
+import { WhyUsExpectations } from "@/features/marketing/components/why-us-expectations";
+import { WhyUsFaq } from "@/features/marketing/components/why-us-faq";
+import { WhyUsHero } from "@/features/marketing/components/why-us-hero";
+import { WhyUsReasons } from "@/features/marketing/components/why-us-reasons";
+import { PAGE_META } from "@/features/marketing/content";
 import { createPageMetadata } from "@/lib/metadata";
 
 export const metadata = createPageMetadata({
@@ -15,17 +17,22 @@ export const metadata = createPageMetadata({
 export default function WhyUsPage() {
   return (
     <>
-      <PageHeader
-        title={PAGE_META.whyUs.title}
-        description={PAGE_META.whyUs.description}
-        crumbs={[
-          { label: "Home", href: ROUTES.home },
-          { label: PAGE_META.whyUs.title },
-        ]}
-      />
-      <Section heading={WHY_US.heading}>
-        <WhyUsGrid points={WHY_US.points} detailed />
-      </Section>
+      {/* 1. Hero with wide hero image and short intro */}
+      <WhyUsHero />
+
+      {/* 2. Six reasons expanded in an editorial sticky column layout */}
+      <WhyUsReasons />
+
+      {/* 3. What to expect when you work with us */}
+      <WhyUsExpectations />
+
+      {/* 4. Our commitments quiet strip with supporting pharmacy image */}
+      <WhyUsCommitments />
+
+      {/* 5. Frequently asked questions with accessible native details/summary */}
+      <WhyUsFaq />
+
+      {/* 6. Dark enquiry call-to-action band */}
       <CtaBanner />
     </>
   );

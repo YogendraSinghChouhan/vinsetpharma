@@ -28,6 +28,8 @@ export const ROUTES = {
   aboutUs: "/about-us",
   whyUs: "/why-us",
   contactUs: "/contact-us",
+  privacyPolicy: "/privacy-policy",
+  termsAndConditions: "/terms-and-conditions",
   products: "/products",
   productDetail: (slug: string) => `/products/${slug}`,
   blog: "/blog",
@@ -66,47 +68,112 @@ export const FOOTER_NAV = [
   { label: "Blog", href: ROUTES.blog },
 ] as const;
 
-export type ContactChannel = {
-  label: string;
-  value: string;
-  href: string | null;
+export const LEGAL_NAV = [
+  { label: "Privacy Policy", href: ROUTES.privacyPolicy },
+  { label: "Terms & Conditions", href: ROUTES.termsAndConditions },
+] as const;
+
+/**
+ * Display text when a contact detail is unset.
+ * Single source of truth for unset fallbacks.
+ */
+export const CONTACT_FALLBACKS = {
+  address: "Address coming soon",
+  phone: "Phone number coming soon",
+  email: "Email coming soon",
+  workingHours: "Working hours coming soon",
+} as const;
+
+/**
+ * Small helper to build tel: href from E.164 phone string.
+ */
+export function buildTelHref(e164: string): string {
+  return `tel:${e164}`;
+}
+
+/**
+ * Small helper to build Google Maps query URL from address string.
+ */
+export function buildMapsUrl(addressText: string): string {
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${addressText}, India`)}`;
+}
+
+export type PhoneContact = {
+  e164: string;
+  display: string;
+  href: string;
 };
 
-export type ContactAddress = ContactChannel & {
-  mapsLabel: string;
+export type AddressContact = {
+  id: string;
+  label: string;
+  text: string;
+  mapsUrl: string;
+};
+
+export type EmailContact = {
+  value: string;
+  href: string;
+};
+
+export type WorkingHoursContact = {
+  label: string;
+  value: string;
 };
 
 export type Contact = {
-  address: ContactAddress;
-  phones: ContactChannel[];
-  email: ContactChannel;
-  workingHours: {
-    label: string;
-    value: string;
-  };
+  email: EmailContact | null;
+  phones: PhoneContact[];
+  addresses: AddressContact[];
+  workingHours: WorkingHoursContact | null;
 };
 
+/**
+ * Contact configuration with verified client facts.
+ * Working hours stay unset (shows short coming soon text).
+ */
 export const CONTACT: Contact = {
-  address: {
-    label: "Address",
-    value: "PLACEHOLDER: Add the company address here.",
-    href: null,
-    mapsLabel: "View on map",
+  email: {
+    value: "Vinsetpharma@gmail.com",
+    href: "mailto:Vinsetpharma@gmail.com",
   },
   phones: [
     {
-      label: "Phone",
-      value: "PLACEHOLDER: Add the phone number here.",
-      href: null,
+      e164: "+919829437525",
+      display: "+91 98294 37525",
+      href: buildTelHref("+919829437525"),
     },
   ],
-  email: {
-    label: "Email",
-    value: "PLACEHOLDER: Add the business email here.",
-    href: null,
-  },
-  workingHours: {
-    label: "Working Hours",
-    value: "PLACEHOLDER: Add the company working hours here.",
-  },
+  addresses: [
+    {
+      id: "mumbai",
+      label: "Mumbai",
+      text: "Shop No. 5, Raam Bhawan, Station Road, Bhayander (W), Mumbai 401101",
+      mapsUrl: buildMapsUrl(
+        "Shop No. 5, Raam Bhawan, Station Road, Bhayander (W), Mumbai 401101",
+      ),
+    },
+    {
+      id: "jaipur",
+      label: "Jaipur",
+      text: "1, Bohra Ji Ka Bagh, Laxmi Mandir Tiraha, Tonk Road, Jaipur",
+      mapsUrl: buildMapsUrl(
+        "1, Bohra Ji Ka Bagh, Laxmi Mandir Tiraha, Tonk Road, Jaipur",
+      ),
+    },
+  ],
+  workingHours: null,
 };
+
+export type LegalConfig = {
+  jurisdiction: string | null;
+};
+
+export const LEGAL: LegalConfig = {
+  jurisdiction: null,
+};
+
+/**
+ * Dedicated logo asset path if modeled, or null when using inline brand mark.
+ */
+export const LOGO_ASSET: string | null = "/logo.png";

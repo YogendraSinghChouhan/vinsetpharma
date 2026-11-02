@@ -19,7 +19,8 @@
     "auth:seed-admin": "bun src/features/auth/seed-admin.ts",
     "auth:reset-admin-password": "bun src/features/auth/reset-admin-password.ts",
     "samples:seed": "bun --preload ./scripts/samples/preload.ts ./scripts/samples/seed.ts",
-    "samples:remove": "bun --preload ./scripts/samples/preload.ts ./scripts/samples/remove.ts"
+    "samples:remove": "bun --preload ./scripts/samples/preload.ts ./scripts/samples/remove.ts",
+    "content:check": "bun --preload ./scripts/samples/preload.ts ./scripts/content-check.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1161.0",

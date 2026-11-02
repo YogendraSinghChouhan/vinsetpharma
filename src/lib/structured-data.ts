@@ -1,5 +1,10 @@
 import { env } from "@/config/env";
-import { CONTACT, SITE_DESCRIPTION, SITE_NAME } from "@/config/site";
+import {
+  CONTACT,
+  LOGO_ASSET,
+  SITE_DESCRIPTION,
+  SITE_NAME,
+} from "@/config/site";
 
 export type Thing = {
   "@context": "https://schema.org";
@@ -7,17 +12,21 @@ export type Thing = {
   [key: string]: unknown;
 };
 
+export type PostalAddressSchema = {
+  "@type": "PostalAddress";
+  streetAddress: string;
+  addressCountry?: string;
+};
+
 export type OrganizationSchema = Thing & {
   "@type": "Organization";
   name: string;
   url: string;
   description: string;
+  logo?: string;
   telephone?: string;
   email?: string;
-  address?: {
-    "@type": "PostalAddress";
-    streetAddress: string;
-  };
+  address?: PostalAddressSchema[];
 };
 
 export type WebSiteSchema = Thing & {
@@ -77,20 +86,17 @@ function getBaseUrl(): string {
   return env.APP_URL.replace(/\/+$/, "");
 }
 
-function isRealValue(val: string | null | undefined): boolean {
-  if (!val) return false;
-  return !val.toLowerCase().startsWith("placeholder");
-}
-
 /**
  * Builds the Schema.org Organization structured data object.
- * Telephones, emails, and addresses are omitted when placeholder text is present.
+ * Emits telephone, email, logo, and address array with verified contact details.
  */
 export function buildOrganization(): OrganizationSchema {
   const baseUrl = getBaseUrl();
-  const phone = CONTACT.phones[0]?.value;
-  const email = CONTACT.email.value;
-  const address = CONTACT.address.value;
+  const phone = CONTACT.phones[0]?.e164;
+  const email = CONTACT.email?.value;
+  const logo = LOGO_ASSET
+    ? `${baseUrl}${LOGO_ASSET.startsWith("/") ? "" : "/"}${LOGO_ASSET}`
+    : undefined;
 
   const org: OrganizationSchema = {
     "@context": "https://schema.org",
@@ -100,17 +106,21 @@ export function buildOrganization(): OrganizationSchema {
     description: SITE_DESCRIPTION,
   };
 
-  if (isRealValue(phone)) {
+  if (logo) {
+    org.logo = logo;
+  }
+  if (phone) {
     org.telephone = phone;
   }
-  if (isRealValue(email)) {
+  if (email) {
     org.email = email;
   }
-  if (isRealValue(address)) {
-    org.address = {
+  if (CONTACT.addresses.length > 0) {
+    org.address = CONTACT.addresses.map((addr) => ({
       "@type": "PostalAddress",
-      streetAddress: address,
-    };
+      streetAddress: addr.text,
+      addressCountry: "IN",
+    }));
   }
 
   return org;

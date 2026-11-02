@@ -1,4 +1,5 @@
 import { describe, expect, it } from "bun:test";
+import { buildMapsUrl, buildTelHref } from "@/config/site";
 import {
   buildBlogPosting,
   buildBreadcrumbList,
@@ -8,7 +9,7 @@ import {
 } from "./structured-data";
 
 describe("structured-data builders", () => {
-  it("buildOrganization omits placeholder telephone, email, and address", () => {
+  it("buildOrganization emits verified organization schema with contact and logo", () => {
     const org = buildOrganization();
     expect(org["@context"]).toBe("https://schema.org");
     expect(org["@type"]).toBe("Organization");
@@ -16,10 +17,21 @@ describe("structured-data builders", () => {
     expect(org.url).toBeDefined();
     expect(org.description).toBeDefined();
 
-    // Since CONTACT has placeholder values in site.ts, these should be omitted
-    expect(org.telephone).toBeUndefined();
-    expect(org.email).toBeUndefined();
-    expect(org.address).toBeUndefined();
+    // Verified contact details
+    expect(org.telephone).toBe("+919829437525");
+    expect(org.email).toBe("Vinsetpharma@gmail.com");
+    expect(org.logo).toContain("/logo.png");
+    expect(org.address).toBeDefined();
+    expect(Array.isArray(org.address)).toBe(true);
+    expect(org.address).toHaveLength(2);
+    expect(org.address?.[0]?.streetAddress).toBe(
+      "Shop No. 5, Raam Bhawan, Station Road, Bhayander (W), Mumbai 401101",
+    );
+    expect(org.address?.[0]?.addressCountry).toBe("IN");
+    expect(org.address?.[1]?.streetAddress).toBe(
+      "1, Bohra Ji Ka Bagh, Laxmi Mandir Tiraha, Tonk Road, Jaipur",
+    );
+    expect(org.address?.[1]?.addressCountry).toBe("IN");
   });
 
   it("buildWebSite generates valid WebSite schema", () => {
@@ -88,6 +100,21 @@ describe("structured-data builders", () => {
     expect(breadcrumbs.itemListElement[0].position).toBe(1);
     expect(breadcrumbs.itemListElement[1].position).toBe(2);
     expect(breadcrumbs.itemListElement[2].position).toBe(3);
+  });
+});
+
+describe("contact helpers", () => {
+  it("buildTelHref produces valid tel: URL from E.164 phone string", () => {
+    expect(buildTelHref("+919829437525")).toBe("tel:+919829437525");
+  });
+
+  it("buildMapsUrl generates encoded Google Maps search URL with India suffix", () => {
+    const address =
+      "Shop No. 5, Raam Bhawan, Station Road, Bhayander (W), Mumbai 401101";
+    const expected = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+      `${address}, India`,
+    )}`;
+    expect(buildMapsUrl(address)).toBe(expected);
   });
 });
 

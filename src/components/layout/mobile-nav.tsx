@@ -84,47 +84,49 @@ export function MobileNav() {
           </div>
         </nav>
 
-        <div className="flex flex-col gap-3 border-t border-border pt-4 text-xs">
-          {CONTACT.phones.map((phone) => (
-            <div key={phone.value} className="flex flex-col gap-0.5">
-              <span className="font-semibold text-muted-foreground uppercase tracking-wider text-[11px]">
-                {phone.label}
-              </span>
-              {phone.href ? (
-                <a
-                  href={phone.href}
-                  onClick={close}
-                  className="min-h-[44px] inline-flex items-center text-foreground underline underline-offset-4 hover:text-primary"
-                >
-                  {phone.value}
-                </a>
-              ) : (
-                <span className="text-muted-foreground">{phone.value}</span>
-              )}
-            </div>
-          ))}
-
-          {CONTACT.email ? (
-            <div className="flex flex-col gap-0.5">
-              <span className="font-semibold text-muted-foreground uppercase tracking-wider text-[11px]">
-                {CONTACT.email.label}
-              </span>
-              {CONTACT.email.href ? (
-                <a
-                  href={CONTACT.email.href}
-                  onClick={close}
-                  className="min-h-[44px] inline-flex items-center text-foreground underline underline-offset-4 hover:text-primary"
-                >
-                  {CONTACT.email.value}
-                </a>
-              ) : (
-                <span className="text-muted-foreground">
-                  {CONTACT.email.value}
+        {CONTACT.phones.length > 0 || CONTACT.email ? (
+          <div className="flex flex-col gap-3 border-t border-border pt-4 text-xs">
+            {CONTACT.phones.map((phone) => (
+              <div key={phone.e164} className="flex flex-col gap-0.5">
+                <span className="font-semibold text-muted-foreground uppercase tracking-wider text-[11px]">
+                  Phone
                 </span>
-              )}
-            </div>
-          ) : null}
-        </div>
+                {phone.href ? (
+                  <a
+                    href={phone.href}
+                    onClick={close}
+                    className="min-h-[44px] inline-flex items-center text-foreground underline underline-offset-4 hover:text-primary"
+                  >
+                    {phone.display}
+                  </a>
+                ) : (
+                  <span className="text-muted-foreground">{phone.display}</span>
+                )}
+              </div>
+            ))}
+
+            {CONTACT.email ? (
+              <div className="flex flex-col gap-0.5">
+                <span className="font-semibold text-muted-foreground uppercase tracking-wider text-[11px]">
+                  Email
+                </span>
+                {CONTACT.email.href ? (
+                  <a
+                    href={CONTACT.email.href}
+                    onClick={close}
+                    className="min-h-[44px] inline-flex items-center text-foreground underline underline-offset-4 hover:text-primary"
+                  >
+                    {CONTACT.email.value}
+                  </a>
+                ) : (
+                  <span className="text-muted-foreground">
+                    {CONTACT.email.value}
+                  </span>
+                )}
+              </div>
+            ) : null}
+          </div>
+        ) : null}
       </SheetContent>
     </Sheet>
   );

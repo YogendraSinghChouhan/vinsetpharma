@@ -1,3 +1,4 @@
+import { IconMail, IconPhone } from "@tabler/icons-react";
 import Link from "next/link";
 import { Container } from "@/components/layout/container";
 import { Logo } from "@/components/layout/logo";
@@ -7,49 +8,53 @@ import { CONTACT, ROUTES } from "@/config/site";
 
 export function SiteHeader() {
   const primaryPhone = CONTACT.phones[0];
+  const email = CONTACT.email;
+  const hasUtilityContact = Boolean(primaryPhone || email);
 
   return (
     <header className="sticky top-0 z-40 w-full bg-background/95 backdrop-blur-md border-b border-border/80 shadow-2xs">
-      {/* Top utility contact bar */}
-      <div className="border-b border-border/60 bg-surface-tint/70 text-xs text-muted-foreground">
-        <Container>
-          <div className="flex flex-col gap-1 py-1.5 sm:flex-row sm:items-center sm:justify-between text-[11px] sm:text-xs">
-            <div className="flex items-center gap-2 truncate">
-              {primaryPhone ? (
-                primaryPhone.href ? (
+      {/* Top utility contact bar: phone and email only, short, no overflow at 360px */}
+      {hasUtilityContact ? (
+        <div className="border-b border-border/60 bg-surface-tint/70 text-xs text-muted-foreground">
+          <Container>
+            <div className="flex flex-col gap-1 py-1.5 sm:flex-row sm:items-center sm:justify-between text-[11px] sm:text-xs">
+              <div className="flex items-center gap-2 truncate">
+                {primaryPhone ? (
                   <a
                     href={primaryPhone.href}
-                    className="truncate transition-colors hover:text-foreground"
+                    className="inline-flex items-center gap-1.5 truncate transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded-xs"
                   >
-                    {primaryPhone.value}
+                    <IconPhone
+                      className="size-3 shrink-0 text-primary"
+                      aria-hidden="true"
+                    />
+                    <span className="truncate">{primaryPhone.display}</span>
                   </a>
-                ) : (
-                  <span className="truncate">{primaryPhone.value}</span>
-                )
-              ) : null}
-            </div>
-            <div className="flex items-center gap-2 truncate">
-              {CONTACT.email ? (
-                CONTACT.email.href ? (
+                ) : null}
+              </div>
+              <div className="flex items-center gap-2 truncate">
+                {email ? (
                   <a
-                    href={CONTACT.email.href}
-                    className="truncate transition-colors hover:text-foreground"
+                    href={email.href}
+                    className="inline-flex items-center gap-1.5 truncate transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded-xs"
                   >
-                    {CONTACT.email.value}
+                    <IconMail
+                      className="size-3 shrink-0 text-primary"
+                      aria-hidden="true"
+                    />
+                    <span className="truncate">{email.value}</span>
                   </a>
-                ) : (
-                  <span className="truncate">{CONTACT.email.value}</span>
-                )
-              ) : null}
+                ) : null}
+              </div>
             </div>
-          </div>
-        </Container>
-      </div>
+          </Container>
+        </div>
+      ) : null}
 
       {/* Main navigation bar */}
       <Container>
         <div className="flex h-16 sm:h-20 items-center justify-between gap-4">
-          <Logo />
+          <Logo priority />
 
           {/* Desktop Nav (lg: 1024px+) */}
           <div className="hidden items-center gap-6 lg:flex">

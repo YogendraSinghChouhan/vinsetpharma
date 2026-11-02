@@ -27,6 +27,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     {
       url: `${baseUrl}${ROUTES.blog}`,
     },
+    {
+      url: `${baseUrl}${ROUTES.privacyPolicy}`,
+    },
+    {
+      url: `${baseUrl}${ROUTES.termsAndConditions}`,
+    },
   ];
 
   // Published products

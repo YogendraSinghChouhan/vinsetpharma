@@ -2,6 +2,7 @@
 
 import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 import { useForm } from "@tanstack/react-form";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
@@ -15,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
 import { env } from "@/config/env";
+import { ROUTES } from "@/config/site";
 import { submitQuoteRequest } from "../actions";
 import { QUOTE_HONEYPOT_FIELD_NAME } from "../constants";
 import { quoteSubmissionSchema } from "../validation";
@@ -328,7 +330,14 @@ export function QuoteForm({ productId }: QuoteFormProps) {
       {/* Consent line */}
       <p className="text-xs text-muted-foreground leading-relaxed">
         By submitting, you agree that Vinsent Pharma may contact you about this
-        enquiry.
+        enquiry in accordance with our{" "}
+        <Link
+          href={ROUTES.privacyPolicy}
+          className="text-foreground underline underline-offset-4 transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-xs"
+        >
+          Privacy Policy
+        </Link>
+        .
       </p>
 
       {/* Submit Button */}

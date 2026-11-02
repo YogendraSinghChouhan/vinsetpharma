@@ -33,7 +33,7 @@ export function AboutSummary() {
             <div className="pt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <p className="text-sm text-muted-foreground max-w-xl">
                 Explore our documented operating standards, quality verification
-                protocols, and company history.
+                protocols, and pharmaceutical care approach.
               </p>
               <Link
                 href={ROUTES.aboutUs}

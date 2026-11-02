@@ -3,6 +3,7 @@
 import { IconExternalLink, IconLogout, IconUser } from "@tabler/icons-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { Logo } from "@/components/layout/logo";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -22,7 +23,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { ROUTES, SITE_NAME } from "@/config/site";
+import { ROUTES } from "@/config/site";
 import { authClient } from "@/features/auth/client";
 import type { Session } from "@/features/auth/server";
 import { ADMIN_NAV } from "../constants";
@@ -45,15 +46,12 @@ export function AdminSidebar({ session }: AdminSidebarProps) {
     <Sidebar variant="inset">
       <SidebarHeader className="border-b px-4 py-3">
         <div className="flex items-center justify-between">
-          <Link
-            href={ROUTES.admin}
-            className="flex items-center gap-2 font-bold tracking-tight text-foreground hover:opacity-80"
-          >
-            <span>{SITE_NAME}</span>
+          <div className="flex items-center gap-2">
+            <Logo size="small" href={ROUTES.admin} />
             <span className="rounded bg-muted px-1.5 py-0.5 text-[10px] font-semibold tracking-wider text-muted-foreground uppercase">
               Admin
             </span>
-          </Link>
+          </div>
         </div>
       </SidebarHeader>
 
