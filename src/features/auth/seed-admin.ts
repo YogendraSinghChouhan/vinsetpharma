@@ -2,6 +2,7 @@ import { loadEnvConfig } from "@next/env";
 import { createEnv } from "@t3-oss/env-nextjs";
 import { hashPassword } from "better-auth/crypto";
 import { z } from "zod";
+import { MIN_PASSWORD_LENGTH } from "./constants";
 
 loadEnvConfig(process.cwd());
 const { env } = await import("@/config/env");
@@ -12,7 +13,7 @@ const seed = createEnv({
   extends: [env],
   server: {
     ADMIN_EMAIL: z.email(),
-    ADMIN_PASSWORD: z.string().min(12),
+    ADMIN_PASSWORD: z.string().min(MIN_PASSWORD_LENGTH),
     ADMIN_NAME: z.string().trim().min(1),
   },
   experimental__runtimeEnv: {},

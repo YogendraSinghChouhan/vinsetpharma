@@ -33,7 +33,7 @@ Call `requireAdmin()` inside every protected data operation or server action. A 
 3. Generate a secret: `bun -e 'console.log(require("node:crypto").randomBytes(32).toString("base64"))'`.
 4. Set `BETTER_AUTH_SECRET` and `APP_URL` (locally `http://localhost:3000`; HTTPS in production).
 5. Run `bun run db:migrate` to apply the committed migration.
-6. Temporarily add `ADMIN_EMAIL`, `ADMIN_NAME` and `ADMIN_PASSWORD` (at least 12 characters) to `.env.local`, then run `bun run auth:seed-admin`. This uses Better Auth's password hashing and an atomic Neon batch. It refuses to run when a user already exists.
+6. Temporarily add `ADMIN_EMAIL`, `ADMIN_NAME` and `ADMIN_PASSWORD` (at least 8 characters) to `.env.local`, then run `bun run auth:seed-admin`. This uses Better Auth's password hashing and an atomic Neon batch. It refuses to run when a user already exists.
 7. Remove the temporary seeding credentials, especially the password.
 8. Run `bun run dev` and request `GET /api/auth/ok` to check the handler.
 
@@ -53,6 +53,6 @@ Schema generation does not apply database changes. Generation still requires val
 
 ## Security and scope
 
-Email/password authentication is enabled, public signup is disabled, and the password minimum is 12 characters. Sessions last one day with hourly refresh; no cookie session cache is enabled. Better Auth's default origin, CSRF and production secure-cookie protections remain enabled. Rate limits are database-backed for serverless deployments, with five email sign-in attempts per minute. The initial admin's email is trusted as verified by the operator running seeding.
+Email/password authentication is enabled, public signup is disabled, and the password minimum is 8 characters. Sessions last one day with hourly refresh; no cookie session cache is enabled. Better Auth's default origin, CSRF and production secure-cookie protections remain enabled. Rate limits are database-backed for serverless deployments, with five email sign-in attempts per minute. The initial admin's email is trusted as verified by the operator running seeding.
 
 This setup does not include sign-in UI, email verification delivery, password reset delivery, OAuth, or dashboard pages. Configure a real email provider before adding reset or verification flows. Do not enable public registration to seed an admin.

@@ -3,6 +3,7 @@ import { betterAuth } from "better-auth";
 import { nextCookies } from "better-auth/next-js";
 import { env } from "@/config/env";
 import { db } from "@/db/client";
+import { MIN_PASSWORD_LENGTH } from "./constants";
 import * as schema from "./schema";
 
 export const auth = betterAuth({
@@ -13,7 +14,7 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     disableSignUp: true,
-    minPasswordLength: 12,
+    minPasswordLength: MIN_PASSWORD_LENGTH,
   },
   rateLimit: {
     enabled: true,

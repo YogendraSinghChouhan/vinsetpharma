@@ -1,0 +1,118 @@
+import { describe, expect, it } from "bun:test";
+import {
+  buildBlogPosting,
+  buildBreadcrumbList,
+  buildOrganization,
+  buildProduct,
+  buildWebSite,
+} from "./structured-data";
+
+describe("structured-data builders", () => {
+  it("buildOrganization omits placeholder telephone, email, and address", () => {
+    const org = buildOrganization();
+    expect(org["@context"]).toBe("https://schema.org");
+    expect(org["@type"]).toBe("Organization");
+    expect(org.name).toBe("Vinsent Pharma");
+    expect(org.url).toBeDefined();
+    expect(org.description).toBeDefined();
+
+    // Since CONTACT has placeholder values in site.ts, these should be omitted
+    expect(org.telephone).toBeUndefined();
+    expect(org.email).toBeUndefined();
+    expect(org.address).toBeUndefined();
+  });
+
+  it("buildWebSite generates valid WebSite schema", () => {
+    const website = buildWebSite();
+    expect(website["@context"]).toBe("https://schema.org");
+    expect(website["@type"]).toBe("WebSite");
+    expect(website.name).toBe("Vinsent Pharma");
+    expect(website.url).toBeDefined();
+  });
+
+  it("buildProduct generates valid Product schema without offers, price, availability, or reviews", () => {
+    const product = buildProduct({
+      name: "Amoxicillin 500mg",
+      description: "Antibiotic formulation for bacterial infections.",
+      url: "https://vinsentpharma.com/products/amoxicillin-500mg",
+      image: "https://vinsentpharma.com/images/amox.jpg",
+    });
+
+    expect(product["@context"]).toBe("https://schema.org");
+    expect(product["@type"]).toBe("Product");
+    expect(product.name).toBe("Amoxicillin 500mg");
+    expect(product.brand["@type"]).toBe("Organization");
+    expect(product.brand.name).toBe("Vinsent Pharma");
+
+    // Strictly ensure no eCommerce or rating fields are emitted
+    expect(product.offers).toBeUndefined();
+    expect(product.price).toBeUndefined();
+    expect(product.availability).toBeUndefined();
+    expect(product.aggregateRating).toBeUndefined();
+    expect(product.reviews).toBeUndefined();
+  });
+
+  it("buildBlogPosting generates valid BlogPosting schema with author, publisher, and dates", () => {
+    const post = buildBlogPosting({
+      headline: "Quality Control in Modern Pharma",
+      description: "A summary of regulatory standards and testing protocols.",
+      url: "https://vinsentpharma.com/blog/quality-control-in-modern-pharma",
+      datePublished: "2026-11-01T12:00:00.000Z",
+      dateModified: "2026-11-01T14:30:00.000Z",
+    });
+
+    expect(post["@context"]).toBe("https://schema.org");
+    expect(post["@type"]).toBe("BlogPosting");
+    expect(post.headline).toBe("Quality Control in Modern Pharma");
+    expect(post.datePublished).toBe("2026-11-01T12:00:00.000Z");
+    expect(post.dateModified).toBe("2026-11-01T14:30:00.000Z");
+    expect(post.author.name).toBe("Vinsent Pharma");
+    expect(post.publisher.name).toBe("Vinsent Pharma");
+    expect(post.mainEntityOfPage["@id"]).toBe(
+      "https://vinsentpharma.com/blog/quality-control-in-modern-pharma",
+    );
+  });
+
+  it("buildBreadcrumbList formats position with 1-based indexing", () => {
+    const breadcrumbs = buildBreadcrumbList([
+      { name: "Home", url: "https://vinsentpharma.com/" },
+      { name: "Our Products", url: "https://vinsentpharma.com/products" },
+      {
+        name: "Amoxicillin",
+        url: "https://vinsentpharma.com/products/amoxicillin",
+      },
+    ]);
+
+    expect(breadcrumbs["@type"]).toBe("BreadcrumbList");
+    expect(breadcrumbs.itemListElement).toHaveLength(3);
+    expect(breadcrumbs.itemListElement[0].position).toBe(1);
+    expect(breadcrumbs.itemListElement[1].position).toBe(2);
+    expect(breadcrumbs.itemListElement[2].position).toBe(3);
+  });
+});
+
+describe("JSON-LD serialization safety", () => {
+  it("escapes '<' as \\u003c to prevent script tag injection and breakout", () => {
+    const payloadWithXss = {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      name: "Dangerous </script><script>alert('xss')</script>",
+      description: "Safe description <test>",
+    };
+
+    const serialized = JSON.stringify(payloadWithXss).replace(/</g, "\\u003c");
+
+    expect(serialized).not.toContain("<");
+    expect(serialized).not.toContain("</script>");
+    expect(serialized).toContain("\\u003c/script>");
+    expect(serialized).toContain("\\u003cscript>");
+    expect(serialized).toContain("\\u003ctest>");
+
+    // Confirm that the serialized string still parses back to valid JSON
+    const parsed = JSON.parse(serialized);
+    expect(parsed.name).toBe(
+      "Dangerous </script><script>alert('xss')</script>",
+    );
+    expect(parsed.description).toBe("Safe description <test>");
+  });
+});
