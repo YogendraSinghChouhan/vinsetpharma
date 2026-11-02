@@ -4,6 +4,7 @@ All photography used across Vinsent Pharma marketing pages is sourced from Unspl
 
 | Page Slot | File Path | Photographer | Platform | License | Source Page |
 |---|---|---|---|---|---|
+| hero (Home) | `public/images/home/hero.jpg` | [Myriam Zilles](https://unsplash.com/@myriamzilles) | Unsplash | Unsplash License (Free commercial & non-commercial use) | [View Photo](https://unsplash.com/photos/white-blue-and-orange-medication-pill-7b8d3ee536b2) |
 | hero (About Us) | `public/images/about/hero.jpg` | [Reproductive Health Supplies Coalition](https://unsplash.com/@rhsupplies) | Unsplash | Unsplash License (Free commercial & non-commercial use) | [View Photo](https://unsplash.com/photos/white-medication-pill-blister-package-584308666744) |
 | values (About Us) | `public/images/about/values.jpg` | [Hans Reniers](https://unsplash.com/@hansreniers) | Unsplash | Unsplash License (Free commercial & non-commercial use) | [View Photo](https://unsplash.com/photos/three-clear-glass-laboratory-beakers-34731de3e568) |
 | process (About Us) | `public/images/about/process.jpg` | [freestocks](https://unsplash.com/@freestocks) | Unsplash | Unsplash License (Free commercial & non-commercial use) | [View Photo](https://unsplash.com/photos/assorted-pills-a93a3070b6de) |

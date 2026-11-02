@@ -10,6 +10,10 @@ export type ImageSlot = {
   alt: string;
 } | null;
 
+export type HomeImages = {
+  hero: ImageSlot;
+};
+
 export type AboutImages = {
   hero: ImageSlot;
   values: ImageSlot;
@@ -19,6 +23,15 @@ export type AboutImages = {
 export type WhyUsImages = {
   hero: ImageSlot;
   principles: ImageSlot;
+};
+
+export const HOME_IMAGES: HomeImages = {
+  hero: {
+    src: "/images/home/hero.jpg",
+    width: 1600,
+    height: 988,
+    alt: "Macro composition of pharmaceutical capsules and tablets arranged on a clean neutral surface",
+  },
 };
 
 export const ABOUT_IMAGES: AboutImages = {

@@ -1,10 +1,9 @@
 import { IconMail, IconPhone } from "@tabler/icons-react";
-import Link from "next/link";
 import { Container } from "@/components/layout/container";
 import { Logo } from "@/components/layout/logo";
 import { MainNav } from "@/components/layout/main-nav";
 import { MobileNav } from "@/components/layout/mobile-nav";
-import { CONTACT, ROUTES } from "@/config/site";
+import { CONTACT } from "@/config/site";
 
 export function SiteHeader() {
   const primaryPhone = CONTACT.phones[0];
