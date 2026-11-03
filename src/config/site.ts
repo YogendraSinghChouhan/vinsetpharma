@@ -50,6 +50,7 @@ export const ROUTES = {
   adminBlogEdit: (id: string) => `/admin/blogs/${id}/edit`,
   media: "/media",
   adminMedia: "/admin/media",
+  adminHero: "/admin/hero",
 } as const;
 
 export const SOCIAL_LINKS: readonly {

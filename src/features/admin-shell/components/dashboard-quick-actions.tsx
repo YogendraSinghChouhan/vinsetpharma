@@ -3,7 +3,9 @@ import {
   IconBox,
   IconExternalLink,
   IconFileInvoice,
+  IconPhotoVideo,
   IconPlus,
+  IconSlideshow,
 } from "@tabler/icons-react";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
@@ -12,10 +14,14 @@ import { cn } from "@/lib/utils";
 
 type DashboardQuickActionsProps = {
   pendingQuotesCount: number;
+  heroSlidesCount: number;
+  heroSlidesCapacity: number;
 };
 
 export function DashboardQuickActions({
   pendingQuotesCount,
+  heroSlidesCount,
+  heroSlidesCapacity,
 }: DashboardQuickActionsProps) {
   return (
     <div className="flex flex-wrap items-center gap-2.5 rounded-xl border border-border/70 bg-card p-3 shadow-2xs">
@@ -61,6 +67,28 @@ export function DashboardQuickActions({
             {pendingQuotesCount}
           </span>
         ) : null}
+      </Link>
+
+      <Link
+        href={ROUTES.adminMedia}
+        className={cn(
+          buttonVariants({ variant: "outline", size: "sm" }),
+          "h-9 text-xs font-medium hover:border-primary/40",
+        )}
+      >
+        <IconPhotoVideo className="size-3.5 mr-1.5" aria-hidden="true" />
+        Manage Media
+      </Link>
+
+      <Link
+        href={ROUTES.adminHero}
+        className={cn(
+          buttonVariants({ variant: "outline", size: "sm" }),
+          "h-9 text-xs font-medium hover:border-primary/40",
+        )}
+      >
+        <IconSlideshow className="size-3.5 mr-1.5" aria-hidden="true" />
+        Hero Banner ({heroSlidesCount}/{heroSlidesCapacity})
       </Link>
 
       <div className="ml-auto">

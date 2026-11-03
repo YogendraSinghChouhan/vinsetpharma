@@ -72,7 +72,11 @@ async function DashboardContent() {
       />
 
       {/* Quick Action Shortcuts */}
-      <DashboardQuickActions pendingQuotesCount={data.stats.quotes.new} />
+      <DashboardQuickActions
+        pendingQuotesCount={data.stats.quotes.new}
+        heroSlidesCount={data.stats.hero.total}
+        heroSlidesCapacity={data.stats.hero.capacity}
+      />
 
       {/* Key Metric Overview Cards */}
       <DashboardStats stats={data.stats} system={data.system} />

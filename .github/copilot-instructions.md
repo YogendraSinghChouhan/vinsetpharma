@@ -13,5 +13,5 @@
 - Use semantic HTML, labelled form controls, visible focus states, alt text, keyboard navigation, and sufficient contrast.
 - Use mobile-first responsive styling with Tailwind and shadcn/ui tokens. Do not use inline styles. Use `next/image` and `next/font`.
 - Do not add a dependency without stating why and getting approval.
-- Build only what the current phase asks for. Do not add extra features or speculative abstractions. This is not a store: no cart, checkout, pricing, or public accounts.
+- Build only what the current phase asks for. Do not add extra features or speculative abstractions. This is not a store: no cart, checkout, pricing, or public accounts. Dynamic features are products, categories, blogs, quote requests, media, and hero banner.
 - Before finishing any phase, run typecheck, lint, and format, and fix all issues.

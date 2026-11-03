@@ -34,6 +34,7 @@ const { categories } = await import("@/features/categories/schema");
 const { products } = await import("@/features/products/schema");
 const { posts } = await import("@/features/blogs/schema");
 const { media } = await import("@/features/media/schema");
+const { heroSlides } = await import("@/features/hero/schema");
 const { sanitizeContent } = await import("@/features/blogs/sanitize");
 const { s3Client } = await import("@/features/storage/server/client");
 const { deleteImage } = await import("@/features/storage/server/service");
@@ -50,6 +51,7 @@ const {
   BLOG_POST_DISCLAIMER,
 } = await import("./data");
 const { SAMPLE_MEDIA_ITEMS } = await import("./media-data");
+const { getSampleHeroStorageKey } = await import("./hero-data");
 const {
   generatePlaceholderPng,
   generateStorageKey,
@@ -422,7 +424,120 @@ for (const sampleItem of SAMPLE_MEDIA_ITEMS) {
   mediaSeeded++;
 }
 
-// 6. Short summary of counts (never log secrets, env values or connection strings)
+// 6. SEED HERO BANNER SLIDES (up to 4 suitable landscape files with width >= 1600 and aspect >= 1.4)
+const mediaDir = path.join(process.cwd(), "scripts", "samples", "media");
+const existingHeroRows = await db
+  .select({
+    id: heroSlides.id,
+    imageKey: heroSlides.imageKey,
+  })
+  .from(heroSlides);
+
+const existingHeroKeys = new Set(existingHeroRows.map((h) => h.imageKey));
+
+const [maxHeroSortRow] = await db
+  .select({ sortOrder: heroSlides.sortOrder })
+  .from(heroSlides)
+  .orderBy(desc(heroSlides.sortOrder))
+  .limit(1);
+
+let currentHeroSortOrder = maxHeroSortRow?.sortOrder ?? 0;
+let heroSeeded = 0;
+let heroSkipped = 0;
+
+if (!fs.existsSync(mediaDir)) {
+  console.warn(
+    "scripts/samples/media directory does not exist. Skipping hero slide seed.",
+  );
+} else {
+  const candidateFiles = fs.readdirSync(mediaDir);
+  const suitableFiles: Array<{
+    file: string;
+    buffer: Buffer;
+    width: number;
+    height: number;
+    ext: string;
+  }> = [];
+
+  for (const filename of candidateFiles) {
+    const filePath = path.join(mediaDir, filename);
+    if (!fs.statSync(filePath).isFile()) continue;
+    const ext = filename.split(".").pop()?.toLowerCase();
+    if (ext !== "jpg" && ext !== "png" && ext !== "webp") continue;
+
+    try {
+      const buffer = fs.readFileSync(filePath);
+      const metadata = await sharp(buffer).metadata();
+      const width = metadata.width ?? 0;
+      const height = metadata.height ?? 0;
+      const aspect = height > 0 ? width / height : 0;
+
+      if (width >= 1600 && aspect >= 1.4) {
+        suitableFiles.push({ file: filename, buffer, width, height, ext });
+      }
+    } catch {
+      // Ignore unreadable files
+    }
+
+    if (suitableFiles.length >= 4) break;
+  }
+
+  if (suitableFiles.length === 0) {
+    console.info(
+      "No suitable landscape files found in scripts/samples/media (width >= 1600, aspect >= 1.4). Skipping hero slide seed.",
+    );
+  } else {
+    for (let i = 0; i < suitableFiles.length; i++) {
+      const sample = suitableFiles[i];
+      const heroKey = getSampleHeroStorageKey(i + 1, sample.ext);
+
+      if (existingHeroKeys.has(heroKey)) {
+        heroSkipped++;
+        continue;
+      }
+
+      const contentType =
+        sample.ext === "png"
+          ? "image/png"
+          : sample.ext === "webp"
+            ? "image/webp"
+            : "image/jpeg";
+
+      try {
+        await s3Client.send(
+          new PutObjectCommand({
+            Bucket: env.S3_BUCKET,
+            Key: heroKey,
+            Body: sample.buffer,
+            ContentType: contentType,
+          }),
+        );
+      } catch (err: unknown) {
+        console.error(
+          `Failed to upload sample hero image "${heroKey}". Aborting seed. No database row was inserted.`,
+          err instanceof Error ? err.message : String(err),
+        );
+        process.exit(1);
+      }
+
+      currentHeroSortOrder += 1;
+
+      await db.insert(heroSlides).values({
+        imageKey: heroKey,
+        width: sample.width,
+        height: sample.height,
+        alt: null,
+        focus: "center",
+        sortOrder: currentHeroSortOrder,
+      });
+
+      existingHeroKeys.add(heroKey);
+      heroSeeded++;
+    }
+  }
+}
+
+// 7. Short summary of counts (never log secrets, env values or connection strings)
 console.info("Sample seed completed:");
 console.info(
   `- Categories: ${categoriesCreated} created, ${categoriesRenamed} renamed, ${categoriesUnchanged} unchanged, ${legacyCategoriesRemoved} legacy removed`,
@@ -434,6 +549,7 @@ console.info(`- Blog posts: ${postsCreated} created, ${postsSkipped} skipped`);
 console.info(
   `- Media: ${mediaSeeded} seeded, ${mediaSkipped} skipped, ${mediaMissing} missing`,
 );
+console.info(`- Hero slides: ${heroSeeded} seeded, ${heroSkipped} skipped`);
 console.info(
   "Reminder: Cached public pages may be stale until the dev server restarts or something is saved once in the admin.",
 );

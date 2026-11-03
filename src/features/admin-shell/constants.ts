@@ -5,6 +5,7 @@ import {
   IconFileInvoice,
   IconLayoutDashboard,
   IconPhotoVideo,
+  IconSlideshow,
 } from "@tabler/icons-react";
 import { ROUTES } from "@/config/site";
 
@@ -23,6 +24,11 @@ export const ADMIN_NAV = [
     title: "Categories",
     url: ROUTES.adminCategories,
     icon: IconCategory,
+  },
+  {
+    title: "Hero banner",
+    url: ROUTES.adminHero,
+    icon: IconSlideshow,
   },
   {
     title: "Media",

@@ -32,6 +32,7 @@ const { categories } = await import("@/features/categories/schema");
 const { products } = await import("@/features/products/schema");
 const { posts } = await import("@/features/blogs/schema");
 const { media } = await import("@/features/media/schema");
+const { heroSlides } = await import("@/features/hero/schema");
 const { deleteImage } = await import("@/features/storage/server/service");
 const { eq, inArray } = await import("drizzle-orm");
 const {
@@ -41,6 +42,7 @@ const {
   SAMPLE_BLOG_POSTS,
 } = await import("./data");
 const { ALL_SAMPLE_MEDIA_KEYS } = await import("./media-data");
+const { ALL_SAMPLE_HERO_KEYS } = await import("./hero-data");
 
 const sampleProductSlugs = SAMPLE_PRODUCTS.map((p) => p.slug);
 const samplePostSlugs = SAMPLE_BLOG_POSTS.map((p) => p.slug);
@@ -55,8 +57,10 @@ let productsRemoved = 0;
 let postsRemoved = 0;
 let categoriesRemoved = 0;
 let mediaRemoved = 0;
+let heroSlidesRemoved = 0;
 let imagesDeleted = 0;
 let mediaFilesDeleted = 0;
+let heroFilesDeleted = 0;
 
 // 1. REMOVE SAMPLE PRODUCTS
 const existingProducts = await db
@@ -190,13 +194,41 @@ if (existingSampleMedia.length > 0) {
   }
 }
 
-// 5. Short summary of counts (never log secrets, env values or connection strings)
+// 5. REMOVE SAMPLE HERO SLIDES (strictly matches the derived sample hero keys)
+const existingSampleHero = await db
+  .select({
+    id: heroSlides.id,
+    imageKey: heroSlides.imageKey,
+  })
+  .from(heroSlides)
+  .where(inArray(heroSlides.imageKey, ALL_SAMPLE_HERO_KEYS));
+
+if (existingSampleHero.length > 0) {
+  await db
+    .delete(heroSlides)
+    .where(inArray(heroSlides.imageKey, ALL_SAMPLE_HERO_KEYS));
+  heroSlidesRemoved = existingSampleHero.length;
+
+  for (const item of existingSampleHero) {
+    try {
+      await deleteImage(item.imageKey);
+      heroFilesDeleted++;
+    } catch {
+      // Ignore missing objects from S3
+    }
+  }
+}
+
+// 6. Short summary of counts (never log secrets, env values or connection strings)
 console.info("Sample cleanup completed:");
 console.info(`- Products removed: ${productsRemoved}`);
 console.info(`- Blog posts removed: ${postsRemoved}`);
 console.info(`- Categories removed: ${categoriesRemoved}`);
 console.info(
   `- Media removed: ${mediaRemoved} (${mediaFilesDeleted} files deleted)`,
+);
+console.info(
+  `- Hero slides removed: ${heroSlidesRemoved} (${heroFilesDeleted} files deleted)`,
 );
 if (keptCategories.length > 0) {
   console.info(

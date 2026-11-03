@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import { AdminCreatePageLayout } from "@/features/admin-shell/components/admin-create-page-layout";
 import { AdminPageHeader } from "@/features/admin-shell/components/admin-page-header";
 import { listCategoryOptions } from "@/features/categories/data";
 import { ProductForm } from "@/features/products/components/product-form";
@@ -20,7 +21,7 @@ async function NewProductContent() {
 
 export default function AdminNewProductPage() {
   return (
-    <div className="space-y-6 max-w-3xl">
+    <AdminCreatePageLayout>
       <AdminPageHeader
         title="Add New Product"
         description="Create a new pharmaceutical product entry for the showcase catalog."
@@ -28,6 +29,6 @@ export default function AdminNewProductPage() {
       <Suspense fallback={<ProductFormSkeleton />}>
         <NewProductContent />
       </Suspense>
-    </div>
+    </AdminCreatePageLayout>
   );
 }

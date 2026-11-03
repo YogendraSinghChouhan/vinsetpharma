@@ -4,6 +4,7 @@ import path from "node:path";
 import sharp from "sharp";
 import { sanitizeContent } from "@/features/blogs/sanitize";
 import {
+  isValidHeroKey,
   isValidMediaKey,
   STORAGE_KEY_REGEX,
 } from "@/features/storage/constants";
@@ -16,6 +17,11 @@ import {
   SAMPLE_CATEGORIES,
   SAMPLE_PRODUCTS,
 } from "./data";
+import {
+  ALL_SAMPLE_HERO_KEYS,
+  getSampleHeroStorageKey,
+  SAMPLE_HERO_LIMIT,
+} from "./hero-data";
 import {
   BLOG_IMAGE_DIMENSIONS,
   buildPlaceholderSvg,
@@ -408,5 +414,49 @@ describe("Sample Media Showcase Data & Files", () => {
     expect(landscapeCount).toBe(12);
     expect(portraitCount).toBe(4);
     expect(squareCount).toBe(4);
+  });
+});
+
+describe("Sample Hero Data & Key Derivation", () => {
+  it("derives deterministic, unique, and valid hero storage keys", () => {
+    expect(ALL_SAMPLE_HERO_KEYS.length).toBe(SAMPLE_HERO_LIMIT);
+    const uniqueKeys = new Set(ALL_SAMPLE_HERO_KEYS);
+    expect(uniqueKeys.size).toBe(SAMPLE_HERO_LIMIT);
+
+    for (let i = 1; i <= SAMPLE_HERO_LIMIT; i++) {
+      const key = getSampleHeroStorageKey(i, "jpg");
+      expect(isValidHeroKey(key)).toBe(true);
+      expect(key.startsWith("hero/")).toBe(true);
+      expect(key.endsWith(".jpg")).toBe(true);
+
+      // Verify idempotency: calling with same index and ext yields identical key
+      expect(getSampleHeroStorageKey(i, "jpg")).toBe(key);
+    }
+  });
+
+  it("verifies suitable landscape sample images exist on disk (width >= 1600, aspect >= 1.4)", async () => {
+    const mediaDir = path.join(process.cwd(), "scripts", "samples", "media");
+    expect(fs.existsSync(mediaDir)).toBe(true);
+
+    const files = fs.readdirSync(mediaDir);
+    let suitableCount = 0;
+
+    for (const file of files) {
+      const filePath = path.join(mediaDir, file);
+      if (!fs.statSync(filePath).isFile()) continue;
+
+      const buffer = fs.readFileSync(filePath);
+      const meta = await sharp(buffer).metadata();
+      const width = meta.width ?? 0;
+      const height = meta.height ?? 0;
+      const aspect = height > 0 ? width / height : 0;
+
+      if (width >= 1600 && aspect >= 1.4) {
+        suitableCount++;
+      }
+    }
+
+    // We need at least 4 suitable landscape images for the hero seed
+    expect(suitableCount).toBeGreaterThanOrEqual(4);
   });
 });

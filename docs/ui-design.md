@@ -100,6 +100,11 @@ Distinctive modern scientific pairing, replacing default Inter:
    - Supported by subtle concentric blister packaging deboss rings. No stock photography, no generic blur meshes.
 5. **Dark Sections**:
    - Call to Action Band and Site Footer use deep `#06232b` (`bg-[var(--brand-dark)]`), creating high-contrast structural anchors against the cool clinical `#f6f9fa` base.
+6. **Dynamic Photographic Hero Banner & Scrim Architecture**:
+   - The home hero seamlessly adapts between dynamic administrator-managed photographic slides (`hero_slides`) and the fallback static blister-pocket capsule composition when no slides are active.
+   - **Contrast Over Photographic Media**: User photography may be bright white or visually complex. The hero deploys a calibrated brand-dark (`#06152d`) scrim (desktop: horizontal gradient 95% to 20%; mobile: vertical gradient 98% to 65%) yielding WCAG AAA contrast ratios (11.8:1–16.1:1 for headings; 9.9:1–13.3:1 for supporting text) tested against worst-case `#ffffff` photo pixels. Primary pill action uses vibrant Sky Spark `#38bdf8` (`text-brand-dark`), delivering 8.5:1 text contrast and 5.5:1–7.5:1 boundary contrast with a high-visibility white focus ring.
+   - **LCP Preservation & Progressive Mount**: The primary slide is server-rendered directly into initial HTML with `priority` and `fetchPriority="high"`. Subsequent slides (2..N) are deferred until after `window.load` and idle callbacks.
+   - **Reduced Motion & A11y**: Transitions use a 1800ms opacity crossfade and slow scale (1.0 to 1.06) anchored to focal coordinates. Under `prefers-reduced-motion`, zoom and autoplay halt automatically, with accessible 44px manual controls and polite live-region announcements.
 
 ---
 
@@ -116,7 +121,8 @@ Distinctive modern scientific pairing, replacing default Inter:
 | `MainNav` | `src/components/layout/main-nav.tsx` | Desktop navigation with pill active states (`aria-current`) | Client |
 | `MobileNav` | `src/components/layout/mobile-nav.tsx` | 44px touch-target sliding drawer using Base UI / Sheet | Client |
 | `SiteFooter` | `src/components/layout/site-footer.tsx` | Dark brand surface, perforation top edge, contact, disclaimer | Server |
-| `Hero` | `src/features/marketing/components/hero.tsx` | Rebuilt hero with capsule art, Sora display typography, dual pill CTAs | Server |
+| `Hero` | `src/features/marketing/components/hero.tsx` | Dual-mode hero (dynamic photo banner with scrim or fallback blister artwork) | Server |
+| `HeroSlideshow` | `src/features/hero/components/hero-slideshow.tsx` | Smooth progressive photo rotation, LCP priority, 44px accessible controls | Client |
 | `AboutSummary` | `src/features/marketing/components/about-summary.tsx` | Short teaser with blister architecture and direct link | Server |
 | `FeaturedProductsSection`| `src/features/products/components/featured-products.tsx` | Restyled with blister-pocket wells; empty state kept | Server |
 | `WhyUsComposition` | `src/features/marketing/components/why-us-grid.tsx` | Asymmetric 2-part composition replacing uniform 6-card grid | Server |

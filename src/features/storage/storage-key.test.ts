@@ -1,8 +1,10 @@
 import { describe, expect, it } from "bun:test";
 import { postCoverImageKeySchema } from "@/features/blogs/validation";
 import { categoryImageKeySchema } from "@/features/categories/validation";
+import { heroImageKeySchema } from "@/features/hero/validation";
 import { productImageKeySchema } from "@/features/products/validation";
 import {
+  isValidHeroKey,
   isValidMediaKey,
   isValidMediaPosterKey,
   isValidStorageKey,
@@ -15,17 +17,22 @@ const validCategoryKey = "categories/11223344-5566-7788-99aa-bbccddeeff00.jpg";
 const validMediaImageKey = "media/22334455-6677-8899-aabb-ccddeeff0011.jpg";
 const validMediaVideoMp4 = "media/33445566-7788-99aa-bbcc-ddeeff001122.mp4";
 const validMediaVideoWebm = "media/44556677-8899-99aa-bbcc-ddeeff001133.webm";
+const validHeroKey = "hero/55667788-99aa-bbcc-ddee-ff0011223344.jpg";
 
 describe("isValidStorageKey", () => {
-  it("accepts valid keys in products, blogs, and categories directories with jpg, png, or webp", () => {
+  it("accepts valid keys in products, blogs, categories, and hero directories with jpg, png, or webp", () => {
     expect(isValidStorageKey(validProductKey)).toBe(true);
     expect(isValidStorageKey(validBlogKey)).toBe(true);
     expect(isValidStorageKey(validCategoryKey)).toBe(true);
+    expect(isValidStorageKey(validHeroKey)).toBe(true);
     expect(
       isValidStorageKey("categories/a0000000-0000-0000-0000-000000000001.png"),
     ).toBe(true);
     expect(
       isValidStorageKey("products/a0000000-0000-0000-0000-000000000001.png"),
+    ).toBe(true);
+    expect(
+      isValidStorageKey("hero/a0000000-0000-0000-0000-000000000001.webp"),
     ).toBe(true);
   });
 
@@ -61,6 +68,9 @@ describe("isValidStorageKey", () => {
       isValidStorageKey("blogs/12345678-1234-1234-1234-123456789abc.mp4"),
     ).toBe(false);
     expect(
+      isValidStorageKey("hero/12345678-1234-1234-1234-123456789abc.mp4"),
+    ).toBe(false);
+    expect(
       isValidStorageKey("media/12345678-1234-1234-1234-123456789abc.avi"),
     ).toBe(false);
     expect(
@@ -74,8 +84,10 @@ describe("isValidStorageKey", () => {
   it("rejects non-UUID filenames and path traversal attempts", () => {
     expect(isValidStorageKey("categories/my-image.jpg")).toBe(false);
     expect(isValidStorageKey("products/my-image.jpg")).toBe(false);
+    expect(isValidStorageKey("hero/my-image.jpg")).toBe(false);
     expect(isValidStorageKey("media/my-video.mp4")).toBe(false);
     expect(isValidStorageKey("media/../secret.mp4")).toBe(false);
+    expect(isValidStorageKey("hero/../secret.jpg")).toBe(false);
   });
 });
 
@@ -86,6 +98,7 @@ describe("isValidMediaKey and isValidMediaPosterKey", () => {
     expect(isValidMediaKey(validMediaVideoWebm)).toBe(true);
     expect(isValidMediaKey(validProductKey)).toBe(false);
     expect(isValidMediaKey(validBlogKey)).toBe(false);
+    expect(isValidMediaKey(validHeroKey)).toBe(false);
   });
 
   it("isValidMediaPosterKey accepts only image extensions in media/ folder", () => {
@@ -95,11 +108,34 @@ describe("isValidMediaKey and isValidMediaPosterKey", () => {
     ).toBe(true);
     expect(isValidMediaPosterKey(validMediaVideoMp4)).toBe(false);
     expect(isValidMediaPosterKey(validMediaVideoWebm)).toBe(false);
+    expect(isValidMediaPosterKey(validHeroKey)).toBe(false);
+  });
+});
+
+describe("isValidHeroKey", () => {
+  it("accepts valid hero keys for jpg, png, and webp", () => {
+    expect(isValidHeroKey(validHeroKey)).toBe(true);
+    expect(
+      isValidHeroKey("hero/11111111-2222-3333-4444-555555555555.png"),
+    ).toBe(true);
+    expect(
+      isValidHeroKey("hero/11111111-2222-3333-4444-555555555555.webp"),
+    ).toBe(true);
+  });
+
+  it("rejects non-hero keys and unsupported formats", () => {
+    expect(isValidHeroKey(validProductKey)).toBe(false);
+    expect(isValidHeroKey(validBlogKey)).toBe(false);
+    expect(isValidHeroKey(validCategoryKey)).toBe(false);
+    expect(isValidHeroKey(validMediaImageKey)).toBe(false);
+    expect(
+      isValidHeroKey("hero/11111111-2222-3333-4444-555555555555.mp4"),
+    ).toBe(false);
   });
 });
 
 describe("folder isolation across features", () => {
-  it("productImageKeySchema accepts products folder but rejects media, blogs and categories", () => {
+  it("productImageKeySchema accepts products folder but rejects media, blogs, categories and hero", () => {
     expect(productImageKeySchema.safeParse(validProductKey).success).toBe(true);
     expect(productImageKeySchema.safeParse(validMediaImageKey).success).toBe(
       false,
@@ -111,9 +147,10 @@ describe("folder isolation across features", () => {
     expect(productImageKeySchema.safeParse(validCategoryKey).success).toBe(
       false,
     );
+    expect(productImageKeySchema.safeParse(validHeroKey).success).toBe(false);
   });
 
-  it("postCoverImageKeySchema accepts blogs folder but rejects media, products and categories", () => {
+  it("postCoverImageKeySchema accepts blogs folder but rejects media, products, categories and hero", () => {
     expect(postCoverImageKeySchema.safeParse(validBlogKey).success).toBe(true);
     expect(postCoverImageKeySchema.safeParse(validMediaImageKey).success).toBe(
       false,
@@ -124,9 +161,10 @@ describe("folder isolation across features", () => {
     expect(postCoverImageKeySchema.safeParse(validCategoryKey).success).toBe(
       false,
     );
+    expect(postCoverImageKeySchema.safeParse(validHeroKey).success).toBe(false);
   });
 
-  it("categoryImageKeySchema accepts categories folder but rejects media, products and blogs", () => {
+  it("categoryImageKeySchema accepts categories folder but rejects media, products, blogs and hero", () => {
     expect(categoryImageKeySchema.safeParse(validCategoryKey).success).toBe(
       true,
     );
@@ -137,6 +175,20 @@ describe("folder isolation across features", () => {
       false,
     );
     expect(categoryImageKeySchema.safeParse(validBlogKey).success).toBe(false);
+    expect(categoryImageKeySchema.safeParse(validHeroKey).success).toBe(false);
+  });
+
+  it("heroImageKeySchema accepts hero folder but rejects media, products, blogs and categories", () => {
+    expect(heroImageKeySchema.safeParse(validHeroKey).success).toBe(true);
+    expect(heroImageKeySchema.safeParse(validProductKey).success).toBe(false);
+    expect(heroImageKeySchema.safeParse(validBlogKey).success).toBe(false);
+    expect(heroImageKeySchema.safeParse(validCategoryKey).success).toBe(false);
+    expect(heroImageKeySchema.safeParse(validMediaImageKey).success).toBe(
+      false,
+    );
+    expect(heroImageKeySchema.safeParse(validMediaVideoMp4).success).toBe(
+      false,
+    );
   });
 });
 
@@ -200,6 +252,35 @@ describe("uploadRequestSchema validation", () => {
     expect(
       uploadRequestSchema.safeParse({
         purpose: "products",
+        contentType: "video/mp4",
+        size: 1024,
+      }).success,
+    ).toBe(false);
+  });
+
+  it("validates hero purpose with 10 MB images and rejects videos", () => {
+    // 10 MB image
+    expect(
+      uploadRequestSchema.safeParse({
+        purpose: "hero",
+        contentType: "image/jpeg",
+        size: 10 * 1024 * 1024,
+      }).success,
+    ).toBe(true);
+
+    // 10 MB + 1 byte image fails
+    expect(
+      uploadRequestSchema.safeParse({
+        purpose: "hero",
+        contentType: "image/jpeg",
+        size: 10 * 1024 * 1024 + 1,
+      }).success,
+    ).toBe(false);
+
+    // video not allowed for hero
+    expect(
+      uploadRequestSchema.safeParse({
+        purpose: "hero",
         contentType: "video/mp4",
         size: 1024,
       }).success,

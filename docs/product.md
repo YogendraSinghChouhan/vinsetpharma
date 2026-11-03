@@ -48,12 +48,18 @@ Basic informational pages with fixed content (Home, About, Contact, and similar)
 - Public Media page displays photos and videos in custom admin-curated order
 - Visitors can view full-size images and play videos with browser-native controls
 
-### 6. Admin dashboard (admin only)
+### 6. Hero banner (dynamic)
+- The home page hero banner is dynamic
+- Admin uploads up to 6 landscape images, arranges them and the home page shows them as a slideshow (with default banner fallback when empty)
+- Focus control (left, center, right) and screen-reader image descriptions
+
+### 7. Admin dashboard (admin only)
 - Secure login
 - **Products:** create, edit, delete, reorder, publish/unpublish, mark up to 8 published products as featured for the home page
 - **Categories:** create, edit, delete, reorder
 - **Blogs:** create, edit, delete, publish/unpublish
 - **Media:** upload photos and videos, arrange by drag and drop, edit captions, delete
+- **Hero banner:** upload up to 6 landscape images, arrange order, set focus crop and descriptions, delete
 - **Quote requests:** view list and details, mark status (new / contacted)
 
 ## Out of scope
@@ -61,7 +67,7 @@ Basic informational pages with fixed content (Home, About, Contact, and similar)
 - Any CMS (the admin is custom-built)
 - E-commerce, payments, carts, orders
 - Public user accounts, roles or permissions beyond a single admin
-- Any other dynamic feature beyond products, categories, blogs, quote requests and media
+- Any other dynamic feature beyond products, categories, blogs, quote requests, media, and hero banner
 - Multi-language support
 
 ## Tech stack
@@ -81,7 +87,7 @@ Basic informational pages with fixed content (Home, About, Contact, and similar)
 
 ## Architecture approach
 
-- **Feature-based folder structure:** each feature (`products`, `categories`, `blogs`, `quotes`, `auth`) owns its actions, data access, validation, types and components
+- **Feature-based folder structure:** each feature (`products`, `categories`, `blogs`, `quotes`, `media`, `hero`, `auth`) owns its actions, data access, validation, types and components
 - **Rendering:** public pages are static/ISR, revalidated when the admin publishes or edits content
 - **Security:** the admin routes are protected at the data layer, with the middleware redirect only as a UX convenience
 
@@ -92,6 +98,7 @@ Basic informational pages with fixed content (Home, About, Contact, and similar)
 - `posts`: cover image, title, slug, content, SEO fields, published, timestamps
 - `quote_requests`: product reference, name, email, phone, message, status, timestamp
 - `media`: type (image/video), file key, poster key (videos), width, height, duration (videos), caption, sort order, timestamp
+- `hero_slides`: image key, width, height, alt, focus, sort order, timestamp
 - `users` / `sessions`: admin authentication (managed by Better Auth)
 
 ## Non-functional requirements

@@ -3,10 +3,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { BlisterPocket } from "@/components/brand/blister-pocket";
 import { Container } from "@/components/layout/container";
+import { HeroSlideshow } from "@/features/hero/components/hero-slideshow";
+import { getHeroSlides } from "@/features/hero/public-data";
 import { HERO } from "../content";
 import { HOME_IMAGES } from "../images";
 
-export function Hero() {
+function FallbackHero() {
   const heroImage = HOME_IMAGES.hero;
 
   return (
@@ -17,7 +19,7 @@ export function Hero() {
           <div className="flex flex-col items-start gap-5 sm:gap-6 lg:col-span-7 min-w-0">
             <div className="inline-flex items-center gap-2 rounded-full border border-border/80 bg-surface-tint px-3.5 py-1 text-xs font-semibold text-primary shadow-2xs">
               <span className="size-2 rounded-full bg-accent" />
-              <span>Pharmaceutical Supply & Procurement</span>
+              <span>Pharmaceutical Supply &amp; Procurement</span>
             </div>
 
             <h1 className="font-heading text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl lg:text-[3.25rem] lg:leading-[1.12] break-words">
@@ -50,7 +52,7 @@ export function Hero() {
                   className="size-4 text-accent shrink-0"
                   aria-hidden="true"
                 />
-                <span>Solid & Liquid Oral Dosages</span>
+                <span>Solid &amp; Liquid Oral Dosages</span>
               </div>
               <div className="flex items-center gap-2">
                 <IconChecklist
@@ -100,6 +102,105 @@ export function Hero() {
           </div>
         </div>
       </Container>
+    </section>
+  );
+}
+
+export async function Hero() {
+  const slides = await getHeroSlides();
+
+  if (!slides || slides.length === 0) {
+    return <FallbackHero />;
+  }
+
+  return (
+    <section
+      aria-label="Hero showcase"
+      className="relative overflow-hidden bg-brand-dark min-h-[clamp(28rem,78svh,44rem)] sm:min-h-[clamp(32rem,82svh,56rem)] max-h-[calc(100svh-var(--header-height)-var(--top-bar-height,0px))] flex items-center border-b border-border/60"
+    >
+      {/* 1. Slideshow background layer */}
+      <HeroSlideshow slides={slides} />
+
+      {/* 2. Brand-dark scrim overlays: computed WCAG AA/AAA contrast over worst-case pure white (#ffffff) photo pixel */}
+      {/* Mobile / Tablet (< lg): vertical gradient covering full height behind vertically stacked content */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 z-[5] pointer-events-none bg-gradient-to-t from-brand-dark/98 via-brand-dark/90 to-brand-dark/65 lg:hidden"
+      />
+      {/* Desktop (>= lg): directional horizontal gradient from brand-dark left to transparent right */}
+      <div
+        aria-hidden="true"
+        className="hidden lg:block absolute inset-0 z-[5] pointer-events-none bg-gradient-to-r from-brand-dark/95 via-brand-dark/85 via-50% to-brand-dark/20"
+      />
+      {/* Edge handover vignette */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-x-0 bottom-0 h-16 z-[6] pointer-events-none bg-gradient-to-t from-brand-dark/60 to-transparent"
+      />
+
+      {/* 3. Server-rendered Section Content */}
+      <div className="relative z-10 w-full py-10 sm:py-14 lg:py-16 pb-16 sm:pb-14">
+        <Container>
+          <div className="flex flex-col items-start gap-5 sm:gap-6 max-w-2xl min-w-0">
+            {/* Pill badge */}
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-brand-dark/60 px-3.5 py-1 text-xs font-semibold text-accent-light shadow-2xs backdrop-blur-md">
+              <span className="size-2 rounded-full bg-accent-light" />
+              <span>Pharmaceutical Supply &amp; Procurement</span>
+            </div>
+
+            {/* Exactly one h1 on page */}
+            <h1 className="font-heading text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl lg:text-[3.25rem] lg:leading-[1.12] break-words drop-shadow-xs">
+              {HERO.headline}
+            </h1>
+
+            {/* Supporting line */}
+            <p className="max-w-[54ch] text-base leading-relaxed text-white/90 sm:text-lg sm:leading-relaxed drop-shadow-xs">
+              {HERO.supportingLine}
+            </p>
+
+            {/* Two pill buttons */}
+            <div className="flex w-full flex-col gap-3 pt-1 sm:w-auto sm:flex-row">
+              <Link
+                href={HERO.primaryCta.href}
+                className="inline-flex min-h-[44px] items-center justify-center rounded-full bg-accent-light px-7 py-3 text-sm font-semibold text-brand-dark shadow-xs transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-brand-dark"
+              >
+                {HERO.primaryCta.label}
+              </Link>
+              <Link
+                href={HERO.secondaryCta.href}
+                className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-white/50 bg-white/10 px-7 py-3 text-sm font-semibold text-white shadow-2xs backdrop-blur-md transition-colors hover:bg-white/20 hover:border-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-brand-dark"
+              >
+                {HERO.secondaryCta.label}
+              </Link>
+            </div>
+
+            {/* Reassurance Features Strip */}
+            <div className="mt-2 flex flex-wrap items-center gap-x-6 gap-y-3 pt-6 border-t border-white/15 text-xs sm:text-sm text-white/80">
+              <div className="flex items-center gap-2">
+                <IconPill
+                  className="size-4 text-accent-light shrink-0"
+                  aria-hidden="true"
+                />
+                <span>Solid &amp; Liquid Oral Dosages</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <IconChecklist
+                  className="size-4 text-accent-light shrink-0"
+                  aria-hidden="true"
+                />
+                <span>Direct Product Quotations</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <IconMessages
+                  className="size-4 text-accent-light shrink-0"
+                  aria-hidden="true"
+                />
+                <span>Attentive Communication</span>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </div>
     </section>
   );
 }

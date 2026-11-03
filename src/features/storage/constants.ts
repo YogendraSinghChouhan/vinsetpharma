@@ -15,9 +15,21 @@ export const ALLOWED_UPLOAD_PURPOSES = [
   "blogs",
   "categories",
   "media",
+  "hero",
 ] as const;
 
 export type UploadPurpose = (typeof ALLOWED_UPLOAD_PURPOSES)[number];
+
+export const HERO_ALLOWED_CONTENT_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+] as const;
+
+export type HeroAllowedContentType =
+  (typeof HERO_ALLOWED_CONTENT_TYPES)[number];
+
+export const HERO_IMAGE_MAX_BYTES = 10 * 1024 * 1024; // 10 MB
 
 export const MEDIA_IMAGE_CONTENT_TYPES = [
   "image/jpeg",
@@ -61,17 +73,20 @@ export const CONTENT_TYPE_TO_EXTENSION: Record<string, string> = {
 
 /**
  * Expected pattern for S3 object keys:
- * - products|blogs|categories: UUID with .jpg, .png, or .webp
+ * - products|blogs|categories|hero: UUID with .jpg, .png, or .webp
  * - media: UUID with .jpg, .png, .webp, .mp4, or .webm
  */
 export const STORAGE_KEY_REGEX =
-  /^(?:(products|blogs|categories)\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\.(jpg|png|webp)|media\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\.(jpg|png|webp|mp4|webm))$/i;
+  /^(?:(products|blogs|categories|hero)\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\.(jpg|png|webp)|media\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\.(jpg|png|webp|mp4|webm))$/i;
 
 export const MEDIA_STORAGE_KEY_REGEX =
   /^media\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\.(jpg|png|webp|mp4|webm)$/i;
 
 export const MEDIA_POSTER_KEY_REGEX =
   /^media\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\.(jpg|png|webp)$/i;
+
+export const HERO_STORAGE_KEY_REGEX =
+  /^hero\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\.(jpg|png|webp)$/i;
 
 export function isValidStorageKey(key: string): boolean {
   return STORAGE_KEY_REGEX.test(key);
@@ -83,4 +98,8 @@ export function isValidMediaKey(key: string): boolean {
 
 export function isValidMediaPosterKey(key: string): boolean {
   return MEDIA_POSTER_KEY_REGEX.test(key);
+}
+
+export function isValidHeroKey(key: string): boolean {
+  return HERO_STORAGE_KEY_REGEX.test(key);
 }

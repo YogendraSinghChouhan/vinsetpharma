@@ -4,6 +4,7 @@ import {
   IconBox,
   IconCircleCheck,
   IconFileInvoice,
+  IconPhotoVideo,
   IconServer,
 } from "@tabler/icons-react";
 import Link from "next/link";
@@ -153,7 +154,40 @@ export function DashboardStats({ stats, system }: DashboardStatsProps) {
         </div>
       </Card>
 
-      {/* 4. Infrastructure Health */}
+      {/* 4. Media Library */}
+      <Card className="flex flex-col justify-between p-5 border border-border/70 shadow-2xs hover:border-primary/30 transition-colors">
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <span className="text-sm font-medium text-muted-foreground">
+              Media Library
+            </span>
+            <div className="flex size-9 items-center justify-center rounded-lg bg-sky-500/10 text-sky-600 dark:text-sky-400">
+              <IconPhotoVideo className="size-5" aria-hidden="true" />
+            </div>
+          </div>
+          <div>
+            <div className="text-3xl font-bold tracking-tight text-foreground">
+              {stats.media.total}
+            </div>
+            <div className="mt-2 flex items-center gap-2 text-xs text-muted-foreground">
+              <span>{stats.media.photos} photos</span>
+              <span aria-hidden="true">·</span>
+              <span>{stats.media.videos} videos</span>
+            </div>
+          </div>
+        </div>
+        <div className="mt-4 pt-3 border-t border-border/50">
+          <Link
+            href={ROUTES.adminMedia}
+            className="inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline"
+          >
+            Manage media
+            <IconArrowRight className="size-3.5" aria-hidden="true" />
+          </Link>
+        </div>
+      </Card>
+
+      {/* 5. Infrastructure Health */}
       <Card className="flex flex-col justify-between p-5 border border-border/70 shadow-2xs hover:border-primary/30 transition-colors">
         <div className="space-y-3">
           <div className="flex items-center justify-between">

@@ -5,6 +5,9 @@ import { env } from "@/config/env";
 import { db } from "@/db/client";
 import { requireAdmin } from "@/features/auth/data";
 import { posts } from "@/features/blogs/schema";
+import { HERO_MAX_SLIDES } from "@/features/hero/constants";
+import { heroSlides } from "@/features/hero/schema";
+import { media } from "@/features/media/schema";
 import { products } from "@/features/products/schema";
 import { type QuoteStatus, quoteRequests } from "@/features/quotes/schema";
 
@@ -24,6 +27,15 @@ export type AdminDashboardStats = {
     total: number;
     published: number;
     draft: number;
+  };
+  media: {
+    total: number;
+    photos: number;
+    videos: number;
+  };
+  hero: {
+    total: number;
+    capacity: number;
   };
 };
 
@@ -85,6 +97,8 @@ export async function getAdminDashboardData(): Promise<AdminDashboardData> {
     [quoteCounts],
     [productCounts],
     [postCounts],
+    [mediaCounts],
+    [heroCounts],
     recentQuotes,
     recentProducts,
     recentPosts,
@@ -111,6 +125,14 @@ export async function getAdminDashboardData(): Promise<AdminDashboardData> {
         draftCount: sql<number>`count(*) filter (where ${posts.published} = false)`,
       })
       .from(posts),
+    db
+      .select({
+        total: count(),
+        photosCount: sql<number>`count(*) filter (where ${media.type} = 'image')`,
+        videosCount: sql<number>`count(*) filter (where ${media.type} = 'video')`,
+      })
+      .from(media),
+    db.select({ total: count() }).from(heroSlides),
     db
       .select({
         id: quoteRequests.id,
@@ -171,6 +193,15 @@ export async function getAdminDashboardData(): Promise<AdminDashboardData> {
         total: Number(postCounts?.total ?? 0),
         published: Number(postCounts?.publishedCount ?? 0),
         draft: Number(postCounts?.draftCount ?? 0),
+      },
+      media: {
+        total: Number(mediaCounts?.total ?? 0),
+        photos: Number(mediaCounts?.photosCount ?? 0),
+        videos: Number(mediaCounts?.videosCount ?? 0),
+      },
+      hero: {
+        total: Number(heroCounts?.total ?? 0),
+        capacity: HERO_MAX_SLIDES,
       },
     },
     recentQuotes,

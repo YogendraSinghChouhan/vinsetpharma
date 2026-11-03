@@ -265,6 +265,15 @@ function MediaTile({
             </p>
           </div>
         ) : null}
+        <div className="flex flex-wrap gap-x-3 gap-y-1 px-3 pt-2 text-[11px] text-muted-foreground">
+          <span>
+            {item.width} × {item.height}px
+          </span>
+          {item.type === "video" && item.durationSeconds ? (
+            <span>{formatDuration(item.durationSeconds)}</span>
+          ) : null}
+          <span>{item.createdAt.toISOString().slice(0, 10)}</span>
+        </div>
 
         {/* Action Controls Bar (Only visible outside selection mode) */}
         {!isSelectionMode ? (

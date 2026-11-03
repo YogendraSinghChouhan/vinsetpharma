@@ -1,6 +1,6 @@
 # Vinset Pharma
 
-A modern marketing, product showcase, and enquiry platform for Vinset Pharma. Visitors can explore company information, browse pharmaceutical products, read scientific articles and news, and submit requests for quotes. A protected administration dashboard allows authorized personnel to manage products, categories, blog posts, quote enquiries, and media (photos and videos).
+A modern marketing, product showcase, and enquiry platform for Vinset Pharma. Visitors can explore company information, browse pharmaceutical products, read scientific articles and news, and submit requests for quotes. A protected administration dashboard allows authorized personnel to manage products, categories, blog posts, quote enquiries, media (photos and videos), and the home page hero banner.
 
 > **Scope Note**: This application is not an e-commerce store. It contains no shopping cart, no checkout, no payment gateways, and no public user accounts. Authentication is strictly reserved for administrators.
 

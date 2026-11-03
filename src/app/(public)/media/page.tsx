@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { Container } from "@/components/layout/container";
 import { ROUTES, SITE_NAME } from "@/config/site";
 import { PageHeader } from "@/features/marketing/components/page-header";
+import {
+  MediaGallery,
+  type MediaGalleryItem,
+} from "@/features/media/components/media-gallery";
 import { MEDIA_MAX_ITEMS } from "@/features/media/constants";
 import { getTopMedia } from "@/features/media/public-data";
 import { getImageUrl } from "@/features/storage/image-url";
@@ -16,6 +19,15 @@ export const metadata: Metadata = createPageMetadata({
 
 export default async function MediaPage() {
   const items = await getTopMedia(MEDIA_MAX_ITEMS);
+  const galleryItems: MediaGalleryItem[] = items.map((item) => ({
+    id: item.id,
+    type: item.type,
+    fileUrl: getImageUrl(item.fileKey),
+    posterUrl: item.posterKey ? getImageUrl(item.posterKey) : undefined,
+    width: item.width,
+    height: item.height,
+    caption: item.caption,
+  }));
 
   return (
     <>
@@ -25,47 +37,8 @@ export default async function MediaPage() {
         crumbs={[{ label: "Home", href: ROUTES.home }, { label: "Media" }]}
       />
       <Container className="py-12 sm:py-16 lg:py-20">
-        {items.length > 0 ? (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {items.map((item) => {
-              const posterUrl = item.posterKey
-                ? getImageUrl(item.posterKey)
-                : undefined;
-
-              return (
-                <figure
-                  key={item.id}
-                  className="overflow-hidden rounded-2xl border border-border/80 bg-card shadow-2xs"
-                >
-                  {item.type === "video" ? (
-                    <video
-                      className="aspect-4/3 w-full bg-muted object-cover"
-                      controls
-                      preload="metadata"
-                      poster={posterUrl}
-                    >
-                      <source src={getImageUrl(item.fileKey)} />
-                      <track kind="captions" />
-                      Your browser does not support video playback.
-                    </video>
-                  ) : (
-                    <Image
-                      src={getImageUrl(item.fileKey)}
-                      alt={item.caption || "Vinset Pharma media"}
-                      width={item.width}
-                      height={item.height}
-                      className="aspect-4/3 w-full object-cover"
-                    />
-                  )}
-                  {item.caption ? (
-                    <figcaption className="px-4 py-3 text-sm text-muted-foreground">
-                      {item.caption}
-                    </figcaption>
-                  ) : null}
-                </figure>
-              );
-            })}
-          </div>
+        {galleryItems.length > 0 ? (
+          <MediaGallery items={galleryItems} />
         ) : (
           <div className="rounded-lg border border-dashed p-12 text-center text-muted-foreground">
             <p className="text-lg font-medium">Media will be published soon.</p>
