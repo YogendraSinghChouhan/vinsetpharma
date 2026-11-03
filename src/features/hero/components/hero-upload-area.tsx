@@ -16,7 +16,6 @@ import { createHeroSlides, requestHeroUpload } from "../actions";
 import {
   HERO_MAX_SLIDES,
   HERO_MIN_ASPECT,
-  HERO_MIN_WIDTH,
   HERO_RECOMMENDED_WIDTH,
 } from "../constants";
 import type { HeroSlide } from "../schema";
@@ -157,13 +156,6 @@ export function HeroUploadArea({
         // 1. Natural dimension analysis
         const { width, height } = await extractImageMetadata(item.file);
         const aspect = width / height;
-
-        // Strict rejection rules
-        if (width < HERO_MIN_WIDTH) {
-          throw new Error(
-            `Image width (${width}px) is too small. Minimum required width is ${HERO_MIN_WIDTH}px.`,
-          );
-        }
 
         if (aspect < HERO_MIN_ASPECT) {
           throw new Error(
@@ -444,8 +436,8 @@ export function HeroUploadArea({
               : "Hero slide capacity reached (6/6 slots full)"}
           </p>
           <p className="text-xs text-muted-foreground">
-            Supports JPG, PNG, and WebP up to 10 MB each (min 1280px wide,
-            landscape aspect &ge; 1.2:1)
+            Supports JPG, PNG, and WebP up to 10 MB each (landscape aspect &ge;
+            1.2:1)
           </p>
         </div>
 

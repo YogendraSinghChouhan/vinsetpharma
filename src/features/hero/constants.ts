@@ -1,5 +1,4 @@
 export const HERO_MAX_SLIDES = 6;
-export const HERO_MIN_WIDTH = 1280;
 export const HERO_RECOMMENDED_WIDTH = 1920;
 export const HERO_MIN_ASPECT = 1.2;
 export const HERO_RECOMMENDED_MAX_BYTES = 1024 * 1024; // 1 MB (advice text only)

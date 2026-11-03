@@ -1,7 +1,7 @@
 import type { HeroSlideFocus } from "./constants";
 
-export const SLIDE_DISPLAY_DURATION_MS = 7000;
-export const SLIDE_CROSSFADE_DURATION_MS = 1800;
+export const SLIDE_DISPLAY_DURATION_MS = 5000;
+export const SLIDE_CROSSFADE_DURATION_MS = 1100;
 export const RESUME_AFTER_INTERACTION_MS = 3000;
 
 export interface SlideDecisionInput {

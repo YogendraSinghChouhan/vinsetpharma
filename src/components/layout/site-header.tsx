@@ -4,6 +4,7 @@ import { Logo } from "@/components/layout/logo";
 import { MainNav } from "@/components/layout/main-nav";
 import { MobileNav } from "@/components/layout/mobile-nav";
 import { TopContactBar } from "@/components/layout/top-contact-bar";
+import { SearchDialog } from "@/features/search/components/search-dialog";
 
 /**
  * Server Component representing the top site header.
@@ -19,12 +20,14 @@ export function SiteHeader() {
             <Logo priority />
 
             {/* Desktop Nav (lg: 1024px+) */}
-            <div className="hidden items-center gap-6 lg:flex">
+            <div className="hidden items-center gap-4 lg:flex">
               <MainNav />
+              <SearchDialog />
             </div>
 
             {/* Mobile Nav (< lg: 1024px) */}
             <div className="flex items-center gap-2 lg:hidden">
+              <SearchDialog />
               <MobileNav />
             </div>
           </div>

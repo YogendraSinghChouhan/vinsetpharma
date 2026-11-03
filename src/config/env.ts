@@ -26,15 +26,12 @@ export const env = createEnv({
     RESEND_API_KEY: z.string().min(1),
     QUOTE_NOTIFICATION_EMAIL: z.string().email(),
     QUOTE_FROM_EMAIL: z.string().email(),
-    TURNSTILE_SECRET_KEY: z.string().min(1),
   },
   client: {
     NEXT_PUBLIC_S3_PUBLIC_URL: z.url().optional(),
-    NEXT_PUBLIC_TURNSTILE_SITE_KEY: z.string().min(1),
   },
   experimental__runtimeEnv: {
     NEXT_PUBLIC_S3_PUBLIC_URL: process.env.NEXT_PUBLIC_S3_PUBLIC_URL,
-    NEXT_PUBLIC_TURNSTILE_SITE_KEY: process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY,
   },
   emptyStringAsUndefined: true,
 });

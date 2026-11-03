@@ -1,13 +1,11 @@
 "use server";
 
-import { headers } from "next/headers";
 import { requireAdmin } from "@/features/auth/data";
 import { GENERIC_ACTION_ERROR, logActionError } from "@/lib/server-error";
 import { QUOTE_HONEYPOT_FIELD_NAME } from "./constants";
 import * as quoteData from "./data";
 import { sendQuoteNotificationEmail } from "./email/send";
 import type { QuoteRequest } from "./schema";
-import { verifyTurnstileToken } from "./turnstile";
 import { quoteSubmissionSchema, updateQuoteStatusSchema } from "./validation";
 
 export type SubmitQuoteActionResult =
@@ -24,12 +22,11 @@ export type UpdateQuoteStatusActionResult =
 
 /**
  * Public server action for quote request submission.
- * Enforces strict 5-step pipeline:
+ * Enforces strict 4-step pipeline:
  * 1. Zod validate
  * 2. Honeypot check (silent discard if filled)
- * 3. Cloudflare Turnstile token verification
- * 4. Database creation with product snapshot
- * 5. Notification email delivery (failure non-blocking)
+ * 3. Database creation with product snapshot
+ * 4. Notification email delivery (failure non-blocking)
  */
 export async function submitQuoteRequest(
   input: unknown,
@@ -54,32 +51,7 @@ export async function submitQuoteRequest(
     return { success: true };
   }
 
-  // Step 3: Turnstile verification
-  let clientIp: string | undefined;
-  try {
-    const headerStore = await headers();
-    clientIp =
-      headerStore.get("cf-connecting-ip") ??
-      headerStore.get("x-forwarded-for")?.split(",")[0]?.trim();
-  } catch {
-    // Ignore header lookup failure
-  }
-
-  const turnstileResult = await verifyTurnstileToken(
-    parsed.data.turnstileToken,
-    clientIp,
-  );
-
-  if (!turnstileResult.success) {
-    return {
-      success: false,
-      error:
-        turnstileResult.error ??
-        "Security check failed. Please refresh and try again.",
-    };
-  }
-
-  // Step 4: Create quote request in database
+  // Step 3: Create quote request in database
   let createdQuote: QuoteRequest;
   try {
     createdQuote = await quoteData.createQuoteRequest({
@@ -97,7 +69,7 @@ export async function submitQuoteRequest(
     };
   }
 
-  // Step 5: Send internal notification email
+  // Step 4: Send internal notification email
   // If sending fails, do NOT fail the request: the quote is saved, emailSentAt remains null.
   try {
     const emailResult = await sendQuoteNotificationEmail(createdQuote);

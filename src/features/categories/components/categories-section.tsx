@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { SectionHeading } from "@/components/brand/section-heading";
-import { AutoCarousel } from "@/components/carousel/auto-carousel";
+import { AutoScrollCarousel } from "@/components/carousel/auto-scroll-carousel";
 import { Container } from "@/components/layout/container";
+import { CarouselItem } from "@/components/ui/carousel";
 import { ROUTES } from "@/config/site";
 import { getPublicCategories } from "../public-data";
 import { CategoryCard } from "./category-card";
@@ -12,6 +13,9 @@ export async function CategoriesSection() {
   if (!categories || categories.length === 0) {
     return null;
   }
+
+  const displayCategories =
+    categories.length < 6 ? [...categories, ...categories] : categories;
 
   return (
     <section
@@ -25,19 +29,20 @@ export async function CategoriesSection() {
             description="Explore our specialized pharmaceutical portfolio organized by therapeutic dosage form."
           />
 
-          <AutoCarousel
-            ariaLabel="Product categories showcase"
-            slideClassName="w-[82%] sm:w-[calc((100%-24px)/2)] lg:w-[calc((100%-48px)/3)]"
-            gapClassName="gap-4 sm:gap-6"
-          >
-            {categories.map((category, index) => (
-              <CategoryCard
-                key={category.id}
-                category={category}
-                priority={index === 0}
-              />
+          <AutoScrollCarousel>
+            {displayCategories.map((category, index) => (
+              <CarouselItem
+                key={`${category.id}-${index}`}
+                className="pl-4 sm:pl-6 basis-full sm:basis-1/2 lg:basis-1/3"
+              >
+                <CategoryCard
+                  category={category}
+                  priority={index < 3}
+                  className="h-full"
+                />
+              </CarouselItem>
             ))}
-          </AutoCarousel>
+          </AutoScrollCarousel>
 
           <div className="flex justify-center pt-2">
             <Link

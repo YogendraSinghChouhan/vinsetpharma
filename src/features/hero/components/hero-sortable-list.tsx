@@ -19,7 +19,6 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import {
-  IconDeviceMobile,
   IconDeviceTv,
   IconGripVertical,
   IconLoader2,
@@ -204,49 +203,28 @@ function HeroSlideCard({
           {/* Dual Previews: 16:9 Desktop + Phone-shaped Mobile */}
           <div className="lg:col-span-7 space-y-2">
             <div className="flex items-center justify-between text-xs text-muted-foreground font-medium">
-              <span>Preview (Desktop & Mobile)</span>
+              <span>Preview</span>
               <span className="font-mono text-[11px]">
                 {item.width} &times; {item.height}px
               </span>
             </div>
 
-            <div className="flex gap-3 sm:gap-4 items-stretch">
-              {/* Desktop 16:9 preview */}
-              <div className="relative flex-1 aspect-video overflow-hidden rounded-xl border border-border/80 bg-muted/30 shadow-2xs">
-                <Image
-                  src={imageUrl}
-                  alt={alt || `Hero slide ${index + 1}`}
-                  fill
-                  sizes="(min-width: 1024px) 35vw, 60vw"
-                  style={{
-                    objectFit: "cover",
-                    objectPosition: getFocusPosition(focus),
-                  }}
-                  className="transition-[object-position] duration-200"
-                />
-                <div className="pointer-events-none absolute bottom-2 left-2 flex items-center gap-1 rounded-md bg-black/70 px-2 py-0.5 text-[10px] font-medium text-white backdrop-blur-xs">
-                  <IconDeviceTv className="size-3" />
-                  <span>Desktop 16:9</span>
-                </div>
-              </div>
-
-              {/* Mobile phone-shaped 9:16 preview */}
-              <div className="relative w-20 sm:w-24 shrink-0 aspect-[9/16] overflow-hidden rounded-xl border-2 border-border/90 bg-muted/30 shadow-xs">
-                <Image
-                  src={imageUrl}
-                  alt={alt || `Mobile crop ${index + 1}`}
-                  fill
-                  sizes="100px"
-                  style={{
-                    objectFit: "cover",
-                    objectPosition: getFocusPosition(focus),
-                  }}
-                  className="transition-[object-position] duration-200"
-                />
-                <div className="pointer-events-none absolute bottom-1.5 inset-x-1.5 flex justify-center items-center gap-0.5 rounded bg-black/75 py-0.5 text-[9px] font-medium text-white backdrop-blur-xs">
-                  <IconDeviceMobile className="size-2.5" />
-                  <span>Mobile</span>
-                </div>
+            {/* Desktop preview */}
+            <div className="relative aspect-video overflow-hidden rounded-xl border border-border/80 bg-muted/30 shadow-2xs">
+              <Image
+                src={imageUrl}
+                alt={alt || `Hero slide ${index + 1}`}
+                fill
+                sizes="(min-width: 1024px) 35vw, 60vw"
+                style={{
+                  objectFit: "cover",
+                  objectPosition: getFocusPosition(focus),
+                }}
+                className="transition-[object-position] duration-200"
+              />
+              <div className="pointer-events-none absolute bottom-2 left-2 flex items-center gap-1 rounded-md bg-black/70 px-2 py-0.5 text-[10px] font-medium text-white backdrop-blur-xs">
+                <IconDeviceTv className="size-3" />
+                <span>Desktop 16:9</span>
               </div>
             </div>
           </div>

@@ -17,7 +17,6 @@ A modern marketing, product showcase, and enquiry platform for Vinset Pharma. Vi
 - **Forms & Validation**: [TanStack Form](https://tanstack.com/form) + [Zod](https://zod.dev/)
 - **Rich Text & Sanitization**: [Tiptap](https://tiptap.dev/) + [sanitize-html](https://www.npmjs.com/package/sanitize-html) (server-enforced allowlist)
 - **Storage**: AWS S3 or S3-compatible object storage (presigned upload URLs)
-- **Bot Protection**: [Cloudflare Turnstile](https://www.cloudflare.com/products/turnstile/)
 - **Email Delivery**: [Resend](https://resend.com/) with [@react-email/components](https://react.email/)
 - **Code Standards**: [Biome](https://biomejs.dev/) for formatting and linting
 
@@ -29,7 +28,6 @@ A modern marketing, product showcase, and enquiry platform for Vinset Pharma. Vi
 - [Bun](https://bun.sh/) (v1.2+)
 - A PostgreSQL database instance (local or Neon serverless)
 - An S3-compatible bucket (AWS, Cloudflare R2, MinIO)
-- Cloudflare Turnstile keys (site key and secret key)
 - A Resend API key for email delivery
 
 ### 1. Installation
@@ -84,8 +82,6 @@ All environment variables are validated at runtime via `@t3-oss/env-nextjs`. Ens
 | `RESEND_API_KEY` | Server | API key from Resend for sending quote notification emails. |
 | `QUOTE_NOTIFICATION_EMAIL`| Server | Recipient email address where incoming quote requests are forwarded. |
 | `QUOTE_FROM_EMAIL` | Server | Verified sender email address configured in Resend (e.g., `quotes@vinsetpharma.com`). |
-| `TURNSTILE_SECRET_KEY` | Server | Cloudflare Turnstile secret key for server-side verification. |
-| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Client | Cloudflare Turnstile public site key rendered in client forms. |
 
 ---
 
@@ -111,14 +107,6 @@ All environment variables are validated at runtime via `@t3-oss/env-nextjs`. Ens
 1. Add your sending domain in the [Resend Domains Dashboard](https://resend.com/domains).
 2. Configure DNS records (SPF, DKIM, and DMARC) with your domain provider.
 3. Ensure `QUOTE_FROM_EMAIL` uses an email address matching your verified domain (e.g., `system@vinsetpharma.com`).
-
-### 3. Cloudflare Turnstile Setup
-1. In Cloudflare Dashboard, create a new Turnstile widget (Managed or Non-interactive).
-2. Add your hostnames under **Allowed Domains**:
-   - `localhost` (for local development)
-   - `127.0.0.1`
-   - Your production domain (e.g., `vinsetpharma.com`) and any preview deployment domains.
-3. Copy the Site Key to `NEXT_PUBLIC_TURNSTILE_SITE_KEY` and the Secret Key to `TURNSTILE_SECRET_KEY`.
 
 ---
 
@@ -184,7 +172,7 @@ bun run auth:reset-admin-password
 ### 1. Environment Setup
 In your Vercel Project Settings, add all variables listed in `.env.example`:
 - Set `APP_URL` to your canonical HTTPS domain (e.g., `https://vinsetpharma.com`).
-- Add all server and client secrets (`DATABASE_URL`, `BETTER_AUTH_SECRET`, `S3_*`, `RESEND_*`, `TURNSTILE_*`).
+- Add all server and client secrets (`DATABASE_URL`, `BETTER_AUTH_SECRET`, `S3_*`, `RESEND_*`).
 
 ### 2. Database Migrations (Pre-deploy)
 Do **not** place migrations inside the Vercel build script. Instead, apply database migrations before deployment directly from your local terminal against the production database:
@@ -215,7 +203,7 @@ Verify the live production deployment:
 - [ ] **Home Page (`/`)**: HTTP 200, valid metadata title `Vinset Pharma`, structured data JSON-LD present.
 - [ ] **Products Catalog (`/products`)**: Displays product cards or clean empty state; pagination works.
 - [ ] **Product Detail (`/products/[slug]`)**: Hero packaging image with LCP priority, specifications, related products, and quote form.
-- [ ] **Request Quote (`/products/[slug]#request-quote`)**: Turnstile widget loads, validation triggers, successful submission sends notification email.
+- [ ] **Request Quote (`/products/[slug]#request-quote`)**: Validation triggers, successful submission sends notification email.
 - [ ] **Blog Listing (`/blog`)**: Article grid renders correctly with date and excerpt.
 - [ ] **Blog Detail (`/blog/[slug]`)**: Header image, sanitized article typography, and BlogPosting JSON-LD.
 - [ ] **Static Pages (`/about-us`, `/why-us`, `/contact-us`)**: Company info, values, and contact details render without errors.

@@ -33,7 +33,7 @@ export function TopContactBar() {
   const citiesText = addresses.length > 0 ? formatCities(addresses) : "";
 
   return (
-    <div className="w-full bg-brand-dark text-brand-dark-foreground">
+    <div className="top-contact-bar-root w-full bg-brand-dark text-brand-dark-foreground">
       {/* Desktop and Tablet view (md: 768px and up) */}
       <div className="hidden md:block border-b border-white/10">
         <Container>

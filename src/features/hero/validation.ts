@@ -9,7 +9,6 @@ import {
   HERO_FOCUS_VALUES,
   HERO_MAX_SLIDES,
   HERO_MIN_ASPECT,
-  HERO_MIN_WIDTH,
 } from "./constants";
 
 export const heroImageKeySchema = z
@@ -39,7 +38,7 @@ export const heroSlideItemInputSchema = z
     width: z
       .number()
       .int("Width must be an integer.")
-      .min(HERO_MIN_WIDTH, `Image width must be at least ${HERO_MIN_WIDTH}px.`),
+      .positive("Width must be a positive integer."),
     height: z
       .number()
       .int("Height must be an integer.")

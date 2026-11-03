@@ -43,11 +43,6 @@ export const SERVICE_PROVIDERS = [
     purpose:
       "Transactional email service for delivering internal quote notification alerts",
   },
-  {
-    name: "Cloudflare",
-    purpose:
-      "Turnstile security verification to detect automated abuse and protect forms",
-  },
 ] as const;
 
 export const PRIVACY_POLICY: LegalDocument = {
@@ -135,10 +130,6 @@ export const PRIVACY_POLICY: LegalDocument = {
         {
           type: "paragraph",
           text: "A strictly necessary session cookie is used solely to authenticate authorized company personnel who sign in to the internal administrative dashboard. General website visitors browsing public pages do not receive persistent tracking cookies.",
-        },
-        {
-          type: "paragraph",
-          text: "Our spam prevention service (Cloudflare Turnstile) may analyze browser signals and client parameters at the time of form submission to verify that the request is made by a human user.",
         },
       ],
     },

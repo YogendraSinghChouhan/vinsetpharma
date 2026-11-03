@@ -3,8 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { BlisterPocket } from "@/components/brand/blister-pocket";
 import { SectionHeading } from "@/components/brand/section-heading";
-import { AutoCarousel } from "@/components/carousel/auto-carousel";
+import { AutoScrollCarousel } from "@/components/carousel/auto-scroll-carousel";
 import { Container } from "@/components/layout/container";
+import { CarouselItem } from "@/components/ui/carousel";
 import { ROUTES } from "@/config/site";
 import { getImageUrl } from "@/features/storage/image-url";
 import { MEDIA_CAROUSEL_LIMIT } from "../constants";
@@ -38,6 +39,7 @@ export async function MediaCarouselSection() {
   }
 
   const total = items.length;
+  const displayItems = items.length < 6 ? [...items, ...items] : items;
 
   return (
     <section
@@ -51,75 +53,80 @@ export async function MediaCarouselSection() {
             description="A visual look into our pharmaceutical products, packaging, and facilities."
           />
 
-          <AutoCarousel
-            ariaLabel="Media gallery showcase"
-            slideClassName="w-[82%] md:w-[calc((100%-24px)/2)] lg:w-[calc((100%-48px)/3)]"
-            gapClassName="gap-4 sm:gap-6"
-          >
-            {items.map((item, index) => {
+          <AutoScrollCarousel>
+            {displayItems.map((item, index) => {
+              const sourceIndex = index % items.length;
               const imageKey =
                 item.type === "video" && item.posterKey
                   ? item.posterKey
                   : item.fileKey;
               const imageUrl = getImageUrl(imageKey);
-              const accessibleName = getSlideAccessibleName(item, index, total);
+              const accessibleName = getSlideAccessibleName(
+                item,
+                sourceIndex,
+                total,
+              );
               const isVideo = item.type === "video";
 
               return (
-                <Link
-                  key={item.id}
-                  href={ROUTES.media}
-                  aria-label={accessibleName}
-                  className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border/80 bg-card p-3 sm:p-4 shadow-2xs transition-colors duration-200 hover:border-primary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                <CarouselItem
+                  key={`${item.id}-${index}`}
+                  className="basis-full pl-4 sm:basis-1/2 sm:pl-6 lg:basis-1/3"
                 >
-                  <BlisterPocket
-                    depth="subtle"
-                    interactive
-                    className="relative aspect-4/3 w-full overflow-hidden rounded-xl"
+                  <Link
+                    href={ROUTES.media}
+                    aria-label={accessibleName}
+                    className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border/80 bg-card p-3 shadow-2xs transition-colors duration-200 hover:border-primary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:p-4"
                   >
-                    <Image
-                      src={imageUrl}
-                      alt={item.caption || `${item.type} media`}
-                      fill
-                      priority={index === 0}
-                      loading={index === 0 ? "eager" : "lazy"}
-                      sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 85vw"
-                      className="object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
+                    <BlisterPocket
+                      depth="subtle"
+                      interactive
+                      className="relative aspect-4/3 w-full overflow-hidden rounded-xl"
+                    >
+                      <Image
+                        src={imageUrl}
+                        alt={item.caption || `${item.type} media`}
+                        fill
+                        priority={index < 3}
+                        loading={index < 3 ? "eager" : "lazy"}
+                        sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 85vw"
+                        className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      />
 
-                    {/* Video Indicators (Play Button + Duration Badge) */}
-                    {isVideo ? (
-                      <>
-                        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-                          <div className="flex size-12 items-center justify-center rounded-full bg-black/60 text-white shadow-md backdrop-blur-xs transition-transform duration-200 group-hover:scale-110">
-                            <IconPlayerPlay
-                              className="size-6 ml-0.5"
-                              aria-hidden="true"
-                            />
+                      {/* Video Indicators (Play Button + Duration Badge) */}
+                      {isVideo ? (
+                        <>
+                          <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+                            <div className="flex size-12 items-center justify-center rounded-full bg-black/60 text-white shadow-md backdrop-blur-xs transition-transform duration-200 group-hover:scale-110">
+                              <IconPlayerPlay
+                                className="ml-0.5 size-6"
+                                aria-hidden="true"
+                              />
+                            </div>
                           </div>
+
+                          {item.durationSeconds ? (
+                            <div className="pointer-events-none absolute top-3 right-3 rounded-md bg-black/75 px-2 py-0.5 font-mono text-[11px] font-medium text-white shadow-xs backdrop-blur-xs">
+                              {formatDuration(item.durationSeconds)}
+                            </div>
+                          ) : null}
+                        </>
+                      ) : null}
+
+                      {/* AA-Legible Caption Scrim Overlay */}
+                      {item.caption ? (
+                        <div className="pointer-events-none absolute inset-x-0 bottom-0 flex flex-col justify-end bg-gradient-to-t from-black/85 via-black/45 to-transparent p-3 pt-10 sm:p-4">
+                          <p className="text-xs leading-snug font-medium text-white drop-shadow-xs sm:text-sm">
+                            {item.caption}
+                          </p>
                         </div>
-
-                        {item.durationSeconds ? (
-                          <div className="pointer-events-none absolute top-3 right-3 rounded-md bg-black/75 px-2 py-0.5 font-mono text-[11px] font-medium text-white shadow-xs backdrop-blur-xs">
-                            {formatDuration(item.durationSeconds)}
-                          </div>
-                        ) : null}
-                      </>
-                    ) : null}
-
-                    {/* AA-Legible Caption Scrim Overlay */}
-                    {item.caption ? (
-                      <div className="pointer-events-none absolute inset-x-0 bottom-0 flex flex-col justify-end bg-gradient-to-t from-black/85 via-black/45 to-transparent p-3 sm:p-4 pt-10">
-                        <p className="line-clamp-2 text-xs sm:text-sm font-medium text-white drop-shadow-xs leading-snug">
-                          {item.caption}
-                        </p>
-                      </div>
-                    ) : null}
-                  </BlisterPocket>
-                </Link>
+                      ) : null}
+                    </BlisterPocket>
+                  </Link>
+                </CarouselItem>
               );
             })}
-          </AutoCarousel>
+          </AutoScrollCarousel>
 
           <div className="flex justify-center pt-2">
             <Link

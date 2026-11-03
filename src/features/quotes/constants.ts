@@ -26,8 +26,4 @@ export const ADMIN_QUOTES_PAGE_SIZE = 20;
 
 export const QUOTE_HONEYPOT_FIELD_NAME = "business_fax";
 
-export const TURNSTILE_VERIFY_URL =
-  "https://challenges.cloudflare.com/turnstile/v0/siteverify";
-export const TURNSTILE_TIMEOUT_MS = 5000;
-
 export const QUOTE_FORM_ANCHOR_ID = "request-quote";

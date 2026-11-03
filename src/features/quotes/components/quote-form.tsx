@@ -1,6 +1,5 @@
 "use client";
 
-import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 import { useForm } from "@tanstack/react-form";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
@@ -15,7 +14,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
-import { env } from "@/config/env";
 import { ROUTES, SITE_NAME } from "@/config/site";
 import { submitQuoteRequest } from "../actions";
 import { QUOTE_HONEYPOT_FIELD_NAME } from "../constants";
@@ -30,7 +28,6 @@ export function QuoteForm({ productId }: QuoteFormProps) {
   const [isSuccess, setIsSuccess] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const turnstileRef = useRef<TurnstileInstance>(null);
   const successContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -46,7 +43,6 @@ export function QuoteForm({ productId }: QuoteFormProps) {
       email: "",
       phone: "",
       message: "",
-      turnstileToken: "",
       [QUOTE_HONEYPOT_FIELD_NAME]: "",
     },
     onSubmit: async ({ value }) => {
@@ -70,8 +66,6 @@ export function QuoteForm({ productId }: QuoteFormProps) {
         if (!result.success) {
           setFormError(result.error);
           setIsSubmitting(false);
-          turnstileRef.current?.reset();
-          form.setFieldValue("turnstileToken", "");
           return;
         }
 
@@ -80,8 +74,6 @@ export function QuoteForm({ productId }: QuoteFormProps) {
         setFormError(
           "An unexpected connection error occurred. Please try again.",
         );
-        turnstileRef.current?.reset();
-        form.setFieldValue("turnstileToken", "");
       } finally {
         setIsSubmitting(false);
       }
@@ -313,24 +305,6 @@ export function QuoteForm({ productId }: QuoteFormProps) {
             </Field>
           );
         }}
-      </form.Field>
-
-      {/* Cloudflare Turnstile */}
-      <form.Field name="turnstileToken">
-        {(field) => (
-          <div className="flex flex-col gap-2">
-            <Turnstile
-              ref={turnstileRef}
-              siteKey={env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
-              onSuccess={(token) => field.handleChange(token)}
-              onError={() => {
-                field.handleChange("");
-                setFormError("Security verification failed. Please try again.");
-              }}
-              onExpire={() => field.handleChange("")}
-            />
-          </div>
-        )}
       </form.Field>
 
       {/* Consent line */}

@@ -1,6 +1,5 @@
 "use client";
 
-import { IconPlayerPause, IconPlayerPlay } from "@tabler/icons-react";
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
@@ -8,7 +7,6 @@ import type { PublicHeroSlide } from "../public-data";
 import {
   computeNextSlideIndex,
   getSlideTransformOrigin,
-  RESUME_AFTER_INTERACTION_MS,
   SLIDE_CROSSFADE_DURATION_MS,
   SLIDE_DISPLAY_DURATION_MS,
 } from "../slideshow-logic";
@@ -26,18 +24,15 @@ export function HeroSlideshow({ slides }: HeroSlideshowProps) {
   const [mountedDeferred, setMountedDeferred] = useState(false);
   const [loadedIndices, setLoadedIndices] = useState<number[]>([0]);
   const [failedIndices, setFailedIndices] = useState<number[]>([]);
-  const [isUserPaused, setIsUserPaused] = useState(false);
   const [isDocumentHidden, setIsDocumentHidden] = useState(false);
   const [isOffScreen, setIsOffScreen] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-  const [manualAnnouncement, setManualAnnouncement] = useState("");
 
   const containerRef = useRef<HTMLDivElement>(null);
   const rotationTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const crossfadeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const resumeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const isPaused = isUserPaused || isDocumentHidden || isOffScreen;
+  const isPaused = isDocumentHidden || isOffScreen;
 
   // 1. Detect prefers-reduced-motion
   useEffect(() => {
@@ -204,42 +199,8 @@ export function HeroSlideshow({ slides }: HeroSlideshowProps) {
     return () => {
       if (rotationTimerRef.current) clearTimeout(rotationTimerRef.current);
       if (crossfadeTimerRef.current) clearTimeout(crossfadeTimerRef.current);
-      if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
     };
   }, []);
-
-  // Manual dot selection
-  const handleSelectDot = (targetIdx: number) => {
-    if (targetIdx === currentIndex) return;
-
-    advanceToSlide(targetIdx);
-    setManualAnnouncement(`Showing image ${targetIdx + 1} of ${slideCount}`);
-
-    // Pause temporarily, resume 3 seconds after interaction unless user pressed Pause
-    if (!isUserPaused) {
-      if (rotationTimerRef.current) clearTimeout(rotationTimerRef.current);
-      if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
-
-      resumeTimerRef.current = setTimeout(() => {
-        // Triggers effect re-evaluation
-        setCurrentIndex((curr) => curr);
-      }, RESUME_AFTER_INTERACTION_MS);
-    }
-  };
-
-  const handleTogglePause = () => {
-    const nextState = !isUserPaused;
-    setIsUserPaused(nextState);
-    setManualAnnouncement(nextState ? "Slideshow paused" : "Slideshow playing");
-
-    if (!nextState) {
-      // Resumed manually: restart timer after short delay
-      if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
-      resumeTimerRef.current = setTimeout(() => {
-        setCurrentIndex((curr) => curr);
-      }, 1000);
-    }
-  };
 
   if (slideCount === 0) {
     return null;
@@ -262,7 +223,7 @@ export function HeroSlideshow({ slides }: HeroSlideshowProps) {
             : previousIndex === 0
               ? "z-10 opacity-100"
               : "z-0 opacity-0 pointer-events-none",
-          prefersReducedMotion ? "duration-0" : "duration-[1800ms]",
+          prefersReducedMotion ? "duration-0" : "duration-[1100ms]",
         )}
         style={{
           willChange:
@@ -275,7 +236,7 @@ export function HeroSlideshow({ slides }: HeroSlideshowProps) {
           className={cn(
             "relative h-full w-full",
             !prefersReducedMotion && slideCount > 1 && currentIndex === 0
-              ? "scale-[1.06] transition-transform duration-[8800ms] ease-out"
+              ? "scale-[1.06] transition-transform duration-[6500ms] ease-out"
               : "scale-100",
           )}
           style={{
@@ -314,7 +275,7 @@ export function HeroSlideshow({ slides }: HeroSlideshowProps) {
                   : isPrevious
                     ? "z-10 opacity-100"
                     : "z-0 opacity-0 pointer-events-none",
-                prefersReducedMotion ? "duration-0" : "duration-[1800ms]",
+                prefersReducedMotion ? "duration-0" : "duration-[1100ms]",
               )}
               style={{
                 willChange:
@@ -325,7 +286,7 @@ export function HeroSlideshow({ slides }: HeroSlideshowProps) {
                 className={cn(
                   "relative h-full w-full",
                   !prefersReducedMotion && isCurrent
-                    ? "scale-[1.06] transition-transform duration-[8800ms] ease-out"
+                    ? "scale-[1.06] transition-transform duration-[6500ms] ease-out"
                     : "scale-100",
                 )}
                 style={{
@@ -361,63 +322,6 @@ export function HeroSlideshow({ slides }: HeroSlideshowProps) {
             </div>
           );
         })}
-
-      {/* 3. Controls Layer (Only rendered when there are 2 or more slides) */}
-      {slideCount >= 2 && (
-        <div className="pointer-events-auto absolute z-30 flex items-center gap-2 bottom-4 sm:bottom-6 right-4 sm:right-8">
-          {/* Pause / Play Button */}
-          <button
-            type="button"
-            aria-pressed={isUserPaused}
-            aria-label={isUserPaused ? "Play slideshow" : "Pause slideshow"}
-            onClick={handleTogglePause}
-            className="flex size-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-full border border-white/30 bg-brand-dark/60 text-white shadow-xs backdrop-blur-md transition-colors hover:bg-brand-dark/85 hover:border-white/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-brand-dark"
-          >
-            {isUserPaused ? (
-              <IconPlayerPlay className="size-4 ml-0.5" aria-hidden="true" />
-            ) : (
-              <IconPlayerPause className="size-4" aria-hidden="true" />
-            )}
-          </button>
-
-          {/* Dot Indicators */}
-          <div
-            role="tablist"
-            aria-label="Slideshow image selector"
-            className="flex items-center gap-1 rounded-full border border-white/20 bg-brand-dark/60 px-2 py-1 backdrop-blur-md shadow-xs"
-          >
-            {slides.map((slide, idx) => {
-              const isSelected = currentIndex === idx;
-              return (
-                <button
-                  key={slide.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={isSelected}
-                  aria-current={isSelected ? "true" : undefined}
-                  aria-label={`Show image ${idx + 1} of ${slideCount}`}
-                  onClick={() => handleSelectDot(idx)}
-                  className="flex size-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-brand-dark"
-                >
-                  <span
-                    className={cn(
-                      "block rounded-full transition-all duration-300",
-                      isSelected
-                        ? "h-2 w-6 bg-accent-light"
-                        : "size-2 bg-white/50 hover:bg-white/80",
-                    )}
-                  />
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
-      {/* 4. Polite screen-reader announcer for manual interaction only */}
-      <div className="sr-only" aria-live="polite">
-        {manualAnnouncement}
-      </div>
     </div>
   );
 }

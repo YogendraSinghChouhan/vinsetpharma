@@ -100,7 +100,7 @@ export function HeaderScrollShell({
       data-hidden="false"
       data-scrolled="false"
       className={cn(
-        "header-scroll-shell sticky top-0 z-40 w-full bg-background/95 backdrop-blur-md border-b border-border/80",
+        "header-scroll-shell sticky top-0 z-40 w-full bg-white border-b border-border/80",
         className,
       )}
     >

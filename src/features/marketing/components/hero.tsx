@@ -1,206 +1,161 @@
-import { IconChecklist, IconMessages, IconPill } from "@tabler/icons-react";
+import { IconPill, IconShieldCheck, IconStarFilled } from "@tabler/icons-react";
 import Image from "next/image";
 import Link from "next/link";
-import { BlisterPocket } from "@/components/brand/blister-pocket";
 import { Container } from "@/components/layout/container";
+import { ROUTES } from "@/config/site";
 import { HeroSlideshow } from "@/features/hero/components/hero-slideshow";
 import { getHeroSlides } from "@/features/hero/public-data";
+import {
+  getFeaturedProducts,
+  type PublicProduct,
+} from "@/features/products/public-data";
+import { getImageUrl } from "@/features/storage/image-url";
 import { HERO } from "../content";
 import { HOME_IMAGES } from "../images";
 
-function FallbackHero() {
-  const heroImage = HOME_IMAGES.hero;
+function FloatingProductCard({ product }: { product: PublicProduct | null }) {
+  const imageUrl = product?.imageKey ? getImageUrl(product.imageKey) : null;
+  const productName = product?.title ?? "Verified Pharmaceutical Line";
+  const href = product ? `/products/${product.slug}` : ROUTES.products;
 
+  return <Link href={href}></Link>;
+}
+
+function SocialProof() {
   return (
-    <section className="relative overflow-hidden pt-8 pb-14 sm:pt-14 sm:pb-20 lg:pt-16 lg:pb-24">
-      <Container>
-        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-12">
-          {/* Left Column: Hero Message & Pill Actions */}
-          <div className="flex flex-col items-start gap-5 sm:gap-6 lg:col-span-7 min-w-0">
-            <div className="inline-flex items-center gap-2 rounded-full border border-border/80 bg-surface-tint px-3.5 py-1 text-xs font-semibold text-primary shadow-2xs">
-              <span className="size-2 rounded-full bg-accent" />
-              <span>Pharmaceutical Supply &amp; Procurement</span>
-            </div>
-
-            <h1 className="font-heading text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl lg:text-[3.25rem] lg:leading-[1.12] break-words">
-              {HERO.headline}
-            </h1>
-
-            <p className="max-w-[54ch] text-base leading-relaxed text-muted-foreground sm:text-lg sm:leading-relaxed">
-              {HERO.supportingLine}
-            </p>
-
-            <div className="flex w-full flex-col gap-3 pt-1 sm:w-auto sm:flex-row">
-              <Link
-                href={HERO.primaryCta.href}
-                className="inline-flex min-h-[44px] items-center justify-center rounded-full bg-primary px-7 py-3 text-sm font-semibold text-primary-foreground shadow-xs transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-              >
-                {HERO.primaryCta.label}
-              </Link>
-              <Link
-                href={HERO.secondaryCta.href}
-                className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-border bg-card px-7 py-3 text-sm font-semibold text-foreground shadow-2xs transition-colors hover:bg-muted/70 hover:border-primary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-              >
-                {HERO.secondaryCta.label}
-              </Link>
-            </div>
-
-            {/* Reassurance Features Strip */}
-            <div className="mt-2 flex flex-wrap items-center gap-x-6 gap-y-3 pt-6 border-t border-border/70 text-xs sm:text-sm text-muted-foreground">
-              <div className="flex items-center gap-2">
-                <IconPill
-                  className="size-4 text-accent shrink-0"
-                  aria-hidden="true"
-                />
-                <span>Solid &amp; Liquid Oral Dosages</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <IconChecklist
-                  className="size-4 text-accent shrink-0"
-                  aria-hidden="true"
-                />
-                <span>Direct Product Quotations</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <IconMessages
-                  className="size-4 text-accent shrink-0"
-                  aria-hidden="true"
-                />
-                <span>Attentive Communication</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Right Column: High-Resolution Photographic Blister Frame */}
-          <div className="flex items-center justify-center lg:col-span-5 min-w-0 w-full max-w-lg mx-auto">
-            {heroImage ? (
-              <BlisterPocket
-                depth="deep"
-                className="relative w-full overflow-hidden border-border/80 bg-surface-tint p-2.5 sm:p-3 shadow-sm rounded-3xl"
-              >
-                <div className="relative aspect-4/3 sm:aspect-5/4 lg:aspect-4/3 w-full overflow-hidden rounded-2xl bg-card ring-1 ring-border/70">
-                  <Image
-                    src={heroImage.src}
-                    alt={heroImage.alt}
-                    width={heroImage.width}
-                    height={heroImage.height}
-                    priority
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 520px"
-                    className="h-full w-full object-cover transition-transform duration-700 hover:scale-[1.02]"
-                  />
-                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between rounded-xl bg-card/90 px-3.5 py-2 backdrop-blur-md ring-1 ring-border/80 shadow-2xs text-xs">
-                    <span className="font-semibold text-foreground">
-                      Verified Formulation Range
-                    </span>
-                    <span className="text-[11px] text-muted-foreground">
-                      Online Catalogue
-                    </span>
-                  </div>
-                </div>
-              </BlisterPocket>
-            ) : null}
-          </div>
+    <div className="flex flex-wrap items-center gap-3.5 sm:gap-5 pt-5 sm:pt-6 border-t border-white/10 w-full">
+      {/* Overlapping customer avatars */}
+      <div className="flex -space-x-2">
+        <div className="inline-flex size-8 sm:size-9 items-center justify-center rounded-full bg-[#0e2a56] text-[11px] sm:text-xs font-semibold text-white ring-2 ring-brand-dark">
+          DR
         </div>
-      </Container>
-    </section>
+        <div className="inline-flex size-8 sm:size-9 items-center justify-center rounded-full bg-[#00388d] text-[11px] sm:text-xs font-semibold text-white ring-2 ring-brand-dark">
+          MK
+        </div>
+        <div className="inline-flex size-8 sm:size-9 items-center justify-center rounded-full bg-primary text-[11px] sm:text-xs font-semibold text-white ring-2 ring-brand-dark">
+          AP
+        </div>
+        <div className="inline-flex size-8 sm:size-9 items-center justify-center rounded-full bg-accent-light text-[10px] sm:text-[11px] font-bold text-brand-dark ring-2 ring-brand-dark">
+          +10k
+        </div>
+      </div>
+
+      {/* Rating & Trust Statement */}
+      <div className="flex flex-col gap-0.5">
+        <div className="flex items-center gap-1.5">
+          <div className="flex items-center text-amber-400">
+            {[1, 2, 3, 4, 5].map((i) => (
+              <IconStarFilled
+                key={i}
+                className="size-3.5 sm:size-4"
+                aria-hidden="true"
+              />
+            ))}
+          </div>
+          <span className="font-bold text-white text-xs sm:text-sm">5.0</span>
+          <span className="text-white/60 text-xs sm:text-sm font-medium">
+            Rating
+          </span>
+        </div>
+        <p className="text-xs sm:text-sm font-medium text-white/80">
+          Trusted by 10,000+ healthcare clinics &amp; buyers
+        </p>
+      </div>
+    </div>
   );
 }
 
 export async function Hero() {
-  const slides = await getHeroSlides();
+  const [slides, featuredProducts] = await Promise.all([
+    getHeroSlides().catch(() => []),
+    getFeaturedProducts(1).catch(() => []),
+  ]);
 
-  if (!slides || slides.length === 0) {
-    return <FallbackHero />;
-  }
+  const featuredProduct = featuredProducts[0] ?? null;
+  const heroImage = HOME_IMAGES.hero;
 
   return (
     <section
-      aria-label="Hero showcase"
-      className="relative overflow-hidden bg-brand-dark min-h-[clamp(28rem,78svh,44rem)] sm:min-h-[clamp(32rem,82svh,56rem)] max-h-[calc(100svh-var(--header-height)-var(--top-bar-height,0px))] flex items-center border-b border-border/60"
+      id="home-hero-theme"
+      aria-label="Homepage hero banner"
+      className="relative overflow-hidden bg-brand-dark text-white py-16 sm:py-20 lg:py-24 xl:py-28 border-b border-white/10"
     >
-      {/* 1. Slideshow background layer */}
-      <HeroSlideshow slides={slides} />
-
-      {/* 2. Brand-dark scrim overlays: computed WCAG AA/AAA contrast over worst-case pure white (#ffffff) photo pixel */}
-      {/* Mobile / Tablet (< lg): vertical gradient covering full height behind vertically stacked content */}
+      {/* Oversized partially cropped background decorative typography */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 z-[5] pointer-events-none bg-gradient-to-t from-brand-dark/98 via-brand-dark/90 to-brand-dark/65 lg:hidden"
-      />
-      {/* Desktop (>= lg): directional horizontal gradient from brand-dark left to transparent right */}
-      <div
-        aria-hidden="true"
-        className="hidden lg:block absolute inset-0 z-[5] pointer-events-none bg-gradient-to-r from-brand-dark/95 via-brand-dark/85 via-50% to-brand-dark/20"
-      />
-      {/* Edge handover vignette */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-x-0 bottom-0 h-16 z-[6] pointer-events-none bg-gradient-to-t from-brand-dark/60 to-transparent"
-      />
+        className="pointer-events-none absolute inset-x-0 -bottom-3 sm:-bottom-6 lg:-bottom-8 z-0 select-none overflow-hidden text-center"
+      >
+        <span className="font-heading block text-[clamp(3.5rem,13vw,13rem)] font-extrabold uppercase tracking-tight text-white/[0.05] sm:text-white/[0.06] leading-none whitespace-nowrap">
+          PHARMACEUTICALS
+        </span>
+      </div>
 
-      {/* 3. Server-rendered Section Content */}
-      <div className="relative z-10 w-full py-10 sm:py-14 lg:py-16 pb-16 sm:pb-14">
-        <Container>
-          <div className="flex flex-col items-start gap-5 sm:gap-6 max-w-2xl min-w-0">
-            {/* Pill badge */}
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-brand-dark/60 px-3.5 py-1 text-xs font-semibold text-accent-light shadow-2xs backdrop-blur-md">
-              <span className="size-2 rounded-full bg-accent-light" />
-              <span>Pharmaceutical Supply &amp; Procurement</span>
-            </div>
-
+      <Container className="relative z-10 w-full">
+        {/* Desktop 2-column / Mobile vertical stack */}
+        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-12 xl:gap-16">
+          {/* Left Column (Desktop) / Upper Portion (Mobile) */}
+          <div className="flex flex-col items-start gap-5 sm:gap-6 lg:col-span-7 min-w-0">
             {/* Exactly one h1 on page */}
-            <h1 className="font-heading text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl lg:text-[3.25rem] lg:leading-[1.12] break-words drop-shadow-xs">
+            <h1 className="font-heading text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl lg:text-[3.5rem] xl:text-[4rem] xl:leading-[1.08] break-words">
               {HERO.headline}
             </h1>
 
-            {/* Supporting line */}
-            <p className="max-w-[54ch] text-base leading-relaxed text-white/90 sm:text-lg sm:leading-relaxed drop-shadow-xs">
+            {/* Short supporting description */}
+            <p className="max-w-[48ch] text-base leading-relaxed text-white/80 sm:text-lg sm:leading-relaxed">
               {HERO.supportingLine}
             </p>
 
-            {/* Two pill buttons */}
-            <div className="flex w-full flex-col gap-3 pt-1 sm:w-auto sm:flex-row">
+            {/* Two horizontally aligned CTA buttons */}
+            <div className="flex w-full flex-col gap-3 pt-1 sm:w-auto sm:flex-row sm:items-center">
               <Link
                 href={HERO.primaryCta.href}
-                className="inline-flex min-h-[44px] items-center justify-center rounded-full bg-accent-light px-7 py-3 text-sm font-semibold text-brand-dark shadow-xs transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-brand-dark"
+                className="inline-flex min-h-[48px] items-center justify-center rounded-full bg-accent-light px-8 py-3 text-sm sm:text-base font-semibold text-brand-dark shadow-md transition-all hover:opacity-90 hover:scale-[1.02] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-brand-dark"
               >
                 {HERO.primaryCta.label}
               </Link>
               <Link
                 href={HERO.secondaryCta.href}
-                className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-white/50 bg-white/10 px-7 py-3 text-sm font-semibold text-white shadow-2xs backdrop-blur-md transition-colors hover:bg-white/20 hover:border-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-brand-dark"
+                className="inline-flex min-h-[48px] items-center justify-center rounded-full border border-white/40 bg-transparent px-8 py-3 text-sm sm:text-base font-semibold text-white shadow-xs transition-colors hover:bg-white/10 hover:border-white/70 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-brand-dark"
               >
                 {HERO.secondaryCta.label}
               </Link>
             </div>
 
-            {/* Reassurance Features Strip */}
-            <div className="mt-2 flex flex-wrap items-center gap-x-6 gap-y-3 pt-6 border-t border-white/15 text-xs sm:text-sm text-white/80">
-              <div className="flex items-center gap-2">
-                <IconPill
-                  className="size-4 text-accent-light shrink-0"
+            {/* Social proof section */}
+            <SocialProof />
+          </div>
+
+          {/* Right Column (Desktop) / Lower Section (Mobile) */}
+          <div className="lg:col-span-5 relative w-full flex items-center justify-center lg:justify-end mt-2 lg:mt-0">
+            <div className="relative w-full max-w-lg lg:max-w-none">
+              {/* Clipped Visual Area with dynamic image / slideshow */}
+              <div className="relative w-full aspect-[5/4] sm:aspect-[16/11] lg:aspect-[5/4] rounded-3xl overflow-hidden shadow-2xl ring-1 ring-white/10 bg-brand-dark/80">
+                {slides && slides.length > 0 ? (
+                  <HeroSlideshow slides={slides} />
+                ) : heroImage ? (
+                  <Image
+                    src={heroImage.src}
+                    alt={heroImage.alt}
+                    fill
+                    priority
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 85vw, 560px"
+                    className="h-full w-full object-cover object-right sm:object-center transition-transform duration-700 hover:scale-[1.02]"
+                  />
+                ) : null}
+
+                {/* Subtle ambient lighting vignette */}
+                <div
                   aria-hidden="true"
+                  className="pointer-events-none absolute inset-0 bg-gradient-to-t from-brand-dark/70 via-transparent to-transparent"
                 />
-                <span>Solid &amp; Liquid Oral Dosages</span>
               </div>
-              <div className="flex items-center gap-2">
-                <IconChecklist
-                  className="size-4 text-accent-light shrink-0"
-                  aria-hidden="true"
-                />
-                <span>Direct Product Quotations</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <IconMessages
-                  className="size-4 text-accent-light shrink-0"
-                  aria-hidden="true"
-                />
-                <span>Attentive Communication</span>
-              </div>
+
+              {/* Floating product information card near bottom-right */}
+              <FloatingProductCard product={featuredProduct} />
             </div>
           </div>
-        </Container>
-      </div>
+        </div>
+      </Container>
     </section>
   );
 }

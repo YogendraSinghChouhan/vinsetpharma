@@ -8,7 +8,6 @@ const validBasePayload = {
   email: "jane.smith@hospital.org",
   phone: "+1 (555) 234-5678",
   message: "We need 500 units of this formulation delivered by next month.",
-  turnstileToken: "dummy-turnstile-token",
 };
 
 describe("quoteSubmissionSchema", () => {

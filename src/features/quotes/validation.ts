@@ -61,10 +61,6 @@ export const quoteSubmissionSchema = z.object({
       QUOTE_LIMITS.message.max,
       `Message cannot exceed ${QUOTE_LIMITS.message.max} characters.`,
     ),
-  turnstileToken: z
-    .string()
-    .trim()
-    .min(1, "Please complete the security check."),
   [QUOTE_HONEYPOT_FIELD_NAME]: z.string().optional(),
 });
 

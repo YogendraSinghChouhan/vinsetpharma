@@ -139,13 +139,13 @@ describe("heroSlideItemInputSchema", () => {
     }
   });
 
-  it("rejects width below 1280px", () => {
+  it("accepts images below the former width recommendation", () => {
     const result = heroSlideItemInputSchema.safeParse({
       imageKey: validHeroKey,
-      width: 1279,
-      height: 720,
+      width: 738,
+      height: 615,
     });
-    expect(result.success).toBe(false);
+    expect(result.success).toBe(true);
   });
 
   it("rejects aspect ratio below 1.2 (square or portrait)", () => {

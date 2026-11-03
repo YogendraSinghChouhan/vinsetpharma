@@ -12,8 +12,6 @@ process.env.S3_PUBLIC_URL = "https://s3.vinsetpharma.com";
 process.env.RESEND_API_KEY = "re_test_12345";
 process.env.QUOTE_NOTIFICATION_EMAIL = "quotes@vinsetpharma.com";
 process.env.QUOTE_FROM_EMAIL = "system@vinsetpharma.com";
-process.env.TURNSTILE_SECRET_KEY = "test-turnstile-secret";
-process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY = "test-turnstile-site-key";
 
 // Cleanly mock server-only package so unit tests can import server modules
 mock.module("server-only", () => {

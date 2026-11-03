@@ -74,15 +74,13 @@ export function DashboardSystemOverview({
           </p>
         </div>
 
-        {/* Notifications & Spam */}
+        {/* Notifications */}
         <div className="p-4 space-y-1">
           <div className="flex items-center gap-1.5 text-xs font-semibold text-muted-foreground">
             <IconShieldCheck className="size-3.5 text-indigo-600 dark:text-indigo-400" />
-            <span>Inquiry Alerts & Bot Defense</span>
+            <span>Inquiry Alerts</span>
           </div>
-          <p className="text-sm font-medium text-foreground truncate">
-            Resend & Turnstile
-          </p>
+          <p className="text-sm font-medium text-foreground truncate">Resend</p>
           <p
             className="text-[11px] text-muted-foreground truncate"
             title={system.notificationEmail}
