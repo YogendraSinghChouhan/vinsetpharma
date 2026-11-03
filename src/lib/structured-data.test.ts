@@ -32,6 +32,12 @@ describe("structured-data builders", () => {
       "1, Bohra Ji Ka Bagh, Laxmi Mandir Tiraha, Tonk Road, Jaipur",
     );
     expect(org.address?.[1]?.addressCountry).toBe("IN");
+
+    // Founder
+    expect(org.founder).toEqual({
+      "@type": "Person",
+      name: "Vishnu Saini",
+    });
   });
 
   it("buildWebSite generates valid WebSite schema", () => {

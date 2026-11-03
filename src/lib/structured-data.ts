@@ -18,6 +18,11 @@ export type PostalAddressSchema = {
   addressCountry?: string;
 };
 
+export type PersonSchema = {
+  "@type": "Person";
+  name: string;
+};
+
 export type OrganizationSchema = Thing & {
   "@type": "Organization";
   name: string;
@@ -27,6 +32,7 @@ export type OrganizationSchema = Thing & {
   telephone?: string;
   email?: string;
   address?: PostalAddressSchema[];
+  founder?: PersonSchema;
 };
 
 export type WebSiteSchema = Thing & {
@@ -104,6 +110,10 @@ export function buildOrganization(): OrganizationSchema {
     name: SITE_NAME,
     url: baseUrl,
     description: SITE_DESCRIPTION,
+    founder: {
+      "@type": "Person",
+      name: "Vishnu Saini",
+    },
   };
 
   if (logo) {

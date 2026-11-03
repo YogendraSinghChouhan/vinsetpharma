@@ -1,6 +1,11 @@
 import { describe, expect, it } from "bun:test";
 import fs from "node:fs";
 import path from "node:path";
+import React from "react";
+import { renderToString } from "react-dom/server";
+import sharp from "sharp";
+import { AboutHero } from "./components/about-hero";
+import { FOUNDER } from "./content";
 import { ABOUT_IMAGES, HOME_IMAGES, WHY_US_IMAGES } from "./images";
 
 const FORBIDDEN_WORDS = [
@@ -59,4 +64,53 @@ describe("Marketing Images Configuration", () => {
       }
     });
   }
+
+  describe("Founder Portrait Configuration", () => {
+    it("FOUNDER.image points to an existing file on disk matching configured dimensions", async () => {
+      expect(FOUNDER.image.src.startsWith("/images/")).toBe(true);
+      const diskPath = path.join(process.cwd(), "public", FOUNDER.image.src);
+      expect(fs.existsSync(diskPath)).toBe(true);
+      expect(fs.statSync(diskPath).size).toBeGreaterThan(0);
+      expect(fs.statSync(diskPath).size).toBeLessThan(500 * 1024);
+
+      // Verify dimensions on disk match configured dimensions exactly
+      const meta = await sharp(diskPath).metadata();
+      expect(meta.width).toBe(FOUNDER.image.width);
+      expect(meta.height).toBe(FOUNDER.image.height);
+    });
+
+    it("FOUNDER.image has compliant alt text without forbidden words", () => {
+      expect(FOUNDER.image.alt.length).toBeGreaterThan(10);
+      const lowerAlt = FOUNDER.image.alt.toLowerCase();
+      for (const forbidden of FORBIDDEN_WORDS) {
+        const regex = new RegExp(`\\b${forbidden}\\b`, "i");
+        expect(regex.test(lowerAlt)).toBe(false);
+      }
+    });
+  });
+
+  describe("Founder Content & AboutHero Component Rendering", () => {
+    it("FOUNDER.message and FOUNDER.bio are null by default", () => {
+      expect(FOUNDER.message).toBeNull();
+      expect(FOUNDER.bio).toBeNull();
+    });
+
+    it("AboutHero does not render blockquote or bio blocks when message and bio are null", () => {
+      const html = renderToString(React.createElement(AboutHero));
+
+      // No blockquote is rendered
+      expect(html.includes("<blockquote")).toBe(false);
+
+      // Founder name and role are rendered in the figure caption
+      expect(html.includes(FOUNDER.name)).toBe(true);
+      expect(html.includes(FOUNDER.role)).toBe(true);
+
+      // Exactly one h1 is rendered: "About Us"
+      const h1Matches = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/gi);
+      expect(h1Matches).not.toBeNull();
+      expect(h1Matches?.length).toBe(1);
+      expect(h1Matches?.[0]).toContain("About Us");
+      expect(h1Matches?.[0]).not.toContain(FOUNDER.name);
+    });
+  });
 });

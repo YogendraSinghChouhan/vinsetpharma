@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { ABOUT, PAGE_META, WHY_US } from "./content";
+import { ABOUT, FOUNDER, PAGE_META, WHY_US } from "./content";
 
 // Standard forbidden words to check
 const FORBIDDEN_WORDS_CASE_INSENSITIVE = [
@@ -52,6 +52,35 @@ describe("Marketing Content Compliance", () => {
     const textCorpus = allAboutStrings.join(" ");
 
     for (const word of FORBIDDEN_WORDS_CASE_INSENSITIVE) {
+      const regex = new RegExp(`\\b${word}\\b`, "i");
+      const match = regex.exec(textCorpus);
+      expect(match).toBeNull();
+    }
+
+    for (const acronym of FORBIDDEN_ACRONYMS) {
+      const regex = new RegExp(`\\b${acronym}\\b`);
+      const match = regex.exec(textCorpus);
+      expect(match).toBeNull();
+    }
+  });
+
+  it("FOUNDER content contains no pharma forbidden words or regulatory acronyms", () => {
+    const allFounderStrings = extractStrings(FOUNDER);
+    const textCorpus = allFounderStrings.join(" ");
+
+    const FORBIDDEN_WORDS = [
+      ...FORBIDDEN_WORDS_CASE_INSENSITIVE,
+      "visionary",
+      "expert",
+      "leader",
+      "pioneer",
+      "renowned",
+      "award",
+      "passion",
+      "experience",
+    ];
+
+    for (const word of FORBIDDEN_WORDS) {
       const regex = new RegExp(`\\b${word}\\b`, "i");
       const match = regex.exec(textCorpus);
       expect(match).toBeNull();

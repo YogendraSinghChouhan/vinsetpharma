@@ -22,6 +22,43 @@ const COMPANY_HISTORY: string | null = null;
 const MISSION_STATEMENT =
   "To supply dependable pharmaceutical products that support patient wellbeing and serve as a reliable partner to healthcare providers.";
 
+export type FounderMessage = {
+  text: string;
+  attribution: string;
+} | null;
+
+export type Founder = {
+  name: string;
+  role: string;
+  image: {
+    src: string;
+    width: number;
+    height: number;
+    alt: string;
+  };
+  intro: string;
+  principles: string;
+  message: FounderMessage;
+  bio: string | null;
+};
+
+export const FOUNDER: Founder = {
+  name: "Vishnu Saini",
+  role: "Founder",
+  image: {
+    src: "/images/about/vishnu-saini.jpg",
+    width: 1086,
+    height: 1448,
+    alt: "Vishnu Saini, founder of Vinsent Pharma",
+  },
+  intro:
+    "Vinsent Pharma was founded by Vishnu Saini. The company aims to make it simple for buyers to find the products they need, request a quote and reach the team directly by phone or email.",
+  principles:
+    "We believe in clear communication, careful attention to every enquiry and straightforward dealings with the people we work with.",
+  message: null,
+  bio: null,
+};
+
 export const HERO = {
   headline: "Think about your life",
   supportingLine:
