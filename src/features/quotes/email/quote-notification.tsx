@@ -43,7 +43,7 @@ export function QuoteNotificationEmail({
         <Container style={containerStyle}>
           <Heading style={headingStyle}>New Quote Request</Heading>
           <Text style={introStyle}>
-            A new quote enquiry has been submitted through the Vinsent Pharma
+            A new quote enquiry has been submitted through the vinset Pharma
             website.
           </Text>
 
@@ -96,7 +96,7 @@ export function QuoteNotificationEmail({
           <Hr style={dividerStyle} />
 
           <Text style={footerStyle}>
-            Vinsent Pharma automated internal notification. Reply directly to
+            vinset Pharma automated internal notification. Reply directly to
             this email to contact the prospective client.
           </Text>
         </Container>

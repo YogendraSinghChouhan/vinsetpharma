@@ -1,6 +1,6 @@
-# Vinsent Pharma
+# vinset Pharma
 
-A modern marketing, product showcase, and enquiry platform for Vinsent Pharma. Visitors can explore company information, browse pharmaceutical products, read scientific articles and news, and submit requests for quotes. A protected administration dashboard allows authorized personnel to manage products, categories, blog posts, and quote enquiries.
+A modern marketing, product showcase, and enquiry platform for vinset Pharma. Visitors can explore company information, browse pharmaceutical products, read scientific articles and news, and submit requests for quotes. A protected administration dashboard allows authorized personnel to manage products, categories, blog posts, quote enquiries, and media (photos and videos).
 
 > **Scope Note**: This application is not an e-commerce store. It contains no shopping cart, no checkout, no payment gateways, and no public user accounts. Authentication is strictly reserved for administrators.
 
@@ -36,7 +36,7 @@ A modern marketing, product showcase, and enquiry platform for Vinsent Pharma. V
 Clone the repository and install dependencies:
 ```bash
 git clone <repository-url>
-cd vinsent-pharma
+cd vinset-pharma
 bun install
 ```
 
@@ -77,13 +77,13 @@ All environment variables are validated at runtime via `@t3-oss/env-nextjs`. Ens
 | `S3_ENDPOINT` | Server | *(Optional)* Custom S3 endpoint URL (e.g., for Cloudflare R2 or MinIO; omit for standard AWS). |
 | `S3_REGION` | Server | S3 region where the media bucket is provisioned (e.g., `us-east-1`). |
 | `S3_BUCKET` | Server | Name of the S3 bucket storing product, category, and blog images. |
-| `S3_ACCESS_KEY_ID` | Server | IAM user access key with read/write permissions for the S3 bucket. |
+| `S3_ACCESS_KEY_ID` | Server | IAM user access key with read, write, and delete permissions for the S3 bucket. |
 | `S3_SECRET_ACCESS_KEY` | Server | IAM user secret access key. |
 | `S3_PUBLIC_URL` | Server | Public base URL serving S3 images (CDN domain or public bucket URL). |
 | `NEXT_PUBLIC_S3_PUBLIC_URL` | Client | *(Optional)* Client-exposed public base URL matching `S3_PUBLIC_URL`. |
 | `RESEND_API_KEY` | Server | API key from Resend for sending quote notification emails. |
 | `QUOTE_NOTIFICATION_EMAIL`| Server | Recipient email address where incoming quote requests are forwarded. |
-| `QUOTE_FROM_EMAIL` | Server | Verified sender email address configured in Resend (e.g., `quotes@vinsentpharma.com`). |
+| `QUOTE_FROM_EMAIL` | Server | Verified sender email address configured in Resend (e.g., `quotes@vinsetpharma.com`). |
 | `TURNSTILE_SECRET_KEY` | Server | Cloudflare Turnstile secret key for server-side verification. |
 | `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Client | Cloudflare Turnstile public site key rendered in client forms. |
 
@@ -92,14 +92,15 @@ All environment variables are validated at runtime via `@t3-oss/env-nextjs`. Ens
 ## External Service Configurations
 
 ### 1. S3 Bucket Requirements
-1. **Public Read**: Ensure objects in the bucket have public read access (or serve them via a CloudFront CDN distribution) so images can be displayed publicly.
-2. **CORS Configuration**: The browser uploads directly to S3 via presigned PUT URLs. Configure CORS on the bucket:
+1. **Credentials & Permissions**: Storage credentials configured via `S3_ACCESS_KEY_ID` and `S3_SECRET_ACCESS_KEY` require `s3:GetObject`, `s3:PutObject`, `s3:DeleteObject`, and `s3:HeadObject` permissions (read, write, and delete on the bucket).
+2. **Public Read**: Ensure objects in the bucket have public read access (or serve them via a CloudFront CDN distribution) so images can be displayed publicly.
+3. **CORS Configuration**: The browser uploads directly to S3 via presigned PUT URLs. Configure CORS on the bucket:
    ```json
    [
      {
        "AllowedHeaders": ["*"],
        "AllowedMethods": ["PUT", "GET", "HEAD"],
-       "AllowedOrigins": ["https://vinsentpharma.com", "http://localhost:3000"],
+       "AllowedOrigins": ["https://vinsetpharma.com", "http://localhost:3000"],
        "ExposeHeaders": ["ETag"]
      }
    ]
@@ -109,14 +110,14 @@ All environment variables are validated at runtime via `@t3-oss/env-nextjs`. Ens
 ### 2. Resend Sender Domain Verification
 1. Add your sending domain in the [Resend Domains Dashboard](https://resend.com/domains).
 2. Configure DNS records (SPF, DKIM, and DMARC) with your domain provider.
-3. Ensure `QUOTE_FROM_EMAIL` uses an email address matching your verified domain (e.g., `system@vinsentpharma.com`).
+3. Ensure `QUOTE_FROM_EMAIL` uses an email address matching your verified domain (e.g., `system@vinsetpharma.com`).
 
 ### 3. Cloudflare Turnstile Setup
 1. In Cloudflare Dashboard, create a new Turnstile widget (Managed or Non-interactive).
 2. Add your hostnames under **Allowed Domains**:
    - `localhost` (for local development)
    - `127.0.0.1`
-   - Your production domain (e.g., `vinsentpharma.com`) and any preview deployment domains.
+   - Your production domain (e.g., `vinsetpharma.com`) and any preview deployment domains.
 3. Copy the Site Key to `NEXT_PUBLIC_TURNSTILE_SITE_KEY` and the Secret Key to `TURNSTILE_SECRET_KEY`.
 
 ---
@@ -144,7 +145,7 @@ All environment variables are validated at runtime via `@t3-oss/env-nextjs`. Ens
 
 ## Recovering Admin Access
 
-Because Vinsent Pharma is an internal administration portal rather than a consumer web application, **there is no public or email-based password reset flow**. If an administrator loses access, use one of the verified procedures below.
+Because vinset Pharma is an internal administration portal rather than a consumer web application, **there is no public or email-based password reset flow**. If an administrator loses access, use one of the verified procedures below.
 
 ### 1. Forgotten Admin Password (CLI Reset)
 
@@ -154,7 +155,7 @@ To reset an admin password safely without modifying database records manually:
 2. Run the dedicated reset script:
 
 ```bash
-ADMIN_EMAIL="admin@vinsentpharma.com" \
+ADMIN_EMAIL="admin@vinsetpharma.com" \
 ADMIN_NEW_PASSWORD="<new-secure-password-8-chars-min>" \
 bun run auth:reset-admin-password
 ```
@@ -182,7 +183,7 @@ bun run auth:reset-admin-password
 
 ### 1. Environment Setup
 In your Vercel Project Settings, add all variables listed in `.env.example`:
-- Set `APP_URL` to your canonical HTTPS domain (e.g., `https://vinsentpharma.com`).
+- Set `APP_URL` to your canonical HTTPS domain (e.g., `https://vinsetpharma.com`).
 - Add all server and client secrets (`DATABASE_URL`, `BETTER_AUTH_SECRET`, `S3_*`, `RESEND_*`, `TURNSTILE_*`).
 
 ### 2. Database Migrations (Pre-deploy)
@@ -196,7 +197,7 @@ Seed the primary admin account before or immediately after deployment:
 ```bash
 DATABASE_URL="<production-db-connection-string>" \
 BETTER_AUTH_SECRET="<production-auth-secret>" \
-ADMIN_EMAIL="admin@vinsentpharma.com" \
+ADMIN_EMAIL="admin@vinsetpharma.com" \
 ADMIN_PASSWORD="<temporary-secure-password>" \
 ADMIN_NAME="Administrator" \
 bun run auth:seed-admin
@@ -211,7 +212,7 @@ vercel --prod
 
 ### 5. Post-Deployment Smoke Test Checklist
 Verify the live production deployment:
-- [ ] **Home Page (`/`)**: HTTP 200, valid metadata title `Vinsent Pharma`, structured data JSON-LD present.
+- [ ] **Home Page (`/`)**: HTTP 200, valid metadata title `vinset Pharma`, structured data JSON-LD present.
 - [ ] **Products Catalog (`/products`)**: Displays product cards or clean empty state; pagination works.
 - [ ] **Product Detail (`/products/[slug]`)**: Hero packaging image with LCP priority, specifications, related products, and quote form.
 - [ ] **Request Quote (`/products/[slug]#request-quote`)**: Turnstile widget loads, validation triggers, successful submission sends notification email.
@@ -219,7 +220,7 @@ Verify the live production deployment:
 - [ ] **Blog Detail (`/blog/[slug]`)**: Header image, sanitized article typography, and BlogPosting JSON-LD.
 - [ ] **Static Pages (`/about-us`, `/why-us`, `/contact-us`)**: Company info, values, and contact details render without errors.
 - [ ] **Admin Login (`/admin/login`)**: Validates admin credentials and redirects to `/admin`.
-- [ ] **Admin Dashboard (`/admin`)**: Create/edit/reorder products and categories, write blog posts, review quote enquiries.
+- [ ] **Admin Dashboard (`/admin`)**: Create/edit/reorder products and categories, write blog posts, manage media showcase, review quote enquiries.
 - [ ] **Error Handling**: Visiting `/products/non-existent-slug` returns true HTTP 404. Malformed pages trigger custom error boundary.
 - [ ] **SEO & Indexing**:
   - `/robots.txt` disallows `/admin/` and `/api/`, links to sitemap.

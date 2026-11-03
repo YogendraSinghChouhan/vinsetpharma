@@ -23,9 +23,9 @@ const MISSION_STATEMENT =
   "To supply dependable pharmaceutical products that support patient wellbeing and serve as a reliable partner to healthcare providers.";
 
 export const HERO = {
-  headline: "Reliable pharmaceutical products, built on careful science.",
+  headline: "Think about your life",
   supportingLine:
-    "Vinsent Pharma develops, prepares and supplies pharmaceutical products for healthcare providers and the people they serve.",
+    "Vinset Pharma develops, prepares and supplies pharmaceutical products for healthcare providers and the people they serve.",
   primaryCta: {
     label: "Our Products",
     href: ROUTES.products,
@@ -38,14 +38,14 @@ export const HERO = {
 
 export const ABOUT = {
   header: {
-    title: "About Vinsent Pharma",
+    title: "About Vinset Pharma",
     tagline: "Careful science for pharmaceutical care.",
     intro:
-      "Vinsent Pharma develops, prepares, and supplies pharmaceutical products for healthcare providers and the communities they serve. We combine structured formulation oversight with direct, attentive customer communication to facilitate reliable product supply.",
+      "Vinset Pharma develops, prepares, and supplies pharmaceutical products for healthcare providers and the communities they serve. We combine structured formulation oversight with direct, attentive customer communication to facilitate reliable product supply.",
   },
   introduction: {
     heading: "About Us",
-    text: "Vinsent Pharma operates as a dedicated pharmaceutical supplier focused on providing dependable, carefully formulated medications to healthcare institutions, clinics, and professional procurement teams across regional networks.",
+    text: "Vinset Pharma operates as a dedicated pharmaceutical supplier focused on providing dependable, carefully formulated medications to healthcare institutions, clinics, and professional procurement teams across regional networks.",
     history: COMPANY_HISTORY,
     linkLabel: "More about our company",
   },
@@ -53,7 +53,7 @@ export const ABOUT = {
     heading: "Who We Are",
     subheading: "A focused approach to pharmaceutical supply and partnership.",
     paragraphs: [
-      "Vinsent Pharma operates as a dedicated pharmaceutical supplier focused on providing dependable, carefully formulated medications to healthcare institutions, clinics, and professional procurement teams. We believe that dependable healthcare delivery begins with consistent product integrity, accurate labelling, and straightforward commercial cooperation.",
+      "Vinset Pharma operates as a dedicated pharmaceutical supplier focused on providing dependable, carefully formulated medications to healthcare institutions, clinics, and professional procurement teams. We believe that dependable healthcare delivery begins with consistent product integrity, accurate labelling, and straightforward commercial cooperation.",
       "Our catalogue encompasses a diverse selection of solid oral dosage forms, liquid preparations, and specialized therapeutic formulations. Through this digital platform, buyers can review detailed product specifications, examine packaging formats, and submit structured quotation requests directly to our supply personnel without cumbersome administrative friction.",
       "We believe in accessible, personal service tailored to institutional schedules. Rather than navigating automated order queues, every quotation submitted through our platform connects you directly with a representative who coordinates pricing, availability, and dispatch logistics according to your clinical requirements.",
       "Our operations prioritize transparent dialogue, continuous batch oversight, and thorough record-keeping from initial consultation through delivery. By aligning formulation selection with regional health requirements, we support healthcare professionals with medications they can prescribe and dispense with quiet assurance.",
@@ -162,7 +162,7 @@ export const ABOUT = {
     subheading:
       "Direct contact points established to support regional procurement.",
     intro:
-      "Vinsent Pharma coordinates client enquiries through two primary contact points located in Mumbai and Jaipur. Whether discussing recurring clinic orders, wholesale shipments, or institutional procurement, our personnel provide prompt regional attention. We welcome enquiries from healthcare practitioners, institutional buyers, and distribution partners across regional markets.",
+      "vinset Pharma coordinates client enquiries through two primary contact points located in Mumbai and Jaipur. Whether discussing recurring clinic orders, wholesale shipments, or institutional procurement, our personnel provide prompt regional attention. We welcome enquiries from healthcare practitioners, institutional buyers, and distribution partners across regional markets.",
   },
 } as const;
 
@@ -183,9 +183,9 @@ export const WHY_US_ICONS = {
 } as const;
 
 export const WHY_US = {
-  heading: "Why Vinsent Pharma",
+  heading: "Why vinset Pharma",
   intro:
-    "Healthcare providers and supply managers choose Vinsent Pharma for our steady dedication to product consistency, open communication, and attentive service.",
+    "Healthcare providers and supply managers choose vinset Pharma for our steady dedication to product consistency, open communication, and attentive service.",
   points: [
     {
       icon: "qualityAssurance",
@@ -286,12 +286,12 @@ export const WHY_US = {
       },
       {
         question:
-          "How will Vinsent Pharma get in touch with me after I submit a quote?",
+          "How will vinset Pharma get in touch with me after I submit a quote?",
         answer:
           "A member of our team will contact you directly via the telephone number or email address provided in your form, typically within standard business hours.",
       },
       {
-        question: "Where can I reach Vinsent Pharma directly?",
+        question: "Where can I reach vinset Pharma directly?",
         answer:
           "You can reach us through our contact points in Mumbai and Jaipur. Phone numbers, email addresses, and map links are available on our Contact Us page and in the website footer.",
       },
@@ -315,7 +315,7 @@ export type WhyUsPoint = (typeof WHY_US.points)[number];
 
 export const CTA = {
   heading: "Browse our products and request a quote.",
-  text: "Explore the Vinsent Pharma product range and send a request for a quote for the products you need.",
+  text: "Explore the vinset Pharma product range and send a request for a quote for the products you need.",
   primaryCta: {
     label: "Browse Products",
     href: ROUTES.products,
@@ -330,21 +330,26 @@ export const PAGE_META = {
   home: {
     title: "Home",
     description:
-      "Vinsent Pharma develops, prepares and supplies pharmaceutical products for healthcare providers and the people they serve.",
+      "vinset Pharma develops, prepares and supplies pharmaceutical products for healthcare providers and the people they serve.",
   },
   about: {
     title: "About Us",
     description:
-      "Learn about Vinsent Pharma, our focus on pharmaceutical quality, mission and values, and how healthcare buyers request direct product quotes.",
+      "Learn about vinset Pharma, our focus on pharmaceutical quality, mission and values, and how healthcare buyers request direct product quotes.",
   },
   whyUs: {
     title: "Why Us",
     description:
-      "Explore why healthcare buyers choose Vinsent Pharma: documented quality, careful ingredient selection, dedicated regional contact points, and direct support.",
+      "Explore why healthcare buyers choose vinset Pharma: documented quality, careful ingredient selection, dedicated regional contact points, and direct support.",
   },
   contact: {
     title: "Contact Us",
     description:
-      "Contact Vinsent Pharma for address, phone, email and working hours.",
+      "Contact vinset Pharma for address, phone, email and working hours.",
+  },
+  media: {
+    title: "Media Showcase",
+    description:
+      "Explore photos and videos of vinset Pharma's manufacturing standards, quality testing operations, and modern laboratory facilities.",
   },
 } as const;

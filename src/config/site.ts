@@ -1,9 +1,9 @@
-export const SITE_NAME = "Vinsent Pharma";
+export const SITE_NAME = "vinset Pharma";
 
 export const SITE_TAGLINE = "Careful science for pharmaceutical care.";
 
 export const SITE_DESCRIPTION =
-  "Vinsent Pharma develops, prepares and supplies pharmaceutical products for healthcare providers and the people they serve.";
+  "vinset Pharma develops, prepares and supplies pharmaceutical products for healthcare providers and the people they serve.";
 
 /**
  * Shared brand color hex values derived directly from globals.css design tokens.
@@ -48,6 +48,8 @@ export const ROUTES = {
   adminBlogs: "/admin/blogs",
   adminBlogNew: "/admin/blogs/new",
   adminBlogEdit: (id: string) => `/admin/blogs/${id}/edit`,
+  media: "/media",
+  adminMedia: "/admin/media",
 } as const;
 
 export const SOCIAL_LINKS: readonly {
@@ -58,6 +60,7 @@ export const SOCIAL_LINKS: readonly {
 export const MAIN_NAV = [
   { label: "Home", href: ROUTES.home },
   { label: "Our Products", href: ROUTES.products },
+  { label: "Media", href: ROUTES.media },
   { label: "Blog", href: ROUTES.blog },
   { label: "Why Us", href: ROUTES.whyUs },
   { label: "About Us", href: ROUTES.aboutUs },
@@ -69,6 +72,7 @@ export const FOOTER_NAV = [
   { label: "Why Us", href: ROUTES.whyUs },
   { label: "Contact Us", href: ROUTES.contactUs },
   { label: "Our Products", href: ROUTES.products },
+  { label: "Media", href: ROUTES.media },
   { label: "Blog", href: ROUTES.blog },
 ] as const;
 

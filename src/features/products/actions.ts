@@ -3,6 +3,7 @@
 import { updateTag } from "next/cache";
 import { requireAdmin } from "@/features/auth/data";
 import { CATEGORY_CACHE_TAGS } from "@/features/categories/constants";
+import { GENERIC_ACTION_ERROR, logActionError } from "@/lib/server-error";
 import { PRODUCT_CACHE_TAGS } from "./constants";
 import * as productData from "./data";
 import type { Product } from "./schema";
@@ -50,11 +51,10 @@ export async function createProduct(
       data: created,
     };
   } catch (error: unknown) {
-    const message =
-      error instanceof Error ? error.message : "Failed to create product.";
+    logActionError("products.create", error);
     return {
       success: false,
-      error: message,
+      error: GENERIC_ACTION_ERROR,
     };
   }
 }
@@ -91,11 +91,10 @@ export async function updateProduct(
       data: updated,
     };
   } catch (error: unknown) {
-    const message =
-      error instanceof Error ? error.message : "Failed to update product.";
+    logActionError("products.update", error);
     return {
       success: false,
-      error: message,
+      error: GENERIC_ACTION_ERROR,
     };
   }
 }
@@ -130,11 +129,10 @@ export async function deleteProduct(
       data: deleted,
     };
   } catch (error: unknown) {
-    const message =
-      error instanceof Error ? error.message : "Failed to delete product.";
+    logActionError("products.delete", error);
     return {
       success: false,
-      error: message,
+      error: GENERIC_ACTION_ERROR,
     };
   }
 }
@@ -169,13 +167,10 @@ export async function setProductPublished(
       data: updated,
     };
   } catch (error: unknown) {
-    const message =
-      error instanceof Error
-        ? error.message
-        : "Failed to update publication status.";
+    logActionError("products.setPublished", error);
     return {
       success: false,
-      error: message,
+      error: GENERIC_ACTION_ERROR,
     };
   }
 }
@@ -211,13 +206,20 @@ export async function setProductFeaturedAction(
       data: updated,
     };
   } catch (error: unknown) {
-    const message =
-      error instanceof Error
-        ? error.message
-        : "Failed to update featured status.";
+    if (
+      error instanceof productData.ProductNotFoundError ||
+      error instanceof productData.ProductDraftFeaturedError ||
+      error instanceof productData.FeaturedLimitReachedError
+    ) {
+      return {
+        success: false,
+        error: error.message,
+      };
+    }
+    logActionError("products.setFeatured", error);
     return {
       success: false,
-      error: message,
+      error: GENERIC_ACTION_ERROR,
     };
   }
 }
@@ -253,11 +255,10 @@ export async function reorderProducts(
       data: undefined,
     };
   } catch (error: unknown) {
-    const message =
-      error instanceof Error ? error.message : "Failed to reorder products.";
+    logActionError("products.reorder", error);
     return {
       success: false,
-      error: message,
+      error: GENERIC_ACTION_ERROR,
     };
   }
 }

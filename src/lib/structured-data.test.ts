@@ -13,7 +13,7 @@ describe("structured-data builders", () => {
     const org = buildOrganization();
     expect(org["@context"]).toBe("https://schema.org");
     expect(org["@type"]).toBe("Organization");
-    expect(org.name).toBe("Vinsent Pharma");
+    expect(org.name).toBe("vinset Pharma");
     expect(org.url).toBeDefined();
     expect(org.description).toBeDefined();
 
@@ -38,7 +38,7 @@ describe("structured-data builders", () => {
     const website = buildWebSite();
     expect(website["@context"]).toBe("https://schema.org");
     expect(website["@type"]).toBe("WebSite");
-    expect(website.name).toBe("Vinsent Pharma");
+    expect(website.name).toBe("vinset Pharma");
     expect(website.url).toBeDefined();
   });
 
@@ -46,15 +46,15 @@ describe("structured-data builders", () => {
     const product = buildProduct({
       name: "Amoxicillin 500mg",
       description: "Antibiotic formulation for bacterial infections.",
-      url: "https://vinsentpharma.com/products/amoxicillin-500mg",
-      image: "https://vinsentpharma.com/images/amox.jpg",
+      url: "https://vinsetpharma.com/products/amoxicillin-500mg",
+      image: "https://vinsetpharma.com/images/amox.jpg",
     });
 
     expect(product["@context"]).toBe("https://schema.org");
     expect(product["@type"]).toBe("Product");
     expect(product.name).toBe("Amoxicillin 500mg");
     expect(product.brand["@type"]).toBe("Organization");
-    expect(product.brand.name).toBe("Vinsent Pharma");
+    expect(product.brand.name).toBe("vinset Pharma");
 
     // Strictly ensure no eCommerce or rating fields are emitted
     expect(product.offers).toBeUndefined();
@@ -68,7 +68,7 @@ describe("structured-data builders", () => {
     const post = buildBlogPosting({
       headline: "Quality Control in Modern Pharma",
       description: "A summary of regulatory standards and testing protocols.",
-      url: "https://vinsentpharma.com/blog/quality-control-in-modern-pharma",
+      url: "https://vinsetpharma.com/blog/quality-control-in-modern-pharma",
       datePublished: "2026-11-01T12:00:00.000Z",
       dateModified: "2026-11-01T14:30:00.000Z",
     });
@@ -78,20 +78,20 @@ describe("structured-data builders", () => {
     expect(post.headline).toBe("Quality Control in Modern Pharma");
     expect(post.datePublished).toBe("2026-11-01T12:00:00.000Z");
     expect(post.dateModified).toBe("2026-11-01T14:30:00.000Z");
-    expect(post.author.name).toBe("Vinsent Pharma");
-    expect(post.publisher.name).toBe("Vinsent Pharma");
+    expect(post.author.name).toBe("vinset Pharma");
+    expect(post.publisher.name).toBe("vinset Pharma");
     expect(post.mainEntityOfPage["@id"]).toBe(
-      "https://vinsentpharma.com/blog/quality-control-in-modern-pharma",
+      "https://vinsetpharma.com/blog/quality-control-in-modern-pharma",
     );
   });
 
   it("buildBreadcrumbList formats position with 1-based indexing", () => {
     const breadcrumbs = buildBreadcrumbList([
-      { name: "Home", url: "https://vinsentpharma.com/" },
-      { name: "Our Products", url: "https://vinsentpharma.com/products" },
+      { name: "Home", url: "https://vinsetpharma.com/" },
+      { name: "Our Products", url: "https://vinsetpharma.com/products" },
       {
         name: "Amoxicillin",
-        url: "https://vinsentpharma.com/products/amoxicillin",
+        url: "https://vinsetpharma.com/products/amoxicillin",
       },
     ]);
 

@@ -36,7 +36,7 @@ export async function generateMetadata({
 
   return createPageMetadata({
     title: `${category.name} | Products`,
-    description: `Explore pharmaceutical formulations in ${category.name} from Vinsent Pharma.`,
+    description: `Explore pharmaceutical formulations in ${category.name} from vinset Pharma.`,
     path: CATEGORY_ROUTES.categoryDetail(slug),
   });
 }

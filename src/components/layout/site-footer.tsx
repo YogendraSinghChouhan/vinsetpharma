@@ -85,7 +85,7 @@ export function SiteFooter() {
             <div className="lg:col-span-4 flex flex-col gap-5">
               <Logo inverted />
               <p className="text-sm text-brand-dark-muted leading-relaxed pr-2">
-                Vinsent Pharma develops, prepares and supplies pharmaceutical
+                vinset Pharma develops, prepares and supplies pharmaceutical
                 products for healthcare providers and the communities they
                 serve.
               </p>
@@ -204,6 +204,14 @@ export function SiteFooter() {
                       className="inline-flex min-h-[40px] items-center text-sm text-brand-dark-muted transition-colors hover:text-accent-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-light"
                     >
                       Why Choose Us
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href={ROUTES.media}
+                      className="inline-flex min-h-[40px] items-center text-sm text-brand-dark-muted transition-colors hover:text-accent-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-light"
+                    >
+                      Media
                     </Link>
                   </li>
                   <li>

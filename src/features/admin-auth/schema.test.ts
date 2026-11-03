@@ -53,7 +53,7 @@ describe("passwordSchema", () => {
 describe("loginSchema", () => {
   it("rejects login payload when password is 7 characters", () => {
     const result = loginSchema.safeParse({
-      email: "admin@vinsentpharma.com",
+      email: "admin@vinsetpharma.com",
       password: "1234567",
     });
     expect(result.success).toBe(false);
@@ -69,19 +69,19 @@ describe("loginSchema", () => {
 
   it("accepts login payload when password is 8 characters", () => {
     const result = loginSchema.safeParse({
-      email: "admin@vinsentpharma.com",
+      email: "admin@vinsetpharma.com",
       password: "12345678",
     });
     expect(result.success).toBe(true);
     if (result.success) {
-      expect(result.data.email).toBe("admin@vinsentpharma.com");
+      expect(result.data.email).toBe("admin@vinsetpharma.com");
       expect(result.data.password).toBe("12345678");
     }
   });
 
   it("accepts login payload when password is longer than 8 characters", () => {
     const result = loginSchema.safeParse({
-      email: "admin@vinsentpharma.com",
+      email: "admin@vinsetpharma.com",
       password: "SuperSecretPassword123!",
     });
     expect(result.success).toBe(true);

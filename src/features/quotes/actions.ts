@@ -2,6 +2,7 @@
 
 import { headers } from "next/headers";
 import { requireAdmin } from "@/features/auth/data";
+import { GENERIC_ACTION_ERROR, logActionError } from "@/lib/server-error";
 import { QUOTE_HONEYPOT_FIELD_NAME } from "./constants";
 import * as quoteData from "./data";
 import { sendQuoteNotificationEmail } from "./email/send";
@@ -89,13 +90,10 @@ export async function submitQuoteRequest(
       message: parsed.data.message,
     });
   } catch (error: unknown) {
-    const message =
-      error instanceof Error
-        ? error.message
-        : "Failed to submit quote request. Please try again.";
+    logActionError("quotes.submit", error);
     return {
       success: false,
-      error: message,
+      error: GENERIC_ACTION_ERROR,
     };
   }
 
@@ -143,11 +141,10 @@ export async function setQuoteStatusAction(
       data: updated,
     };
   } catch (error: unknown) {
-    const message =
-      error instanceof Error ? error.message : "Failed to update quote status.";
+    logActionError("quotes.setStatus", error);
     return {
       success: false,
-      error: message,
+      error: GENERIC_ACTION_ERROR,
     };
   }
 }

@@ -301,8 +301,8 @@ describe("Local Environment Host Guard Logic", () => {
   });
 
   it("rejects non-local domains to protect production", () => {
-    expect(isAllowedHost("https://vinsentpharma.com")).toBe(false);
-    expect(isAllowedHost("https://staging.vinsentpharma.com")).toBe(false);
+    expect(isAllowedHost("https://vinsetpharma.com")).toBe(false);
+    expect(isAllowedHost("https://staging.vinsetpharma.com")).toBe(false);
     expect(isAllowedHost("https://example.com")).toBe(false);
     expect(isAllowedHost("not-a-url")).toBe(false);
   });

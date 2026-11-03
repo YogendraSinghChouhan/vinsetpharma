@@ -44,7 +44,7 @@ export function BlogCard({ post, priority = false }: BlogCardProps) {
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-surface-tint text-muted-foreground text-sm font-medium">
-            Vinsent Pharma
+            vinset Pharma
           </div>
         )}
       </div>

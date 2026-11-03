@@ -25,19 +25,19 @@ export function Logo({
       <Link
         href={href}
         className={cn(
-          "inline-flex items-center rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-light focus-visible:ring-offset-2",
+          "inline-flex items-center rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-light focus-visible:ring-offset-2 focus-visible:ring-offset-brand-dark",
           className,
         )}
         aria-label={`${SITE_NAME} home`}
       >
-        <span className="inline-flex items-center justify-center rounded-xl bg-card px-4 py-2 shadow-2xs ring-1 ring-border/60 transition-opacity hover:opacity-95">
+        <span className="inline-flex items-center justify-center rounded-2xl bg-card px-5 py-3 shadow-2xs ring-1 ring-border/60 transition-opacity hover:opacity-95">
           <Image
             src={logoImage}
             alt={SITE_NAME}
-            width={160}
-            height={55}
-            className="h-10 w-auto object-contain sm:h-11 md:h-12"
-            sizes="(max-width: 640px) 130px, 160px"
+            width={220}
+            height={76}
+            className="h-12 w-auto object-contain sm:h-14 md:h-16"
+            sizes="(max-width: 640px) 160px, (max-width: 768px) 190px, 220px"
           />
         </span>
       </Link>
@@ -57,16 +57,16 @@ export function Logo({
         src={logoImage}
         alt={SITE_NAME}
         priority={priority}
-        width={size === "small" ? 100 : 180}
-        height={size === "small" ? 35 : 62}
+        width={size === "small" ? 110 : 220}
+        height={size === "small" ? 38 : 76}
         className={cn(
           "w-auto object-contain",
-          size === "small" ? "h-7 sm:h-8" : "h-10 sm:h-12 lg:h-14",
+          size === "small" ? "h-8 sm:h-9" : "h-12 sm:h-14 lg:h-16",
         )}
         sizes={
           size === "small"
-            ? "100px"
-            : "(max-width: 640px) 140px, (max-width: 1024px) 160px, 180px"
+            ? "110px"
+            : "(max-width: 640px) 150px, (max-width: 1024px) 180px, 220px"
         }
       />
     </Link>

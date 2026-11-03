@@ -66,9 +66,9 @@ describe("sanitizeContent", () => {
   });
 
   it("preserves mailto links without target blank", () => {
-    const input = '<a href="mailto:info@vinsentpharma.com">Email Us</a>';
+    const input = '<a href="mailto:info@vinsetpharma.com">Email Us</a>';
     const output = sanitizeContent(input);
-    expect(output).toContain('href="mailto:info@vinsentpharma.com"');
+    expect(output).toContain('href="mailto:info@vinsetpharma.com"');
     expect(output).not.toContain('target="_blank"');
   });
 });

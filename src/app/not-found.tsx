@@ -11,7 +11,7 @@ export default function NotFound() {
         </h1>
         <p className="max-w-md text-lg text-muted-foreground">
           The page you are looking for does not exist or may have been moved.
-          Visit the home page to explore Vinsent Pharma.
+          Visit the home page to explore vinset Pharma.
         </p>
         <Link
           href={ROUTES.home}

@@ -168,7 +168,7 @@ export async function generatePlaceholderPng(options: {
       url.searchParams.set("q", "80");
 
       const response = await fetch(url.toString(), {
-        headers: { "User-Agent": "VinsentPharmaSampleSeeder/1.0" },
+        headers: { "User-Agent": "vinsetPharmaSampleSeeder/1.0" },
         signal: AbortSignal.timeout(10000),
       });
 

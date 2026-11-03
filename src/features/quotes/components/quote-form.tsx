@@ -335,7 +335,7 @@ export function QuoteForm({ productId }: QuoteFormProps) {
 
       {/* Consent line */}
       <p className="text-xs text-muted-foreground leading-relaxed">
-        By submitting, you agree that Vinsent Pharma may contact you about this
+        By submitting, you agree that vinset Pharma may contact you about this
         enquiry in accordance with our{" "}
         <Link
           href={ROUTES.privacyPolicy}

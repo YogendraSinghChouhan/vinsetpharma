@@ -1,6 +1,6 @@
 # Image Credits
 
-All photography used across Vinsent Pharma marketing pages is sourced from Unsplash in accordance with the Unsplash License (free commercial and non-commercial use, no endorsement implied).
+All photography used across vinset Pharma marketing pages is sourced from Unsplash in accordance with the Unsplash License (free commercial and non-commercial use, no endorsement implied).
 
 | Page Slot | File Path | Photographer | Platform | License | Source Page |
 |---|---|---|---|---|---|

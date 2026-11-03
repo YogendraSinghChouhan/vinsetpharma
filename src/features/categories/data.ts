@@ -2,6 +2,7 @@ import "server-only";
 
 import { asc, eq, sql } from "drizzle-orm";
 import { db } from "@/db/client";
+import { buildReorderStatement } from "@/db/reorder";
 import { requireAdmin } from "@/features/auth/data";
 import { products } from "@/features/products/schema";
 import { deleteImage } from "@/features/storage/server/service";
@@ -243,18 +244,11 @@ export async function reorderCategories(
     return;
   }
 
-  const cases = input.ids.map(
-    (id, index) => sql`WHEN ${id}::uuid THEN ${index + 1}`,
+  await db.execute(
+    buildReorderStatement({
+      table: categories,
+      ids: input.ids,
+      refreshUpdatedAt: true,
+    }),
   );
-
-  const idList = input.ids.map((id) => sql`${id}::uuid`);
-
-  await db.execute(sql`
-    UPDATE ${categories}
-    SET sort_order = CASE ${categories.id}
-      ${sql.join(cases, sql` `)}
-    END,
-    updated_at = NOW()
-    WHERE ${categories.id} IN (${sql.join(idList, sql`, `)})
-  `);
 }

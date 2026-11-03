@@ -3,6 +3,7 @@
 import { updateTag } from "next/cache";
 import { requireAdmin } from "@/features/auth/data";
 import { PRODUCT_CACHE_TAGS } from "@/features/products/constants";
+import { GENERIC_ACTION_ERROR, logActionError } from "@/lib/server-error";
 import { CATEGORY_CACHE_TAGS } from "./constants";
 import * as categoryData from "./data";
 import type { Category } from "./schema";
@@ -48,11 +49,10 @@ export async function createCategory(
       data: created,
     };
   } catch (error: unknown) {
-    const message =
-      error instanceof Error ? error.message : "Failed to create category.";
+    logActionError("categories.create", error);
     return {
       success: false,
-      error: message,
+      error: GENERIC_ACTION_ERROR,
     };
   }
 }
@@ -89,11 +89,10 @@ export async function updateCategory(
       data: updated,
     };
   } catch (error: unknown) {
-    const message =
-      error instanceof Error ? error.message : "Failed to update category.";
+    logActionError("categories.update", error);
     return {
       success: false,
-      error: message,
+      error: GENERIC_ACTION_ERROR,
     };
   }
 }
@@ -128,11 +127,16 @@ export async function deleteCategory(
       data: deleted,
     };
   } catch (error: unknown) {
-    const message =
-      error instanceof Error ? error.message : "Failed to delete category.";
+    if (error instanceof categoryData.CategoryInUseError) {
+      return {
+        success: false,
+        error: error.message,
+      };
+    }
+    logActionError("categories.delete", error);
     return {
       success: false,
-      error: message,
+      error: GENERIC_ACTION_ERROR,
     };
   }
 }
@@ -168,11 +172,10 @@ export async function reorderCategories(
       data: undefined,
     };
   } catch (error: unknown) {
-    const message =
-      error instanceof Error ? error.message : "Failed to reorder categories.";
+    logActionError("categories.reorder", error);
     return {
       success: false,
-      error: message,
+      error: GENERIC_ACTION_ERROR,
     };
   }
 }

@@ -2,6 +2,7 @@
 
 import { updateTag } from "next/cache";
 import { requireAdmin } from "@/features/auth/data";
+import { GENERIC_ACTION_ERROR, logActionError } from "@/lib/server-error";
 import { BLOG_CACHE_TAGS } from "./constants";
 import * as blogData from "./data";
 import type { Post } from "./schema";
@@ -45,11 +46,10 @@ export async function createPost(input: unknown): Promise<ActionResult<Post>> {
       data: created,
     };
   } catch (error: unknown) {
-    const message =
-      error instanceof Error ? error.message : "Failed to create post.";
+    logActionError("blogs.create", error);
     return {
       success: false,
-      error: message,
+      error: GENERIC_ACTION_ERROR,
     };
   }
 }
@@ -83,11 +83,10 @@ export async function updatePost(input: unknown): Promise<ActionResult<Post>> {
       data: updated,
     };
   } catch (error: unknown) {
-    const message =
-      error instanceof Error ? error.message : "Failed to update post.";
+    logActionError("blogs.update", error);
     return {
       success: false,
-      error: message,
+      error: GENERIC_ACTION_ERROR,
     };
   }
 }
@@ -121,11 +120,10 @@ export async function deletePost(
       data: deleted,
     };
   } catch (error: unknown) {
-    const message =
-      error instanceof Error ? error.message : "Failed to delete post.";
+    logActionError("blogs.delete", error);
     return {
       success: false,
-      error: message,
+      error: GENERIC_ACTION_ERROR,
     };
   }
 }
@@ -159,13 +157,10 @@ export async function setPostPublished(
       data: updated,
     };
   } catch (error: unknown) {
-    const message =
-      error instanceof Error
-        ? error.message
-        : "Failed to update publication status.";
+    logActionError("blogs.setPublished", error);
     return {
       success: false,
-      error: message,
+      error: GENERIC_ACTION_ERROR,
     };
   }
 }

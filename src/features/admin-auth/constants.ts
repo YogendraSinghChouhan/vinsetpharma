@@ -1,7 +1,7 @@
 export const ADMIN_AUTH_COPY = {
   title: "Admin Sign In",
   description:
-    "Enter your administrator credentials to access the Vinsent Pharma management dashboard.",
+    "Enter your administrator credentials to access the vinset Pharma management dashboard.",
   emailLabel: "Email",
   emailPlaceholder: "Email address",
   passwordLabel: "Password",

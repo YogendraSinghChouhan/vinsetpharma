@@ -1,6 +1,7 @@
 "use server";
 
 import { requireAdmin } from "@/features/auth/data";
+import { GENERIC_ACTION_ERROR, logActionError } from "@/lib/server-error";
 import { uploadRequestSchema } from "./schema";
 import { createUploadUrl, type UploadUrlResult } from "./server/service";
 
@@ -36,11 +37,10 @@ export async function requestImageUpload(
       data,
     };
   } catch (error: unknown) {
-    const message =
-      error instanceof Error ? error.message : "Failed to generate upload URL.";
+    logActionError("storage.requestUpload", error);
     return {
       success: false,
-      error: message,
+      error: GENERIC_ACTION_ERROR,
     };
   }
 }

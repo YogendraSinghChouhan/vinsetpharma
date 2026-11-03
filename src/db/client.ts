@@ -4,6 +4,7 @@ import {
   authRelations,
   blogRelations,
   categoryRelations,
+  mediaRelations,
   productRelations,
   quoteRelations,
 } from "./schema";
@@ -16,6 +17,7 @@ export const db = drizzle({
     ...quoteRelations,
     ...blogRelations,
     ...authRelations,
+    ...mediaRelations,
   },
 });
 

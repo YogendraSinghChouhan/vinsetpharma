@@ -53,7 +53,7 @@ export const SERVICE_PROVIDERS = [
 export const PRIVACY_POLICY: LegalDocument = {
   title: "Privacy Policy",
   description:
-    "Information on how Vinsent Pharma collects, handles, and protects details submitted through this website.",
+    "Information on how vinset Pharma collects, handles, and protects details submitted through this website.",
   lastUpdated: LEGAL_LAST_UPDATED,
   sections: [
     {
@@ -217,7 +217,7 @@ export const PRIVACY_POLICY: LegalDocument = {
 export const TERMS_AND_CONDITIONS: LegalDocument = {
   title: "Terms & Conditions",
   description:
-    "Terms and conditions governing your access and use of the Vinsent Pharma website.",
+    "Terms and conditions governing your access and use of the vinset Pharma website.",
   lastUpdated: LEGAL_LAST_UPDATED,
   sections: [
     {

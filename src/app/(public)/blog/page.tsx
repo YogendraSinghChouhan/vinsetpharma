@@ -45,7 +45,7 @@ export async function generateMetadata({ searchParams }: BlogPageProps) {
   return createPageMetadata({
     title,
     description:
-      "Explore clinical perspectives, pharmaceutical breakthroughs, and company announcements from Vinsent Pharma.",
+      "Explore clinical perspectives, pharmaceutical breakthroughs, and company announcements from vinset Pharma.",
     path,
   });
 }
@@ -95,7 +95,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
     <>
       <PageHeader
         title="Blog & Insights"
-        description="Explore clinical perspectives, pharmaceutical breakthroughs, and company announcements from Vinsent Pharma."
+        description="Explore clinical perspectives, pharmaceutical breakthroughs, and company announcements from vinset Pharma."
         crumbs={[{ label: "Home", href: ROUTES.home }, { label: "Blog" }]}
       />
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">

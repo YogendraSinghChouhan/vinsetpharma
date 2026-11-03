@@ -7,7 +7,7 @@ import { MIN_PASSWORD_LENGTH } from "./constants";
 import * as schema from "./schema";
 
 export const auth = betterAuth({
-  appName: "Vinsent Pharma",
+  appName: "vinset Pharma",
   baseURL: env.APP_URL,
   secret: env.BETTER_AUTH_SECRET,
   database: drizzleAdapter(db, { provider: "pg", schema }),
