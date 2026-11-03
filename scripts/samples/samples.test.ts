@@ -3,7 +3,11 @@ import { sanitizeContent } from "@/features/blogs/sanitize";
 import { STORAGE_KEY_REGEX } from "@/features/storage/constants";
 import {
   BLOG_POST_DISCLAIMER,
+  FEATURED_SAMPLE_PRODUCT_SLUGS,
+  LEGACY_SAMPLE_CATEGORY_SLUGS,
+  PRODUCT_TO_CATEGORY_SLUG,
   SAMPLE_BLOG_POSTS,
+  SAMPLE_CATEGORIES,
   SAMPLE_PRODUCTS,
 } from "./data";
 import {
@@ -15,9 +19,135 @@ import {
   PRODUCT_IMAGE_DIMENSIONS,
 } from "./images";
 
+describe("Sample Categories Data", () => {
+  it("contains exactly 5 sample categories with specified slugs in order", () => {
+    expect(SAMPLE_CATEGORIES.length).toBe(5);
+    const expectedSlugs = [
+      "tablets-and-capsules",
+      "syrups-and-suspensions",
+      "creams-gels-and-ointments",
+      "injectables",
+      "sachets",
+    ];
+    expect(SAMPLE_CATEGORIES.map((c) => c.slug)).toEqual(expectedSlugs);
+  });
+
+  it("exports legacy sample category slugs for backwards-compatible migration", () => {
+    expect(LEGACY_SAMPLE_CATEGORY_SLUGS).toEqual(["tablets", "capsules"]);
+  });
+
+  it("has unique slugs and non-empty name for every category", () => {
+    const slugs = new Set<string>();
+    for (const category of SAMPLE_CATEGORIES) {
+      expect(category.name.trim().length).toBeGreaterThan(0);
+      expect(category.slug.trim().length).toBeGreaterThan(0);
+      expect(slugs.has(category.slug)).toBe(false);
+      slugs.add(category.slug);
+    }
+    expect(slugs.size).toBe(5);
+  });
+
+  it("maps every sample product to an existing sample category", () => {
+    const categorySlugs = new Set(SAMPLE_CATEGORIES.map((c) => c.slug));
+
+    for (const product of SAMPLE_PRODUCTS) {
+      const mappedCategorySlug = PRODUCT_TO_CATEGORY_SLUG[product.slug];
+      expect(mappedCategorySlug).toBeDefined();
+      expect(categorySlugs.has(mappedCategorySlug)).toBe(true);
+    }
+
+    // Verify exact product-category mappings from specification
+    expect(PRODUCT_TO_CATEGORY_SLUG["veltra-d-tablets"]).toBe(
+      "tablets-and-capsules",
+    );
+    expect(PRODUCT_TO_CATEGORY_SLUG["nexivin-capsules"]).toBe(
+      "tablets-and-capsules",
+    );
+    expect(PRODUCT_TO_CATEGORY_SLUG["lumivin-softgel-capsules"]).toBe(
+      "tablets-and-capsules",
+    );
+    expect(PRODUCT_TO_CATEGORY_SLUG["orvita-syrup"]).toBe(
+      "syrups-and-suspensions",
+    );
+    expect(PRODUCT_TO_CATEGORY_SLUG["zenvira-dry-syrup"]).toBe(
+      "syrups-and-suspensions",
+    );
+    expect(PRODUCT_TO_CATEGORY_SLUG["dermavin-cream"]).toBe(
+      "creams-gels-and-ointments",
+    );
+    expect(PRODUCT_TO_CATEGORY_SLUG["flexavin-gel"]).toBe(
+      "creams-gels-and-ointments",
+    );
+    expect(PRODUCT_TO_CATEGORY_SLUG["woundvin-ointment"]).toBe(
+      "creams-gels-and-ointments",
+    );
+    expect(PRODUCT_TO_CATEGORY_SLUG["clarivin-injection"]).toBe("injectables");
+    expect(PRODUCT_TO_CATEGORY_SLUG["hydravin-sachets"]).toBe("sachets");
+  });
+
+  it("verifies sample data file consistency across categories and products", () => {
+    const SLUG_REGEX = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
+    // 1. Exactly five categories
+    expect(SAMPLE_CATEGORIES.length).toBe(5);
+
+    // 2. All category slugs are unique and valid
+    const categorySlugs = new Set<string>();
+    for (const category of SAMPLE_CATEGORIES) {
+      expect(category.slug).toMatch(SLUG_REGEX);
+      expect(categorySlugs.has(category.slug)).toBe(false);
+      categorySlugs.add(category.slug);
+    }
+    expect(categorySlugs.size).toBe(5);
+
+    // 3. All product slugs are unique and valid
+    const productSlugs = new Set<string>();
+    for (const product of SAMPLE_PRODUCTS) {
+      expect(product.slug).toMatch(SLUG_REGEX);
+      expect(productSlugs.has(product.slug)).toBe(false);
+      productSlugs.add(product.slug);
+    }
+    expect(productSlugs.size).toBe(10);
+
+    // 4. Every sample product slug appears in exactly one category
+    const mappedProductSlugs = Object.keys(PRODUCT_TO_CATEGORY_SLUG);
+    expect(mappedProductSlugs.length).toBe(SAMPLE_PRODUCTS.length);
+
+    for (const product of SAMPLE_PRODUCTS) {
+      const targetCategorySlug = PRODUCT_TO_CATEGORY_SLUG[product.slug];
+      expect(targetCategorySlug).toBeDefined();
+      expect(typeof targetCategorySlug).toBe("string");
+      expect(categorySlugs.has(targetCategorySlug)).toBe(true);
+    }
+
+    // 5. Every mapped product slug exists in the sample products
+    for (const mappedSlug of mappedProductSlugs) {
+      expect(productSlugs.has(mappedSlug)).toBe(true);
+    }
+  });
+});
+
 describe("Sample Products Data", () => {
   it("contains exactly 10 sample products", () => {
     expect(SAMPLE_PRODUCTS.length).toBe(10);
+  });
+
+  it("exports exactly 6 featured sample products conforming to specification", () => {
+    expect(FEATURED_SAMPLE_PRODUCT_SLUGS.length).toBe(6);
+    const expectedFeatured = [
+      "veltra-d-tablets",
+      "nexivin-capsules",
+      "orvita-syrup",
+      "dermavin-cream",
+      "clarivin-injection",
+      "hydravin-sachets",
+    ];
+    expect(Array.from(FEATURED_SAMPLE_PRODUCT_SLUGS)).toEqual(expectedFeatured);
+
+    const productSlugs = new Set(SAMPLE_PRODUCTS.map((p) => p.slug));
+    for (const featuredSlug of FEATURED_SAMPLE_PRODUCT_SLUGS) {
+      expect(productSlugs.has(featuredSlug)).toBe(true);
+    }
   });
 
   it("has unique slugs and non-empty required fields for every product", () => {
@@ -95,6 +225,11 @@ describe("Sample Image Utilities", () => {
     expect(STORAGE_KEY_REGEX.test(blogKey)).toBe(true);
     expect(blogKey.startsWith("blogs/")).toBe(true);
     expect(blogKey.endsWith(".png")).toBe(true);
+
+    const categoryKey = generateStorageKey("categories");
+    expect(STORAGE_KEY_REGEX.test(categoryKey)).toBe(true);
+    expect(categoryKey.startsWith("categories/")).toBe(true);
+    expect(categoryKey.endsWith(".png")).toBe(true);
   });
 
   it("builds valid placeholder SVG containing item initial", () => {

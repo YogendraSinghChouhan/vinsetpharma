@@ -27,10 +27,11 @@ There is only one role (admin). No public signup or login.
 ### 1. Static pages
 Basic informational pages with fixed content (Home, About, Contact, and similar). Content lives in code, not in the dashboard.
 
-### 2. Product showcase (dynamic)
-- Product listing page and product detail page
-- Each product has only: **image, title, tagline, description**
-- No pricing, stock, categories, variants or cart
+### 2. Product showcase and categories (dynamic)
+- Product listing page, product detail page, and category listing
+- Each product belongs to one category
+- Each product has: **category, image, title, tagline, description**
+- No pricing, stock, variants or cart
 - Each product detail page has a **Request a Quote** form
 
 ### 3. Blogs (dynamic)
@@ -44,7 +45,8 @@ Basic informational pages with fixed content (Home, About, Contact, and similar)
 
 ### 5. Admin dashboard (admin only)
 - Secure login
-- **Products:** create, edit, delete, reorder, publish/unpublish
+- **Products:** create, edit, delete, reorder, publish/unpublish, mark up to 8 published products as featured for the home page
+- **Categories:** create, edit, delete, reorder
 - **Blogs:** create, edit, delete, publish/unpublish
 - **Quote requests:** view list and details, mark status (new / contacted)
 
@@ -53,7 +55,7 @@ Basic informational pages with fixed content (Home, About, Contact, and similar)
 - Any CMS (the admin is custom-built)
 - E-commerce, payments, carts, orders
 - Public user accounts, roles or permissions beyond a single admin
-- Any other dynamic feature beyond products, blogs and quote requests
+- Any other dynamic feature beyond products, categories, blogs and quote requests
 - Multi-language support
 
 ## Tech stack
@@ -73,13 +75,14 @@ Basic informational pages with fixed content (Home, About, Contact, and similar)
 
 ## Architecture approach
 
-- **Feature-based folder structure:** each feature (`products`, `blogs`, `quotes`, `auth`) owns its actions, data access, validation, types and components
+- **Feature-based folder structure:** each feature (`products`, `categories`, `blogs`, `quotes`, `auth`) owns its actions, data access, validation, types and components
 - **Rendering:** public pages are static/ISR, revalidated when the admin publishes or edits content
 - **Security:** the admin routes are protected at the data layer, with the middleware redirect only as a UX convenience
 
 ## Data model (high level)
 
-- `products`: image, title, tagline, description, slug, sort order, published
+- `categories`: name, slug, image key, sort order, timestamps
+- `products`: category reference (`categoryId`), image, title, tagline, description, slug, sort order, published, featured
 - `posts`: cover image, title, slug, content, SEO fields, published, timestamps
 - `quote_requests`: product reference, name, email, phone, message, status, timestamp
 - `users` / `sessions`: admin authentication (managed by Better Auth)

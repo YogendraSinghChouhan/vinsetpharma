@@ -2,6 +2,7 @@
 
 import { updateTag } from "next/cache";
 import { requireAdmin } from "@/features/auth/data";
+import { CATEGORY_CACHE_TAGS } from "@/features/categories/constants";
 import { PRODUCT_CACHE_TAGS } from "./constants";
 import * as productData from "./data";
 import type { Product } from "./schema";
@@ -10,6 +11,7 @@ import {
   productIdSchema,
   publishToggleSchema,
   reorderProductsSchema,
+  setProductFeaturedSchema,
   updateProductSchema,
 } from "./validation";
 
@@ -42,6 +44,7 @@ export async function createProduct(
   try {
     const created = await productData.createProduct(parsed.data);
     updateTag(PRODUCT_CACHE_TAGS.list);
+    updateTag(CATEGORY_CACHE_TAGS.list);
     return {
       success: true,
       data: created,
@@ -82,6 +85,7 @@ export async function updateProduct(
     const updated = await productData.updateProduct(parsed.data);
     updateTag(PRODUCT_CACHE_TAGS.list);
     updateTag(PRODUCT_CACHE_TAGS.bySlug(updated.slug));
+    updateTag(CATEGORY_CACHE_TAGS.list);
     return {
       success: true,
       data: updated,
@@ -120,6 +124,7 @@ export async function deleteProduct(
     const deleted = await productData.deleteProduct(parsed.data);
     updateTag(PRODUCT_CACHE_TAGS.list);
     updateTag(PRODUCT_CACHE_TAGS.bySlug(deleted.slug));
+    updateTag(CATEGORY_CACHE_TAGS.list);
     return {
       success: true,
       data: deleted,
@@ -158,6 +163,7 @@ export async function setProductPublished(
     const updated = await productData.setProductPublished(parsed.data);
     updateTag(PRODUCT_CACHE_TAGS.list);
     updateTag(PRODUCT_CACHE_TAGS.bySlug(updated.slug));
+    updateTag(CATEGORY_CACHE_TAGS.list);
     return {
       success: true,
       data: updated,
@@ -167,6 +173,48 @@ export async function setProductPublished(
       error instanceof Error
         ? error.message
         : "Failed to update publication status.";
+    return {
+      success: false,
+      error: message,
+    };
+  }
+}
+
+export async function setProductFeaturedAction(
+  input: unknown,
+): Promise<ActionResult<Product>> {
+  try {
+    await requireAdmin();
+  } catch {
+    return {
+      success: false,
+      error: "Unauthorized: an admin session is required.",
+    };
+  }
+
+  const parsed = setProductFeaturedSchema.safeParse(input);
+  if (!parsed.success) {
+    const message =
+      parsed.error.issues[0]?.message ?? "Invalid featured parameters.";
+    return {
+      success: false,
+      error: message,
+    };
+  }
+
+  try {
+    const updated = await productData.setProductFeatured(parsed.data);
+    updateTag(PRODUCT_CACHE_TAGS.list);
+    updateTag(PRODUCT_CACHE_TAGS.bySlug(updated.slug));
+    return {
+      success: true,
+      data: updated,
+    };
+  } catch (error: unknown) {
+    const message =
+      error instanceof Error
+        ? error.message
+        : "Failed to update featured status.";
     return {
       success: false,
       error: message,
@@ -199,6 +247,7 @@ export async function reorderProducts(
   try {
     await productData.reorderProducts(parsed.data);
     updateTag(PRODUCT_CACHE_TAGS.list);
+    updateTag(CATEGORY_CACHE_TAGS.list);
     return {
       success: true,
       data: undefined,

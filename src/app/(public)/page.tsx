@@ -3,6 +3,7 @@ import { Container } from "@/components/layout/container";
 import { JsonLd } from "@/components/seo/json-ld";
 import { ROUTES, SITE_DESCRIPTION, SITE_NAME } from "@/config/site";
 import { LatestBlogsSection } from "@/features/blogs/components/latest-blogs";
+import { CategoriesSection } from "@/features/categories/components/categories-section";
 import { AboutSummary } from "@/features/marketing/components/about-summary";
 import { CtaBanner } from "@/features/marketing/components/cta-banner";
 import { Hero } from "@/features/marketing/components/hero";
@@ -37,7 +38,20 @@ export default function HomePage() {
       {/* 2. Short About Teaser */}
       <AboutSummary />
 
-      {/* 3. Featured Products Grid (blister pocket well treatment) */}
+      {/* Structural perforation divider */}
+      <Container>
+        <PerforationDivider />
+      </Container>
+
+      {/* 3. Product Categories Showcase */}
+      <CategoriesSection />
+
+      {/* Structural perforation divider */}
+      <Container>
+        <PerforationDivider />
+      </Container>
+
+      {/* 4. Featured Products Automatic Carousel */}
       <FeaturedProductsSection />
 
       {/* Structural perforation divider */}
@@ -45,15 +59,15 @@ export default function HomePage() {
         <PerforationDivider />
       </Container>
 
-      {/* 4. "Why Us" asymmetric ledger composition */}
+      {/* 5. "Why Us" asymmetric ledger composition */}
       <Section heading={WHY_US.heading}>
         <WhyUsGrid points={WHY_US.points} />
       </Section>
 
-      {/* 5. Dark Enquiry Call-to-Action Band */}
+      {/* 6. Dark Enquiry Call-to-Action Band */}
       <CtaBanner />
 
-      {/* 6. Latest Blog Preview */}
+      {/* 7. Latest Blog Preview */}
       <LatestBlogsSection />
     </>
   );

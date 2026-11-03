@@ -4,6 +4,10 @@ import { PRODUCT_LIMITS } from "./constants";
 
 export const productIdSchema = z.string().uuid("Invalid product ID format.");
 
+export const productCategoryIdSchema = z
+  .string()
+  .uuid("Please select a category.");
+
 export const productTitleSchema = z
   .string()
   .trim()
@@ -46,6 +50,7 @@ export const createProductSchema = z.object({
   tagline: productTaglineSchema,
   description: productDescriptionSchema,
   imageKey: productImageKeySchema,
+  categoryId: productCategoryIdSchema,
 });
 
 export type CreateProductInput = z.infer<typeof createProductSchema>;
@@ -56,6 +61,7 @@ export const updateProductSchema = z.object({
   tagline: productTaglineSchema,
   description: productDescriptionSchema,
   imageKey: productImageKeySchema,
+  categoryId: productCategoryIdSchema,
 });
 
 export type UpdateProductInput = z.infer<typeof updateProductSchema>;
@@ -66,6 +72,13 @@ export const publishToggleSchema = z.object({
 });
 
 export type PublishToggleInput = z.infer<typeof publishToggleSchema>;
+
+export const setProductFeaturedSchema = z.object({
+  id: productIdSchema,
+  featured: z.boolean(),
+});
+
+export type SetProductFeaturedInput = z.infer<typeof setProductFeaturedSchema>;
 
 export const reorderProductsSchema = z.object({
   ids: z

@@ -237,7 +237,7 @@ export function PostForm({ post }: PostFormProps) {
                       id={field.name}
                       name={field.name}
                       type="text"
-                      placeholder="e.g. Advances in Modern Sterile Injectable Formulation"
+                      placeholder="Post title"
                       value={field.state.value}
                       onBlur={field.handleBlur}
                       onChange={(e) => {
@@ -292,7 +292,7 @@ export function PostForm({ post }: PostFormProps) {
                       id={field.name}
                       name={field.name}
                       type="text"
-                      placeholder="e.g. advances-in-modern-sterile-formulation"
+                      placeholder="URL slug"
                       value={field.state.value}
                       onBlur={field.handleBlur}
                       onChange={(e) => {
@@ -393,7 +393,7 @@ export function PostForm({ post }: PostFormProps) {
                           id={field.name}
                           name={field.name}
                           type="text"
-                          placeholder="Custom title tag (defaults to article title if blank)"
+                          placeholder="SEO title"
                           value={field.state.value}
                           onBlur={field.handleBlur}
                           onChange={(e) => field.handleChange(e.target.value)}
@@ -407,7 +407,8 @@ export function PostForm({ post }: PostFormProps) {
                         ) : (
                           <div className="flex justify-between text-[11px] text-muted-foreground">
                             <span>
-                              Title for search engines and browser tab.
+                              Title for search engines. Defaults to article
+                              title if blank.
                             </span>
                             <span>
                               {field.state.value.length}/
@@ -446,7 +447,7 @@ export function PostForm({ post }: PostFormProps) {
                           id={field.name}
                           name={field.name}
                           rows={3}
-                          placeholder="Brief meta description (defaults to post excerpt if blank)"
+                          placeholder="Search description"
                           value={field.state.value}
                           onBlur={field.handleBlur}
                           onChange={(e) => field.handleChange(e.target.value)}
@@ -459,7 +460,10 @@ export function PostForm({ post }: PostFormProps) {
                           <FieldError id={errorId}>{String(error)}</FieldError>
                         ) : (
                           <div className="flex justify-between text-[11px] text-muted-foreground">
-                            <span>Summary snippet for search results.</span>
+                            <span>
+                              Summary snippet for search results. Defaults to
+                              post excerpt if blank.
+                            </span>
                             <span>
                               {field.state.value.length}/
                               {POST_LIMITS.seoDescription.max}

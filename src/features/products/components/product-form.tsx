@@ -21,10 +21,18 @@ import {
   FieldTitle,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/components/ui/toast";
 import { ROUTES } from "@/config/site";
+import type { CategoryOption } from "@/features/categories/data";
 import { ImageUploader } from "@/features/storage/components/image-uploader";
 import { cn } from "@/lib/utils";
 import { createProduct, updateProduct } from "../actions";
@@ -32,6 +40,7 @@ import { PRODUCT_LIMITS } from "../constants";
 import type { Product } from "../schema";
 import {
   createProductSchema,
+  productCategoryIdSchema,
   productDescriptionSchema,
   productImageKeySchema,
   productTaglineSchema,
@@ -40,9 +49,10 @@ import {
 
 interface ProductFormProps {
   product?: Product;
+  categories?: CategoryOption[];
 }
 
-export function ProductForm({ product }: ProductFormProps) {
+export function ProductForm({ product, categories = [] }: ProductFormProps) {
   const router = useRouter();
   const [formError, setFormError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -55,6 +65,7 @@ export function ProductForm({ product }: ProductFormProps) {
       tagline: product?.tagline ?? "",
       description: product?.description ?? "",
       imageKey: product?.imageKey ?? "",
+      categoryId: product?.categoryId ?? "",
     },
     onSubmit: async ({ value }) => {
       setFormError(null);
@@ -78,6 +89,7 @@ export function ProductForm({ product }: ProductFormProps) {
             tagline: parseResult.data.tagline,
             description: parseResult.data.description,
             imageKey: parseResult.data.imageKey,
+            categoryId: parseResult.data.categoryId,
           });
 
           if (!res.success) {
@@ -97,6 +109,7 @@ export function ProductForm({ product }: ProductFormProps) {
             tagline: parseResult.data.tagline,
             description: parseResult.data.description,
             imageKey: parseResult.data.imageKey,
+            categoryId: parseResult.data.categoryId,
           });
 
           if (!res.success) {
@@ -131,7 +144,7 @@ export function ProductForm({ product }: ProductFormProps) {
         </CardTitle>
         <CardDescription>
           {isEditMode
-            ? "Update the details and image for this pharmaceutical product."
+            ? "Update the details, category, and image for this pharmaceutical product."
             : "Enter information to showcase a new product in the catalog."}
         </CardDescription>
       </CardHeader>
@@ -140,6 +153,19 @@ export function ProductForm({ product }: ProductFormProps) {
           <Alert variant="destructive" className="mb-6">
             <AlertDescription>{formError}</AlertDescription>
           </Alert>
+        ) : null}
+
+        {categories.length === 0 ? (
+          <div className="mb-6 rounded-none border border-amber-500/30 bg-amber-50/50 p-3 text-xs text-amber-800 dark:border-amber-500/20 dark:bg-amber-950/20 dark:text-amber-300">
+            No product categories exist yet. You must{" "}
+            <Link
+              href={ROUTES.adminCategoryNew}
+              className="font-semibold underline hover:text-amber-900 dark:hover:text-amber-200"
+            >
+              create a category
+            </Link>{" "}
+            before you can add or save a product.
+          </div>
         ) : null}
 
         <form
@@ -195,6 +221,60 @@ export function ProductForm({ product }: ProductFormProps) {
               }}
             </form.Field>
 
+            {/* Category Select Field */}
+            <form.Field
+              name="categoryId"
+              validators={{
+                onBlur: ({ value }) => {
+                  const res = productCategoryIdSchema.safeParse(value);
+                  return res.success ? undefined : res.error.issues[0]?.message;
+                },
+              }}
+            >
+              {(field) => {
+                const error = field.state.meta.errors[0];
+                const isInvalid = Boolean(error);
+                const errorId = "product-category-error";
+
+                return (
+                  <Field data-invalid={isInvalid} className="gap-1.5">
+                    <FieldLabel htmlFor={field.name}>
+                      <FieldTitle>Category</FieldTitle>
+                    </FieldLabel>
+                    <Select
+                      value={field.state.value || null}
+                      onValueChange={(val) => field.handleChange(val ?? "")}
+                      disabled={categories.length === 0 || isSubmitting}
+                    >
+                      <SelectTrigger
+                        id={field.name}
+                        className="w-full"
+                        aria-invalid={isInvalid}
+                        aria-describedby={isInvalid ? errorId : undefined}
+                        aria-required="true"
+                      >
+                        <SelectValue placeholder="Select a category" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {categories.map((cat) => (
+                          <SelectItem key={cat.id} value={cat.id}>
+                            {cat.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    {isInvalid ? (
+                      <FieldError id={errorId}>{String(error)}</FieldError>
+                    ) : (
+                      <p className="text-[11px] text-muted-foreground">
+                        Each product must belong to one pharmaceutical category.
+                      </p>
+                    )}
+                  </Field>
+                );
+              }}
+            </form.Field>
+
             {/* Title Field */}
             <form.Field
               name="title"
@@ -218,11 +298,10 @@ export function ProductForm({ product }: ProductFormProps) {
                     <Input
                       id={field.name}
                       name={field.name}
-                      type="text"
-                      placeholder="e.g. Paracetamol 500mg Tablets"
                       value={field.state.value}
                       onBlur={field.handleBlur}
                       onChange={(e) => field.handleChange(e.target.value)}
+                      placeholder="Product name"
                       maxLength={PRODUCT_LIMITS.title.max}
                       disabled={isSubmitting}
                       aria-invalid={isInvalid}
@@ -232,12 +311,10 @@ export function ProductForm({ product }: ProductFormProps) {
                     {isInvalid ? (
                       <FieldError id={errorId}>{String(error)}</FieldError>
                     ) : (
-                      <div className="flex justify-between text-[11px] text-muted-foreground">
-                        <span>The official product name.</span>
-                        <span>
-                          {field.state.value.length}/{PRODUCT_LIMITS.title.max}
-                        </span>
-                      </div>
+                      <p className="text-[11px] text-muted-foreground">
+                        {PRODUCT_LIMITS.title.min} to {PRODUCT_LIMITS.title.max}{" "}
+                        characters.
+                      </p>
                     )}
                   </Field>
                 );
@@ -258,6 +335,7 @@ export function ProductForm({ product }: ProductFormProps) {
                 const error = field.state.meta.errors[0];
                 const isInvalid = Boolean(error);
                 const errorId = "product-tagline-error";
+                const currentLength = field.state.value.length;
 
                 return (
                   <Field data-invalid={isInvalid} className="gap-1.5">
@@ -267,33 +345,39 @@ export function ProductForm({ product }: ProductFormProps) {
                     <Input
                       id={field.name}
                       name={field.name}
-                      type="text"
-                      placeholder="e.g. Fast-acting relief for mild to moderate pain."
                       value={field.state.value}
                       onBlur={field.handleBlur}
                       onChange={(e) => field.handleChange(e.target.value)}
+                      placeholder="Short tagline"
                       maxLength={PRODUCT_LIMITS.tagline.max}
                       disabled={isSubmitting}
                       aria-invalid={isInvalid}
                       aria-describedby={isInvalid ? errorId : undefined}
                     />
-                    {isInvalid ? (
-                      <FieldError id={errorId}>{String(error)}</FieldError>
-                    ) : (
-                      <div className="flex justify-between text-[11px] text-muted-foreground">
-                        <span>A short highlight sentence for listings.</span>
+                    <div className="flex items-center justify-between text-[11px] text-muted-foreground">
+                      {isInvalid ? (
+                        <FieldError id={errorId}>{String(error)}</FieldError>
+                      ) : (
                         <span>
-                          {field.state.value.length}/
-                          {PRODUCT_LIMITS.tagline.max}
+                          Brief summary displayed on cards and search.
                         </span>
-                      </div>
-                    )}
+                      )}
+                      <span
+                        className={
+                          currentLength > PRODUCT_LIMITS.tagline.max - 20
+                            ? "font-semibold text-destructive"
+                            : ""
+                        }
+                      >
+                        {currentLength}/{PRODUCT_LIMITS.tagline.max} characters
+                      </span>
+                    </div>
                   </Field>
                 );
               }}
             </form.Field>
 
-            {/* Description Field with Live Character Count */}
+            {/* Description Field */}
             <form.Field
               name="description"
               validators={{
@@ -318,7 +402,7 @@ export function ProductForm({ product }: ProductFormProps) {
                       id={field.name}
                       name={field.name}
                       rows={6}
-                      placeholder="Detailed pharmaceutical specifications, active ingredients, dosage form, packaging..."
+                      placeholder="Product description"
                       value={field.state.value}
                       onBlur={field.handleBlur}
                       onChange={(e) => field.handleChange(e.target.value)}
@@ -332,7 +416,10 @@ export function ProductForm({ product }: ProductFormProps) {
                       {isInvalid ? (
                         <FieldError id={errorId}>{String(error)}</FieldError>
                       ) : (
-                        <span>Comprehensive details for buyers and RFQs.</span>
+                        <span>
+                          Specifications, active ingredients, dosage form, and
+                          packaging.
+                        </span>
                       )}
                       <span
                         className={
@@ -355,11 +442,15 @@ export function ProductForm({ product }: ProductFormProps) {
           <div className="flex items-center justify-end gap-3 pt-4 border-t border-border">
             <Link
               href={ROUTES.adminProducts}
-              className={cn(buttonVariants({ variant: "outline" }))}
+              className={cn(buttonVariants({ variant: "outline", size: "sm" }))}
             >
               Cancel
             </Link>
-            <Button type="submit" disabled={isSubmitting}>
+            <Button
+              type="submit"
+              size="sm"
+              disabled={isSubmitting || categories.length === 0}
+            >
               {isSubmitting ? (
                 <>
                   <Spinner className="size-4 mr-2" />

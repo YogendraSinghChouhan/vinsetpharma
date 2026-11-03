@@ -3,6 +3,7 @@ import { env } from "@/config/env";
 import {
   authRelations,
   blogRelations,
+  categoryRelations,
   productRelations,
   quoteRelations,
 } from "./schema";
@@ -10,6 +11,7 @@ import {
 export const db = drizzle({
   connection: env.DATABASE_URL,
   relations: {
+    ...categoryRelations,
     ...productRelations,
     ...quoteRelations,
     ...blogRelations,

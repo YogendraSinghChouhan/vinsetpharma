@@ -3,6 +3,7 @@ import zlib from "node:zlib";
 import type { S3Client } from "@aws-sdk/client-s3";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
 import { BRAND_COLORS } from "@/config/site";
+import type { UploadPurpose } from "@/features/storage/constants";
 
 export const PRODUCT_IMAGE_DIMENSIONS = {
   width: 1200,
@@ -18,7 +19,7 @@ export const BLOG_IMAGE_DIMENSIONS = {
  * Generates an S3 storage key conforming exactly to the application format:
  * `${purpose}/${uuid}.png`
  */
-export function generateStorageKey(purpose: "products" | "blogs"): string {
+export function generateStorageKey(purpose: UploadPurpose): string {
   return `${purpose}/${randomUUID()}.png`;
 }
 

@@ -3,9 +3,9 @@ export const ADMIN_AUTH_COPY = {
   description:
     "Enter your administrator credentials to access the Vinsent Pharma management dashboard.",
   emailLabel: "Email",
-  emailPlaceholder: "admin@vinsentpharma.com",
+  emailPlaceholder: "Email address",
   passwordLabel: "Password",
-  passwordPlaceholder: "••••••••",
+  passwordPlaceholder: "Password",
   submitButton: "Sign In",
   submittingButton: "Signing in...",
   genericError: "Invalid email or password",

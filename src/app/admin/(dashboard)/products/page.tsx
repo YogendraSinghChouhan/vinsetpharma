@@ -7,7 +7,7 @@ import { ROUTES } from "@/config/site";
 import { AdminPageHeader } from "@/features/admin-shell/components/admin-page-header";
 import { ProductListSkeleton } from "@/features/products/components/product-list-skeleton";
 import { ProductSortableList } from "@/features/products/components/product-sortable-list";
-import { listProducts } from "@/features/products/data";
+import { countFeaturedProducts, listProducts } from "@/features/products/data";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
@@ -19,8 +19,16 @@ export const metadata: Metadata = {
 };
 
 async function ProductsContent() {
-  const products = await listProducts();
-  return <ProductSortableList initialProducts={products} />;
+  const [products, featuredCount] = await Promise.all([
+    listProducts(),
+    countFeaturedProducts(),
+  ]);
+  return (
+    <ProductSortableList
+      initialProducts={products}
+      initialFeaturedCount={featuredCount}
+    />
+  );
 }
 
 export default function AdminProductsPage() {

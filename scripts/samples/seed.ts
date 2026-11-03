@@ -28,13 +28,22 @@ if (appUrlHost !== "localhost" && appUrlHost !== "127.0.0.1") {
 }
 
 const { db } = await import("@/db/client");
+const { categories } = await import("@/features/categories/schema");
 const { products } = await import("@/features/products/schema");
 const { posts } = await import("@/features/blogs/schema");
 const { sanitizeContent } = await import("@/features/blogs/sanitize");
 const { s3Client } = await import("@/features/storage/server/client");
-const { desc } = await import("drizzle-orm");
-const { SAMPLE_PRODUCTS, SAMPLE_BLOG_POSTS, BLOG_POST_DISCLAIMER } =
-  await import("./data");
+const { deleteImage } = await import("@/features/storage/server/service");
+const { desc, eq } = await import("drizzle-orm");
+const {
+  SAMPLE_CATEGORIES,
+  LEGACY_SAMPLE_CATEGORY_SLUGS,
+  PRODUCT_TO_CATEGORY_SLUG,
+  FEATURED_SAMPLE_PRODUCT_SLUGS,
+  SAMPLE_PRODUCTS,
+  SAMPLE_BLOG_POSTS,
+  BLOG_POST_DISCLAIMER,
+} = await import("./data");
 const {
   generatePlaceholderPng,
   generateStorageKey,
@@ -43,13 +52,82 @@ const {
   BLOG_IMAGE_DIMENSIONS,
 } = await import("./images");
 
-// 1. SEED PRODUCTS (Idempotent: skip existing slugs)
+// 1. SEED CATEGORIES (Idempotent: insert missing, update name if differed, preserve sortOrder and image)
+const existingCategoryRows = await db
+  .select({
+    id: categories.id,
+    slug: categories.slug,
+    name: categories.name,
+  })
+  .from(categories);
+const categoryMap = new Map<string, string>(
+  existingCategoryRows.map((c) => [c.slug, c.id]),
+);
+const categoryNameMap = new Map<string, string>(
+  existingCategoryRows.map((c) => [c.slug, c.name]),
+);
+
+let categoriesCreated = 0;
+let categoriesRenamed = 0;
+let categoriesUnchanged = 0;
+
+const [maxCategorySortRow] = await db
+  .select({ sortOrder: categories.sortOrder })
+  .from(categories)
+  .orderBy(desc(categories.sortOrder))
+  .limit(1);
+
+let currentCategorySortOrder = maxCategorySortRow?.sortOrder ?? 0;
+
+for (const sampleCategory of SAMPLE_CATEGORIES) {
+  const existingId = categoryMap.get(sampleCategory.slug);
+  if (existingId) {
+    const existingName = categoryNameMap.get(sampleCategory.slug);
+    if (existingName !== sampleCategory.name) {
+      await db
+        .update(categories)
+        .set({ name: sampleCategory.name })
+        .where(eq(categories.id, existingId));
+      categoriesRenamed++;
+    } else {
+      categoriesUnchanged++;
+    }
+    continue;
+  }
+
+  currentCategorySortOrder += 1;
+
+  // imageKey left null on purpose so the fallback gets exercised
+  const [created] = await db
+    .insert(categories)
+    .values({
+      name: sampleCategory.name,
+      slug: sampleCategory.slug,
+      imageKey: null,
+      sortOrder: currentCategorySortOrder,
+    })
+    .returning({ id: categories.id });
+
+  if (created) {
+    categoryMap.set(sampleCategory.slug, created.id);
+    categoriesCreated++;
+  }
+}
+
+// 2. SEED PRODUCTS (Idempotent: insert missing, reassign categoryId by map if null or different)
 const existingProductRows = await db
-  .select({ slug: products.slug })
+  .select({
+    id: products.id,
+    slug: products.slug,
+    categoryId: products.categoryId,
+  })
   .from(products);
-const existingProductSlugs = new Set(existingProductRows.map((p) => p.slug));
+const existingProductsBySlug = new Map(
+  existingProductRows.map((p) => [p.slug, p]),
+);
 
 let productsCreated = 0;
+let productsAssigned = 0;
 let productsSkipped = 0;
 
 // Query current maximum sortOrder so new items continue sequentially
@@ -62,8 +140,23 @@ const [maxSortRow] = await db
 let currentSortOrder = maxSortRow?.sortOrder ?? 0;
 
 for (const sampleProduct of SAMPLE_PRODUCTS) {
-  if (existingProductSlugs.has(sampleProduct.slug)) {
-    productsSkipped++;
+  const targetCategorySlug = PRODUCT_TO_CATEGORY_SLUG[sampleProduct.slug];
+  const targetCategoryId = targetCategorySlug
+    ? (categoryMap.get(targetCategorySlug) ?? null)
+    : null;
+
+  const existing = existingProductsBySlug.get(sampleProduct.slug);
+  if (existing) {
+    // If product already exists with a null or different category, link to target category
+    if (targetCategoryId && existing.categoryId !== targetCategoryId) {
+      await db
+        .update(products)
+        .set({ categoryId: targetCategoryId })
+        .where(eq(products.id, existing.id));
+      productsAssigned++;
+    } else {
+      productsSkipped++;
+    }
     continue;
   }
 
@@ -96,20 +189,34 @@ for (const sampleProduct of SAMPLE_PRODUCTS) {
   }
 
   // Insert product directly via Drizzle
+  const isFeatured = FEATURED_SAMPLE_PRODUCT_SLUGS.includes(sampleProduct.slug);
   await db.insert(products).values({
     title: sampleProduct.title,
     slug: sampleProduct.slug,
     tagline: sampleProduct.tagline,
     description: sampleProduct.description,
     imageKey,
+    categoryId: targetCategoryId,
     sortOrder: currentSortOrder,
     published: true,
+    featured: isFeatured,
   });
 
   productsCreated++;
 }
 
-// 2. SEED BLOG POSTS (Idempotent: skip existing slugs)
+// 2b. SET FEATURED STATUS ON SAMPLE PRODUCTS (Idempotent, strictly touches sample product slugs only)
+for (const sampleProduct of SAMPLE_PRODUCTS) {
+  const shouldBeFeatured = FEATURED_SAMPLE_PRODUCT_SLUGS.includes(
+    sampleProduct.slug,
+  );
+  await db
+    .update(products)
+    .set({ featured: shouldBeFeatured })
+    .where(eq(products.slug, sampleProduct.slug));
+}
+
+// 3. SEED BLOG POSTS (Idempotent: skip existing slugs)
 const existingPostRows = await db.select({ slug: posts.slug }).from(posts);
 const existingPostSlugs = new Set(existingPostRows.map((p) => p.slug));
 
@@ -175,12 +282,53 @@ for (let i = 0; i < SAMPLE_BLOG_POSTS.length; i++) {
   postsCreated++;
 }
 
-// 3. Short summary of counts (never log secrets, env values or connection strings)
+// 4. CLEAN UP LEGACY SAMPLE CATEGORIES (Only delete legacy category if NO product references it)
+let legacyCategoriesRemoved = 0;
+
+for (const legacySlug of LEGACY_SAMPLE_CATEGORY_SLUGS) {
+  const [legacyCategory] = await db
+    .select({
+      id: categories.id,
+      slug: categories.slug,
+      imageKey: categories.imageKey,
+    })
+    .from(categories)
+    .where(eq(categories.slug, legacySlug))
+    .limit(1);
+
+  if (!legacyCategory) {
+    continue;
+  }
+
+  const [referencingProduct] = await db
+    .select({ id: products.id })
+    .from(products)
+    .where(eq(products.categoryId, legacyCategory.id))
+    .limit(1);
+
+  if (!referencingProduct) {
+    await db.delete(categories).where(eq(categories.id, legacyCategory.id));
+    legacyCategoriesRemoved++;
+
+    if (legacyCategory.imageKey) {
+      try {
+        await deleteImage(legacyCategory.imageKey);
+      } catch {
+        // Ignore missing objects from S3
+      }
+    }
+  }
+}
+
+// 5. Short summary of counts (never log secrets, env values or connection strings)
 console.info("Sample seed completed:");
 console.info(
-  `- Products: ${productsCreated} created, ${productsSkipped} skipped`,
+  `- Categories: ${categoriesCreated} created, ${categoriesRenamed} renamed, ${categoriesUnchanged} unchanged, ${legacyCategoriesRemoved} legacy removed`,
+);
+console.info(
+  `- Products: ${productsCreated} created, ${productsAssigned} assigned, ${productsSkipped} unchanged`,
 );
 console.info(`- Blog posts: ${postsCreated} created, ${postsSkipped} skipped`);
 console.info(
-  "Reminder: Cached public pages may be stale until the dev server restarts or a product/post is saved once in the admin.",
+  "Reminder: Cached public pages may be stale until the dev server restarts or something is saved once in the admin.",
 );

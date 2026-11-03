@@ -170,7 +170,7 @@ export function QuoteForm({ productId }: QuoteFormProps) {
                   name={field.name}
                   type="text"
                   autoComplete="name"
-                  placeholder="e.g. Dr. Jane Smith"
+                  placeholder="Full name"
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
@@ -211,7 +211,7 @@ export function QuoteForm({ productId }: QuoteFormProps) {
                   name={field.name}
                   type="email"
                   autoComplete="email"
-                  placeholder="name@organization.com"
+                  placeholder="Email address"
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
@@ -253,7 +253,7 @@ export function QuoteForm({ productId }: QuoteFormProps) {
                 name={field.name}
                 type="tel"
                 autoComplete="tel"
-                placeholder="+1 (555) 000-0000"
+                placeholder="Phone number"
                 value={field.state.value}
                 onBlur={field.handleBlur}
                 onChange={(e) => field.handleChange(e.target.value)}
@@ -283,6 +283,7 @@ export function QuoteForm({ productId }: QuoteFormProps) {
           const error = field.state.meta.errors[0];
           const isInvalid = Boolean(error);
           const errorId = "quote-message-error";
+          const helpId = "quote-message-help";
 
           return (
             <Field data-invalid={isInvalid} className="gap-1.5">
@@ -293,17 +294,22 @@ export function QuoteForm({ productId }: QuoteFormProps) {
                 id={field.name}
                 name={field.name}
                 rows={4}
-                placeholder="Please outline the required batch quantities, specifications, or delivery timelines."
+                placeholder="Your message"
                 value={field.state.value}
                 onBlur={field.handleBlur}
                 onChange={(e) => field.handleChange(e.target.value)}
                 aria-invalid={isInvalid}
-                aria-describedby={isInvalid ? errorId : undefined}
+                aria-describedby={isInvalid ? errorId : helpId}
                 required
               />
               {isInvalid ? (
                 <FieldError id={errorId}>{String(error)}</FieldError>
-              ) : null}
+              ) : (
+                <p id={helpId} className="text-[11px] text-muted-foreground">
+                  Include required batch quantities, specifications, or
+                  timelines.
+                </p>
+              )}
             </Field>
           );
         }}

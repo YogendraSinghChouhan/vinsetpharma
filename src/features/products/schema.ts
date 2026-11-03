@@ -8,6 +8,7 @@ import {
   timestamp,
   uuid,
 } from "drizzle-orm/pg-core";
+import { categories } from "@/features/categories/schema";
 
 export const products = pgTable(
   "products",
@@ -18,8 +19,12 @@ export const products = pgTable(
     tagline: text("tagline").notNull(),
     description: text("description").notNull(),
     imageKey: text("image_key").notNull(),
+    categoryId: uuid("category_id").references(() => categories.id, {
+      onDelete: "restrict",
+    }),
     sortOrder: integer("sort_order").notNull(),
     published: boolean("published").default(false).notNull(),
+    featured: boolean("featured").default(false).notNull(),
     createdAt: timestamp("created_at", { withTimezone: true })
       .defaultNow()
       .notNull(),
@@ -33,10 +38,25 @@ export const products = pgTable(
       table.published,
       table.sortOrder,
     ),
+    index("products_category_published_sort_order_idx").on(
+      table.categoryId,
+      table.published,
+      table.sortOrder,
+    ),
   ],
 );
 
 export type Product = typeof products.$inferSelect;
 export type NewProduct = typeof products.$inferInsert;
 
-export const productRelations = defineRelationsPart({ products }, () => ({}));
+export const productRelations = defineRelationsPart(
+  { products, categories },
+  (r) => ({
+    products: {
+      category: r.one.categories({
+        from: r.products.categoryId,
+        to: r.categories.id,
+      }),
+    },
+  }),
+);

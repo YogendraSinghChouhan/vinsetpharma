@@ -1,6 +1,6 @@
 # Vinsent Pharma
 
-A modern marketing, product showcase, and enquiry platform for Vinsent Pharma. Visitors can explore company information, browse pharmaceutical products, read scientific articles and news, and submit requests for quotes. A protected administration dashboard allows authorized personnel to manage products, blog posts, and quote enquiries.
+A modern marketing, product showcase, and enquiry platform for Vinsent Pharma. Visitors can explore company information, browse pharmaceutical products, read scientific articles and news, and submit requests for quotes. A protected administration dashboard allows authorized personnel to manage products, categories, blog posts, and quote enquiries.
 
 > **Scope Note**: This application is not an e-commerce store. It contains no shopping cart, no checkout, no payment gateways, and no public user accounts. Authentication is strictly reserved for administrators.
 
@@ -76,7 +76,7 @@ All environment variables are validated at runtime via `@t3-oss/env-nextjs`. Ens
 | `BETTER_AUTH_SECRET` | Server | High-entropy base64 string (min 32 characters) used to sign auth cookies and tokens. |
 | `S3_ENDPOINT` | Server | *(Optional)* Custom S3 endpoint URL (e.g., for Cloudflare R2 or MinIO; omit for standard AWS). |
 | `S3_REGION` | Server | S3 region where the media bucket is provisioned (e.g., `us-east-1`). |
-| `S3_BUCKET` | Server | Name of the S3 bucket storing product and blog images. |
+| `S3_BUCKET` | Server | Name of the S3 bucket storing product, category, and blog images. |
 | `S3_ACCESS_KEY_ID` | Server | IAM user access key with read/write permissions for the S3 bucket. |
 | `S3_SECRET_ACCESS_KEY` | Server | IAM user secret access key. |
 | `S3_PUBLIC_URL` | Server | Public base URL serving S3 images (CDN domain or public bucket URL). |
@@ -219,7 +219,7 @@ Verify the live production deployment:
 - [ ] **Blog Detail (`/blog/[slug]`)**: Header image, sanitized article typography, and BlogPosting JSON-LD.
 - [ ] **Static Pages (`/about-us`, `/why-us`, `/contact-us`)**: Company info, values, and contact details render without errors.
 - [ ] **Admin Login (`/admin/login`)**: Validates admin credentials and redirects to `/admin`.
-- [ ] **Admin Dashboard (`/admin`)**: Create/edit/reorder products, write blog posts, review quote enquiries.
+- [ ] **Admin Dashboard (`/admin`)**: Create/edit/reorder products and categories, write blog posts, review quote enquiries.
 - [ ] **Error Handling**: Visiting `/products/non-existent-slug` returns true HTTP 404. Malformed pages trigger custom error boundary.
 - [ ] **SEO & Indexing**:
   - `/robots.txt` disallows `/admin/` and `/api/`, links to sitemap.

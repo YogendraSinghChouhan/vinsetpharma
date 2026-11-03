@@ -1,6 +1,7 @@
 import {
   IconArticle,
   IconBox,
+  IconCategory,
   IconFileInvoice,
   IconLayoutDashboard,
 } from "@tabler/icons-react";
@@ -16,6 +17,11 @@ export const ADMIN_NAV = [
     title: "Products",
     url: ROUTES.adminProducts,
     icon: IconBox,
+  },
+  {
+    title: "Categories",
+    url: ROUTES.adminCategories,
+    icon: IconCategory,
   },
   {
     title: "Quote Requests",

@@ -334,7 +334,14 @@ export function RichTextEditor({
       </div>
 
       {/* Editor Body */}
-      <EditorContent editor={editor} />
+      <div className="relative">
+        {editor.isEmpty ? (
+          <p className="pointer-events-none absolute left-3 top-2.5 text-sm text-muted-foreground select-none">
+            Write your post
+          </p>
+        ) : null}
+        <EditorContent editor={editor} />
+      </div>
 
       {/* Link Dialog */}
       <Dialog open={isLinkDialogOpen} onOpenChange={setIsLinkDialogOpen}>
@@ -360,7 +367,7 @@ export function RichTextEditor({
               <Input
                 id="editor-link-url"
                 type="url"
-                placeholder="https://example.com"
+                placeholder="https://"
                 value={linkUrl}
                 onChange={(e) => {
                   setLinkUrl(e.target.value);

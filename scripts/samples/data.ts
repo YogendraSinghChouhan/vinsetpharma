@@ -6,6 +6,46 @@ export interface SampleProduct {
   imageUrl: string;
 }
 
+export interface SampleCategory {
+  name: string;
+  slug: string;
+}
+
+export const SAMPLE_CATEGORIES: readonly SampleCategory[] = [
+  { name: "Tablets and Capsules", slug: "tablets-and-capsules" },
+  { name: "Syrups and Suspensions", slug: "syrups-and-suspensions" },
+  { name: "Creams, Gels and Ointments", slug: "creams-gels-and-ointments" },
+  { name: "Injectables", slug: "injectables" },
+  { name: "Sachets", slug: "sachets" },
+] as const;
+
+export const LEGACY_SAMPLE_CATEGORY_SLUGS: readonly string[] = [
+  "tablets",
+  "capsules",
+] as const;
+
+export const PRODUCT_TO_CATEGORY_SLUG: Record<string, string> = {
+  "veltra-d-tablets": "tablets-and-capsules",
+  "nexivin-capsules": "tablets-and-capsules",
+  "lumivin-softgel-capsules": "tablets-and-capsules",
+  "orvita-syrup": "syrups-and-suspensions",
+  "zenvira-dry-syrup": "syrups-and-suspensions",
+  "dermavin-cream": "creams-gels-and-ointments",
+  "flexavin-gel": "creams-gels-and-ointments",
+  "woundvin-ointment": "creams-gels-and-ointments",
+  "clarivin-injection": "injectables",
+  "hydravin-sachets": "sachets",
+};
+
+export const FEATURED_SAMPLE_PRODUCT_SLUGS: readonly string[] = [
+  "veltra-d-tablets",
+  "nexivin-capsules",
+  "orvita-syrup",
+  "dermavin-cream",
+  "clarivin-injection",
+  "hydravin-sachets",
+] as const;
+
 export interface SampleBlogPost {
   title: string;
   slug: string;

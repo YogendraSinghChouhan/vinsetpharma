@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { AdminPageHeader } from "@/features/admin-shell/components/admin-page-header";
+import { listCategoryOptions } from "@/features/categories/data";
 import { ProductForm } from "@/features/products/components/product-form";
 import { ProductFormSkeleton } from "@/features/products/components/product-form-skeleton";
 import { getProductById } from "@/features/products/data";
@@ -30,12 +31,15 @@ async function EditProductContent({
     notFound();
   }
 
-  const product = await getProductById(parsed.data);
+  const [product, categories] = await Promise.all([
+    getProductById(parsed.data),
+    listCategoryOptions(),
+  ]);
   if (!product) {
     notFound();
   }
 
-  return <ProductForm product={product} />;
+  return <ProductForm product={product} categories={categories} />;
 }
 
 export default function AdminEditProductPage({ params }: EditProductPageProps) {

@@ -28,17 +28,30 @@ if (appUrlHost !== "localhost" && appUrlHost !== "127.0.0.1") {
 }
 
 const { db } = await import("@/db/client");
+const { categories } = await import("@/features/categories/schema");
 const { products } = await import("@/features/products/schema");
 const { posts } = await import("@/features/blogs/schema");
 const { deleteImage } = await import("@/features/storage/server/service");
-const { inArray } = await import("drizzle-orm");
-const { SAMPLE_PRODUCTS, SAMPLE_BLOG_POSTS } = await import("./data");
+const { eq, inArray } = await import("drizzle-orm");
+const {
+  SAMPLE_CATEGORIES,
+  LEGACY_SAMPLE_CATEGORY_SLUGS,
+  SAMPLE_PRODUCTS,
+  SAMPLE_BLOG_POSTS,
+} = await import("./data");
 
 const sampleProductSlugs = SAMPLE_PRODUCTS.map((p) => p.slug);
 const samplePostSlugs = SAMPLE_BLOG_POSTS.map((p) => p.slug);
+const candidateCategorySlugs = Array.from(
+  new Set([
+    ...SAMPLE_CATEGORIES.map((c) => c.slug),
+    ...LEGACY_SAMPLE_CATEGORY_SLUGS,
+  ]),
+);
 
 let productsRemoved = 0;
 let postsRemoved = 0;
+let categoriesRemoved = 0;
 let imagesDeleted = 0;
 
 // 1. REMOVE SAMPLE PRODUCTS
@@ -97,8 +110,63 @@ if (existingPosts.length > 0) {
   }
 }
 
-// 3. Short summary of counts (never log secrets, env values or connection strings)
+// 3. REMOVE SAMPLE CATEGORIES (Only those with no remaining referencing products)
+const existingCategories = await db
+  .select({
+    id: categories.id,
+    slug: categories.slug,
+    name: categories.name,
+    imageKey: categories.imageKey,
+  })
+  .from(categories)
+  .where(inArray(categories.slug, candidateCategorySlugs));
+
+const keptCategories: Array<{
+  name: string;
+  slug: string;
+  referencingCount: number;
+}> = [];
+
+for (const category of existingCategories) {
+  const referencingProducts = await db
+    .select({ id: products.id })
+    .from(products)
+    .where(eq(products.categoryId, category.id));
+
+  if (referencingProducts.length === 0) {
+    await db.delete(categories).where(eq(categories.id, category.id));
+    categoriesRemoved++;
+
+    if (category.imageKey) {
+      try {
+        await deleteImage(category.imageKey);
+        imagesDeleted++;
+      } catch {
+        // Ignore missing objects from S3
+      }
+    }
+  } else {
+    keptCategories.push({
+      name: category.name,
+      slug: category.slug,
+      referencingCount: referencingProducts.length,
+    });
+  }
+}
+
+// 4. Short summary of counts (never log secrets, env values or connection strings)
 console.info("Sample cleanup completed:");
 console.info(`- Products removed: ${productsRemoved}`);
 console.info(`- Blog posts removed: ${postsRemoved}`);
+console.info(`- Categories removed: ${categoriesRemoved}`);
+if (keptCategories.length > 0) {
+  console.info(
+    `- Categories kept (${keptCategories.length}) because real products still reference them:`,
+  );
+  for (const kept of keptCategories) {
+    console.info(
+      `  * "${kept.name}" (${kept.slug}): referenced by ${kept.referencingCount} product(s)`,
+    );
+  }
+}
 console.info(`- Images deleted: ${imagesDeleted}`);

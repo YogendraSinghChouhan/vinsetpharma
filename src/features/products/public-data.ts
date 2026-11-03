@@ -93,7 +93,8 @@ export async function getPublishedProductBySlug(
 }
 
 /**
- * Public read query for the first N published products.
+ * Public read query for published and featured products.
+ * Uses 'use cache' with list tag and 'days' cacheLife.
  */
 export async function getFeaturedProducts(
   limit: number = FEATURED_PRODUCTS_LIMIT,
@@ -105,7 +106,7 @@ export async function getFeaturedProducts(
   return db
     .select(publicProductColumns)
     .from(products)
-    .where(eq(products.published, true))
+    .where(and(eq(products.published, true), eq(products.featured, true)))
     .orderBy(asc(products.sortOrder), asc(products.createdAt), asc(products.id))
     .limit(limit);
 }
