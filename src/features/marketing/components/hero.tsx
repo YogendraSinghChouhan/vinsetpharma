@@ -1,25 +1,11 @@
-import { IconPill, IconShieldCheck, IconStarFilled } from "@tabler/icons-react";
+import { IconStarFilled } from "@tabler/icons-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/components/layout/container";
-import { ROUTES } from "@/config/site";
 import { HeroSlideshow } from "@/features/hero/components/hero-slideshow";
 import { getHeroSlides } from "@/features/hero/public-data";
-import {
-  getFeaturedProducts,
-  type PublicProduct,
-} from "@/features/products/public-data";
-import { getImageUrl } from "@/features/storage/image-url";
 import { HERO } from "../content";
 import { HOME_IMAGES } from "../images";
-
-function FloatingProductCard({ product }: { product: PublicProduct | null }) {
-  const imageUrl = product?.imageKey ? getImageUrl(product.imageKey) : null;
-  const productName = product?.title ?? "Verified Pharmaceutical Line";
-  const href = product ? `/products/${product.slug}` : ROUTES.products;
-
-  return <Link href={href}></Link>;
-}
 
 function SocialProof() {
   return (
@@ -66,12 +52,7 @@ function SocialProof() {
 }
 
 export async function Hero() {
-  const [slides, featuredProducts] = await Promise.all([
-    getHeroSlides().catch(() => []),
-    getFeaturedProducts(1).catch(() => []),
-  ]);
-
-  const featuredProduct = featuredProducts[0] ?? null;
+  const slides = await getHeroSlides().catch(() => []);
   const heroImage = HOME_IMAGES.hero;
 
   return (
@@ -149,9 +130,6 @@ export async function Hero() {
                   className="pointer-events-none absolute inset-0 bg-gradient-to-t from-brand-dark/70 via-transparent to-transparent"
                 />
               </div>
-
-              {/* Floating product information card near bottom-right */}
-              <FloatingProductCard product={featuredProduct} />
             </div>
           </div>
         </div>
