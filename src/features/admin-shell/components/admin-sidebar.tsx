@@ -1,6 +1,11 @@
 "use client";
 
-import { IconExternalLink, IconLogout, IconUser } from "@tabler/icons-react";
+import {
+  IconExternalLink,
+  IconKey,
+  IconLogout,
+  IconUser,
+} from "@tabler/icons-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Logo } from "@/components/layout/logo";
@@ -8,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
@@ -119,21 +125,30 @@ export function AdminSidebar({ session }: AdminSidebarProps) {
             }
           />
           <DropdownMenuContent align="start" side="top" className="w-56">
-            <DropdownMenuLabel>Account</DropdownMenuLabel>
-            <div className="border-b px-3 pb-2 pt-1 text-xs text-muted-foreground mb-1">
-              <p className="font-semibold text-foreground truncate">
-                {session.user.name}
-              </p>
-              <p className="truncate lowercase">{session.user.email}</p>
-            </div>
-            <DropdownMenuItem
-              variant="destructive"
-              onClick={handleSignOut}
-              className="cursor-pointer"
-            >
-              <IconLogout className="size-3.5" />
-              <span>Sign out</span>
-            </DropdownMenuItem>
+            <DropdownMenuGroup>
+              <DropdownMenuLabel>Account</DropdownMenuLabel>
+              <div className="border-b px-3 pb-2 pt-1 text-xs text-muted-foreground mb-1">
+                <p className="font-semibold text-foreground truncate">
+                  {session.user.name}
+                </p>
+                <p className="truncate lowercase">{session.user.email}</p>
+              </div>
+              <DropdownMenuItem
+                render={<Link href={ROUTES.adminAccount} />}
+                className="cursor-pointer"
+              >
+                <IconKey className="size-3.5" />
+                <span>Change password</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                variant="destructive"
+                onClick={handleSignOut}
+                className="cursor-pointer"
+              >
+                <IconLogout className="size-3.5" />
+                <span>Sign out</span>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarFooter>

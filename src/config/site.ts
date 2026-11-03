@@ -36,6 +36,7 @@ export const ROUTES = {
   blogDetail: (slug: string) => `/blog/${slug}`,
   admin: "/admin",
   adminLogin: "/admin/login",
+  adminAccount: "/admin/account",
   adminProducts: "/admin/products",
   adminProductNew: "/admin/products/new",
   adminProductEdit: (id: string) => `/admin/products/${id}/edit`,
