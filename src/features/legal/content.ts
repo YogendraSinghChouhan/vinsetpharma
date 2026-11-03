@@ -52,8 +52,7 @@ export const SERVICE_PROVIDERS = [
 
 export const PRIVACY_POLICY: LegalDocument = {
   title: "Privacy Policy",
-  description:
-    "Information on how vinset Pharma collects, handles, and protects details submitted through this website.",
+  description: `Information on how ${SITE_NAME} collects, handles, and protects details submitted through this website.`,
   lastUpdated: LEGAL_LAST_UPDATED,
   sections: [
     {
@@ -167,7 +166,7 @@ export const PRIVACY_POLICY: LegalDocument = {
         },
         {
           type: "paragraph",
-          text: "While we take proactive measures to protect information, electronic transmission over the internet and digital data storage can encounter security risks, and absolute security cannot be guaranteed.",
+          text: "While we take proactive measures to protect information, electronic transmission over the internet and digital data storage can encounter security risks, and absolute security cannot be assured.",
         },
       ],
     },
@@ -216,8 +215,7 @@ export const PRIVACY_POLICY: LegalDocument = {
 
 export const TERMS_AND_CONDITIONS: LegalDocument = {
   title: "Terms & Conditions",
-  description:
-    "Terms and conditions governing your access and use of the vinset Pharma website.",
+  description: `Terms and conditions governing your access and use of the ${SITE_NAME} website.`,
   lastUpdated: LEGAL_LAST_UPDATED,
   sections: [
     {

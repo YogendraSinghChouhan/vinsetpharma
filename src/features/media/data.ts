@@ -1,6 +1,6 @@
 import "server-only";
 
-import { asc, count, eq, sql } from "drizzle-orm";
+import { asc, count, eq, inArray, sql } from "drizzle-orm";
 import { db } from "@/db/client";
 import { buildReorderStatement } from "@/db/reorder";
 import { requireAdmin } from "@/features/auth/data";
@@ -231,6 +231,63 @@ export async function deleteMedia(id: string): Promise<Media> {
   }
 
   return deleted;
+}
+
+/**
+ * Deletes multiple media items from the database in ONE statement, then deletes their files and posters
+ * from storage 5 at a time. Storage failures do not fail the call but are counted.
+ * IDs that no longer exist are simply not counted.
+ */
+export async function deleteMediaItems(
+  ids: string[],
+): Promise<{ deleted: number; storageFailures: number }> {
+  await requireAdmin();
+
+  if (ids.length === 0) {
+    return { deleted: 0, storageFailures: 0 };
+  }
+
+  const deletedRows = await db
+    .delete(media)
+    .where(inArray(media.id, ids))
+    .returning({
+      id: media.id,
+      fileKey: media.fileKey,
+      posterKey: media.posterKey,
+    });
+
+  if (deletedRows.length === 0) {
+    return { deleted: 0, storageFailures: 0 };
+  }
+
+  // Collect all keys to delete from storage
+  const keysToDelete: string[] = [];
+  for (const row of deletedRows) {
+    keysToDelete.push(row.fileKey);
+    if (row.posterKey) {
+      keysToDelete.push(row.posterKey);
+    }
+  }
+
+  // Delete each file and poster from storage, 5 at a time
+  let storageFailures = 0;
+  for (let i = 0; i < keysToDelete.length; i += 5) {
+    const chunk = keysToDelete.slice(i, i + 5);
+    await Promise.all(
+      chunk.map(async (key) => {
+        try {
+          await deleteObject(key);
+        } catch {
+          storageFailures++;
+        }
+      }),
+    );
+  }
+
+  return {
+    deleted: deletedRows.length,
+    storageFailures,
+  };
 }
 
 /**

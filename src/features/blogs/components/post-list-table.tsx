@@ -1,50 +1,38 @@
 "use client";
 
-import {
-  IconAlertCircle,
-  IconArticle,
-  IconPencil,
-  IconPlus,
-  IconTrash,
-} from "@tabler/icons-react";
-import Image from "next/image";
+import { IconArticle, IconPlus } from "@tabler/icons-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { Card } from "@/components/ui/card";
 import { toast } from "@/components/ui/toast";
 import { ROUTES } from "@/config/site";
-import { getImageUrl } from "@/features/storage/image-url";
+import { AdminPagination } from "@/features/admin-shell/components/admin-pagination";
 import { cn } from "@/lib/utils";
 import { deletePost, setPostPublished } from "../actions";
+import { ADMIN_POSTS_PAGE_SIZE } from "../constants";
 import type { AdminPostSummary } from "../data";
+import { PostRowCard } from "./post-row-card";
 
-interface PostListTableProps {
+export interface PostListTableProps {
   initialPosts: AdminPostSummary[];
+  totalItems: number;
+  totalPages: number;
+  currentPage: number;
+  publishedCount: number;
+  draftCount: number;
 }
 
-export function PostListTable({ initialPosts }: PostListTableProps) {
+export function PostListTable({
+  initialPosts,
+  totalItems,
+  totalPages,
+  currentPage,
+  publishedCount,
+  draftCount,
+}: PostListTableProps) {
   const router = useRouter();
   const [posts, setPosts] = useState<AdminPostSummary[]>(initialPosts);
   const [isPending, startTransition] = useTransition();
@@ -111,184 +99,87 @@ export function PostListTable({ initialPosts }: PostListTableProps) {
     });
   }
 
-  if (posts.length === 0) {
+  if (totalItems === 0) {
     return (
-      <div className="rounded-lg border border-dashed bg-card p-12 text-center">
-        <div className="mx-auto flex size-12 items-center justify-center rounded-full bg-muted text-muted-foreground">
+      <Card className="flex flex-col items-center justify-center border border-dashed border-border bg-card p-12 text-center">
+        <div className="flex size-12 items-center justify-center rounded-lg border border-border bg-muted text-muted-foreground mb-4">
           <IconArticle className="size-6" aria-hidden="true" />
         </div>
-        <h3 className="mt-4 text-base font-semibold">No blog posts yet</h3>
-        <p className="mt-1 text-sm text-muted-foreground max-w-sm mx-auto">
-          Create your first article or announcement to share insights and
-          updates.
+        <h3 className="text-base font-bold text-foreground">
+          No blog posts yet
+        </h3>
+        <p className="mt-1 max-w-sm text-xs text-muted-foreground mb-6">
+          Create your first article or company update to share pharmaceutical
+          insights with visitors.
         </p>
-        <div className="mt-6">
-          <Link
-            href={ROUTES.adminBlogNew}
-            className={cn(buttonVariants({ size: "sm" }))}
-          >
-            <IconPlus className="size-4 mr-1.5" aria-hidden="true" />
-            <span>Create your first post</span>
-          </Link>
-        </div>
-      </div>
+        <Link
+          href={ROUTES.adminBlogNew}
+          className={cn(buttonVariants({ size: "sm" }))}
+        >
+          <IconPlus className="size-4 mr-1.5" aria-hidden="true" />
+          <span>Create your first post</span>
+        </Link>
+      </Card>
     );
   }
 
   return (
-    <div className="rounded-md border bg-card shadow-xs overflow-hidden">
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-16">Cover</TableHead>
-            <TableHead>Title</TableHead>
-            <TableHead className="w-28">Status</TableHead>
-            <TableHead className="w-36">Published Date</TableHead>
-            <TableHead className="w-24 text-center">Visible</TableHead>
-            <TableHead className="w-24 text-right">Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {posts.map((post) => {
-            const imageUrl = getImageUrl(post.coverImageKey);
-            const formattedPublishedDate = post.publishedAt
-              ? new Intl.DateTimeFormat("en-US", {
-                  year: "numeric",
-                  month: "short",
-                  day: "numeric",
-                }).format(new Date(post.publishedAt))
-              : "—";
+    <div className="flex flex-col gap-4">
+      {/* Summary Chips Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 rounded-lg border border-border bg-card p-3.5 shadow-2xs">
+        <div className="flex flex-wrap items-center gap-1.5">
+          <Badge
+            variant="outline"
+            className="text-xs font-semibold px-2.5 py-0.5"
+          >
+            Total: <span className="ml-1 text-foreground">{totalItems}</span>
+          </Badge>
+          <Badge
+            variant="default"
+            className="text-xs font-semibold px-2.5 py-0.5"
+          >
+            Published:{" "}
+            <span className="ml-1 text-primary-foreground">
+              {publishedCount}
+            </span>
+          </Badge>
+          <Badge
+            variant="secondary"
+            className="text-xs font-semibold px-2.5 py-0.5"
+          >
+            Drafts: <span className="ml-1 text-foreground">{draftCount}</span>
+          </Badge>
+        </div>
 
-            return (
-              <TableRow key={post.id}>
-                {/* Cover Thumbnail */}
-                <TableCell className="p-2">
-                  <div className="relative size-12 overflow-hidden rounded-md border bg-muted shrink-0">
-                    {imageUrl ? (
-                      <Image
-                        src={imageUrl}
-                        alt=""
-                        fill
-                        sizes="48px"
-                        className="object-cover"
-                      />
-                    ) : (
-                      <div className="flex h-full w-full items-center justify-center text-muted-foreground">
-                        <IconArticle className="size-5" />
-                      </div>
-                    )}
-                  </div>
-                </TableCell>
+        <span className="text-[11px] text-muted-foreground">
+          Page {currentPage} of {totalPages}
+        </span>
+      </div>
 
-                {/* Title & Slug */}
-                <TableCell className="font-medium">
-                  <div className="flex flex-col">
-                    <span className="line-clamp-1 text-foreground">
-                      {post.title}
-                    </span>
-                    <span className="text-xs text-muted-foreground font-mono">
-                      /blog/{post.slug}
-                    </span>
-                  </div>
-                </TableCell>
+      {/* Row Cards List */}
+      <ul
+        className="flex flex-col gap-2.5 list-none p-0 m-0"
+        aria-label="Blog posts list"
+      >
+        {posts.map((post) => (
+          <PostRowCard
+            key={post.id}
+            post={post}
+            disabled={isPending}
+            onTogglePublish={(checked) => handleTogglePublish(post, checked)}
+            onDelete={() => handleDeletePost(post)}
+          />
+        ))}
+      </ul>
 
-                {/* Status Badge */}
-                <TableCell>
-                  {post.published ? (
-                    <Badge variant="default" className="text-xs font-medium">
-                      Published
-                    </Badge>
-                  ) : (
-                    <Badge variant="secondary" className="text-xs font-medium">
-                      Draft
-                    </Badge>
-                  )}
-                </TableCell>
-
-                {/* Published Date */}
-                <TableCell className="text-sm text-muted-foreground">
-                  {post.publishedAt ? (
-                    <time dateTime={new Date(post.publishedAt).toISOString()}>
-                      {formattedPublishedDate}
-                    </time>
-                  ) : (
-                    formattedPublishedDate
-                  )}
-                </TableCell>
-
-                {/* Publish Switch */}
-                <TableCell className="text-center">
-                  <div className="flex justify-center">
-                    <Switch
-                      checked={post.published}
-                      onCheckedChange={(checked) =>
-                        handleTogglePublish(post, checked)
-                      }
-                      disabled={isPending}
-                      aria-label={`Toggle publication for ${post.title}`}
-                    />
-                  </div>
-                </TableCell>
-
-                {/* Actions */}
-                <TableCell className="text-right">
-                  <div className="flex items-center justify-end gap-1">
-                    <Link
-                      href={ROUTES.adminBlogEdit(post.id)}
-                      className={cn(
-                        buttonVariants({ variant: "ghost", size: "icon" }),
-                        "size-8 text-muted-foreground hover:text-foreground",
-                      )}
-                      aria-label={`Edit ${post.title}`}
-                    >
-                      <IconPencil className="size-4" aria-hidden="true" />
-                    </Link>
-
-                    <AlertDialog>
-                      <AlertDialogTrigger
-                        className={cn(
-                          buttonVariants({ variant: "ghost", size: "icon" }),
-                          "size-8 text-muted-foreground hover:text-destructive focus-visible:ring-destructive",
-                        )}
-                        aria-label={`Delete ${post.title}`}
-                      >
-                        <IconTrash className="size-4" aria-hidden="true" />
-                      </AlertDialogTrigger>
-                      <AlertDialogContent>
-                        <AlertDialogHeader>
-                          <div className="flex items-center gap-2 text-destructive">
-                            <IconAlertCircle className="size-5" />
-                            <AlertDialogTitle>
-                              Delete Blog Post
-                            </AlertDialogTitle>
-                          </div>
-                          <AlertDialogDescription>
-                            Are you sure you want to delete{" "}
-                            <span className="font-semibold text-foreground">
-                              &ldquo;{post.title}&rdquo;
-                            </span>
-                            ? This action will permanently remove the post and
-                            its cover image from storage. This cannot be undone.
-                          </AlertDialogDescription>
-                        </AlertDialogHeader>
-                        <AlertDialogFooter>
-                          <AlertDialogCancel>Cancel</AlertDialogCancel>
-                          <AlertDialogAction
-                            variant="destructive"
-                            onClick={() => handleDeletePost(post)}
-                          >
-                            Delete Post
-                          </AlertDialogAction>
-                        </AlertDialogFooter>
-                      </AlertDialogContent>
-                    </AlertDialog>
-                  </div>
-                </TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
+      {/* Shared Admin Pagination */}
+      <AdminPagination
+        page={currentPage}
+        totalPages={totalPages}
+        basePath={ROUTES.adminBlogs}
+        totalItems={totalItems}
+        pageSize={ADMIN_POSTS_PAGE_SIZE}
+      />
     </div>
   );
 }

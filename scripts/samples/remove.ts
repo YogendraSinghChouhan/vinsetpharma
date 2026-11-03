@@ -31,6 +31,7 @@ const { db } = await import("@/db/client");
 const { categories } = await import("@/features/categories/schema");
 const { products } = await import("@/features/products/schema");
 const { posts } = await import("@/features/blogs/schema");
+const { media } = await import("@/features/media/schema");
 const { deleteImage } = await import("@/features/storage/server/service");
 const { eq, inArray } = await import("drizzle-orm");
 const {
@@ -39,6 +40,7 @@ const {
   SAMPLE_PRODUCTS,
   SAMPLE_BLOG_POSTS,
 } = await import("./data");
+const { ALL_SAMPLE_MEDIA_KEYS } = await import("./media-data");
 
 const sampleProductSlugs = SAMPLE_PRODUCTS.map((p) => p.slug);
 const samplePostSlugs = SAMPLE_BLOG_POSTS.map((p) => p.slug);
@@ -52,7 +54,9 @@ const candidateCategorySlugs = Array.from(
 let productsRemoved = 0;
 let postsRemoved = 0;
 let categoriesRemoved = 0;
+let mediaRemoved = 0;
 let imagesDeleted = 0;
+let mediaFilesDeleted = 0;
 
 // 1. REMOVE SAMPLE PRODUCTS
 const existingProducts = await db
@@ -154,11 +158,46 @@ for (const category of existingCategories) {
   }
 }
 
-// 4. Short summary of counts (never log secrets, env values or connection strings)
+// 4. REMOVE SAMPLE MEDIA (strictly matches the 20 derived sample media keys)
+const existingSampleMedia = await db
+  .select({
+    id: media.id,
+    fileKey: media.fileKey,
+    posterKey: media.posterKey,
+  })
+  .from(media)
+  .where(inArray(media.fileKey, ALL_SAMPLE_MEDIA_KEYS));
+
+if (existingSampleMedia.length > 0) {
+  await db.delete(media).where(inArray(media.fileKey, ALL_SAMPLE_MEDIA_KEYS));
+  mediaRemoved = existingSampleMedia.length;
+
+  for (const item of existingSampleMedia) {
+    try {
+      await deleteImage(item.fileKey);
+      mediaFilesDeleted++;
+    } catch {
+      // Ignore missing objects from S3
+    }
+    if (item.posterKey) {
+      try {
+        await deleteImage(item.posterKey);
+        mediaFilesDeleted++;
+      } catch {
+        // Ignore missing objects from S3
+      }
+    }
+  }
+}
+
+// 5. Short summary of counts (never log secrets, env values or connection strings)
 console.info("Sample cleanup completed:");
 console.info(`- Products removed: ${productsRemoved}`);
 console.info(`- Blog posts removed: ${postsRemoved}`);
 console.info(`- Categories removed: ${categoriesRemoved}`);
+console.info(
+  `- Media removed: ${mediaRemoved} (${mediaFilesDeleted} files deleted)`,
+);
 if (keptCategories.length > 0) {
   console.info(
     `- Categories kept (${keptCategories.length}) because real products still reference them:`,

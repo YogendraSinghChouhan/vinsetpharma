@@ -2,12 +2,9 @@ import {
   IconArrowRight,
   IconArrowUp,
   IconExternalLink,
-  IconFileCertificate,
   IconMail,
   IconMapPin,
   IconPhone,
-  IconShieldCheck,
-  IconTruck,
 } from "@tabler/icons-react";
 import Link from "next/link";
 import { PerforationDivider } from "@/components/brand/perforation-divider";
@@ -18,8 +15,13 @@ import {
   COPYRIGHT_YEAR,
   LEGAL_NAV,
   ROUTES,
+  SITE_DESCRIPTION,
   SITE_NAME,
 } from "@/config/site";
+import {
+  FOOTER_PILLAR_ICONS,
+  FOOTER_PILLARS,
+} from "@/features/marketing/content";
 
 export function SiteFooter() {
   const primaryPhone = CONTACT.phones[0];
@@ -31,52 +33,33 @@ export function SiteFooter() {
 
       <div className="bg-brand-dark text-brand-dark-foreground pt-12 pb-14 sm:pt-16 sm:pb-16 lg:pt-20 lg:pb-20">
         <Container>
-          {/* 1. Quality & Trust Pillars Ribbon */}
+          {/* 1. Verified Site Quick Action Pillars */}
           <div className="mb-14 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 pb-12 border-b border-[oklch(1_0_0/10%)]">
-            <div className="flex items-start gap-3.5 rounded-2xl bg-[oklch(1_0_0/3%)] p-4 border border-[oklch(1_0_0/8%)] transition-colors hover:border-accent-light/30">
-              <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/20 text-accent-light border border-primary/30">
-                <IconShieldCheck className="size-5" aria-hidden="true" />
-              </div>
-              <div className="flex flex-col">
-                <span className="text-sm font-semibold tracking-tight text-brand-dark-foreground">
-                  Quality Formulations
-                </span>
-                <span className="text-xs text-brand-dark-muted leading-relaxed mt-0.5">
-                  Formulated to meet rigorous pharmaceutical and clinical
-                  standards.
-                </span>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3.5 rounded-2xl bg-[oklch(1_0_0/3%)] p-4 border border-[oklch(1_0_0/8%)] transition-colors hover:border-accent-light/30">
-              <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/20 text-accent-light border border-primary/30">
-                <IconTruck className="size-5" aria-hidden="true" />
-              </div>
-              <div className="flex flex-col">
-                <span className="text-sm font-semibold tracking-tight text-brand-dark-foreground">
-                  Pan-India Supply
-                </span>
-                <span className="text-xs text-brand-dark-muted leading-relaxed mt-0.5">
-                  Direct logistics network connecting healthcare providers and
-                  pharmacies.
-                </span>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3.5 rounded-2xl bg-[oklch(1_0_0/3%)] p-4 border border-[oklch(1_0_0/8%)] transition-colors hover:border-accent-light/30 sm:col-span-2 lg:col-span-1">
-              <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/20 text-accent-light border border-primary/30">
-                <IconFileCertificate className="size-5" aria-hidden="true" />
-              </div>
-              <div className="flex flex-col">
-                <span className="text-sm font-semibold tracking-tight text-brand-dark-foreground">
-                  Batch Documentation
-                </span>
-                <span className="text-xs text-brand-dark-muted leading-relaxed mt-0.5">
-                  Detailed batch records and technical specifications upon
-                  request.
-                </span>
-              </div>
-            </div>
+            {FOOTER_PILLARS.map((pillar, idx) => {
+              const IconComponent = FOOTER_PILLAR_ICONS[pillar.icon];
+              const isLast = idx === 2;
+              return (
+                <Link
+                  key={pillar.title}
+                  href={pillar.href}
+                  className={`group flex items-start gap-3.5 rounded-2xl bg-[oklch(1_0_0/3%)] p-4 border border-[oklch(1_0_0/8%)] transition-colors hover:border-accent-light/40 hover:bg-[oklch(1_0_0/5%)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-light ${
+                    isLast ? "sm:col-span-2 lg:col-span-1" : ""
+                  }`}
+                >
+                  <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/20 text-accent-light border border-primary/30 transition-colors group-hover:bg-primary/30 group-hover:text-white">
+                    <IconComponent className="size-5" aria-hidden="true" />
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-sm font-semibold tracking-tight text-brand-dark-foreground group-hover:text-accent-light transition-colors">
+                      {pillar.title}
+                    </span>
+                    <span className="text-xs text-brand-dark-muted leading-relaxed mt-0.5">
+                      {pillar.description}
+                    </span>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
 
           {/* 2. Main 12-Column Responsive Information Grid */}
@@ -85,9 +68,7 @@ export function SiteFooter() {
             <div className="lg:col-span-4 flex flex-col gap-5">
               <Logo inverted />
               <p className="text-sm text-brand-dark-muted leading-relaxed pr-2">
-                vinset Pharma develops, prepares and supplies pharmaceutical
-                products for healthcare providers and the communities they
-                serve.
+                {SITE_DESCRIPTION}
               </p>
 
               {/* Direct Enquiry CTA Button */}
@@ -242,10 +223,10 @@ export function SiteFooter() {
               </nav>
             </div>
 
-            {/* Column 4: Facilities & Operations Hubs (4 cols) */}
+            {/* Column 4: Locations & Contact Points (4 cols) */}
             <div className="lg:col-span-4 flex flex-col gap-4">
               <p className="font-heading text-xs font-semibold tracking-widest text-brand-dark-foreground uppercase">
-                Facilities & Operating Hubs
+                Locations & Contact Points
               </p>
 
               <div className="flex flex-col gap-3">
@@ -261,7 +242,7 @@ export function SiteFooter() {
                           aria-hidden="true"
                         />
                         <span className="text-xs font-semibold uppercase tracking-wider">
-                          {address.label} Hub
+                          {address.label}
                         </span>
                       </div>
                       <a

@@ -1,7 +1,8 @@
+import { SITE_NAME } from "@/config/site";
+
 export const ADMIN_AUTH_COPY = {
   title: "Admin Sign In",
-  description:
-    "Enter your administrator credentials to access the vinset Pharma management dashboard.",
+  description: `Enter your administrator credentials to access the ${SITE_NAME} management dashboard.`,
   emailLabel: "Email",
   emailPlaceholder: "Email address",
   passwordLabel: "Password",

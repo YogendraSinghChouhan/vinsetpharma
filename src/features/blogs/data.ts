@@ -1,6 +1,6 @@
 import "server-only";
 
-import { asc, count, desc, eq } from "drizzle-orm";
+import { asc, desc, eq, sql } from "drizzle-orm";
 import { db } from "@/db/client";
 import { requireAdmin } from "@/features/auth/data";
 import { deleteImage } from "@/features/storage/server/service";
@@ -24,9 +24,18 @@ export type AdminPostSummary = {
   createdAt: Date;
 };
 
+export type ListPostsResult = {
+  items: AdminPostSummary[];
+  totalItems: number;
+  totalPages: number;
+  publishedCount: number;
+  draftCount: number;
+};
+
 /**
  * Admin read query for paginated blog posts list.
- * Ordered by createdAt desc, then id asc.
+ * Ordered by createdAt desc, then id asc for deterministic tie-breaking.
+ * Uses a single cheap aggregate query for total and published counts.
  * Uncached request-time data.
  */
 export async function listPosts({
@@ -35,15 +44,19 @@ export async function listPosts({
 }: {
   page?: number;
   pageSize?: number;
-} = {}): Promise<{
-  items: AdminPostSummary[];
-  totalItems: number;
-  totalPages: number;
-}> {
+} = {}): Promise<ListPostsResult> {
   await requireAdmin();
 
-  const [{ total }] = await db.select({ total: count() }).from(posts);
-  const totalItems = Number(total ?? 0);
+  const [counts] = await db
+    .select({
+      total: sql<number>`count(*)::int`,
+      publishedCount: sql<number>`count(*) filter (where ${posts.published} = true)::int`,
+    })
+    .from(posts);
+
+  const totalItems = Number(counts?.total ?? 0);
+  const publishedCount = Number(counts?.publishedCount ?? 0);
+  const draftCount = Math.max(0, totalItems - publishedCount);
   const totalPages = Math.max(1, Math.ceil(totalItems / pageSize));
   const offset = Math.max(0, (page - 1) * pageSize);
 
@@ -66,6 +79,8 @@ export async function listPosts({
     items,
     totalItems,
     totalPages,
+    publishedCount,
+    draftCount,
   };
 }
 

@@ -2,7 +2,7 @@ import "server-only";
 
 import { Resend } from "resend";
 import { env } from "@/config/env";
-import { ROUTES } from "@/config/site";
+import { ROUTES, SITE_NAME } from "@/config/site";
 import type { QuoteRequest } from "../schema";
 import { QuoteNotificationEmail } from "./quote-notification";
 
@@ -35,10 +35,10 @@ export async function sendQuoteNotificationEmail(
 
   try {
     const { data, error } = await resend.emails.send({
-      from: env.QUOTE_FROM_EMAIL,
+      from: `${SITE_NAME} <${env.QUOTE_FROM_EMAIL}>`,
       to: [env.QUOTE_NOTIFICATION_EMAIL],
       replyTo: cleanVisitorEmail,
-      subject: `New quote request: ${cleanProductTitle}`,
+      subject: `[${SITE_NAME}] New quote request: ${cleanProductTitle}`,
       react: QuoteNotificationEmail({
         quoteId: quote.id,
         productTitle: quote.productTitle,

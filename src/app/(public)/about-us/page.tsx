@@ -8,6 +8,7 @@ import { AboutWhoWeAre } from "@/features/marketing/components/about-who-we-are"
 import { AboutWorkflow } from "@/features/marketing/components/about-workflow";
 import { CtaBanner } from "@/features/marketing/components/cta-banner";
 import { PAGE_META } from "@/features/marketing/content";
+import { MediaCarouselSection } from "@/features/media/components/media-carousel-section";
 import { createPageMetadata } from "@/lib/metadata";
 
 export const metadata = createPageMetadata({
@@ -40,7 +41,10 @@ export default function AboutPage() {
       {/* 7. Where to find us regional contact points */}
       <AboutContactPoints />
 
-      {/* 8. Dark enquiry call-to-action band */}
+      {/* 8. Media gallery showcase */}
+      <MediaCarouselSection />
+
+      {/* 9. Dark enquiry call-to-action band */}
       <CtaBanner />
     </>
   );

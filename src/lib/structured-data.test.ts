@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { buildMapsUrl, buildTelHref } from "@/config/site";
+import { buildMapsUrl, buildTelHref, SITE_NAME } from "@/config/site";
 import {
   buildBlogPosting,
   buildBreadcrumbList,
@@ -13,7 +13,7 @@ describe("structured-data builders", () => {
     const org = buildOrganization();
     expect(org["@context"]).toBe("https://schema.org");
     expect(org["@type"]).toBe("Organization");
-    expect(org.name).toBe("vinset Pharma");
+    expect(org.name).toBe(SITE_NAME);
     expect(org.url).toBeDefined();
     expect(org.description).toBeDefined();
 
@@ -44,7 +44,7 @@ describe("structured-data builders", () => {
     const website = buildWebSite();
     expect(website["@context"]).toBe("https://schema.org");
     expect(website["@type"]).toBe("WebSite");
-    expect(website.name).toBe("vinset Pharma");
+    expect(website.name).toBe(SITE_NAME);
     expect(website.url).toBeDefined();
   });
 
@@ -60,7 +60,7 @@ describe("structured-data builders", () => {
     expect(product["@type"]).toBe("Product");
     expect(product.name).toBe("Amoxicillin 500mg");
     expect(product.brand["@type"]).toBe("Organization");
-    expect(product.brand.name).toBe("vinset Pharma");
+    expect(product.brand.name).toBe(SITE_NAME);
 
     // Strictly ensure no eCommerce or rating fields are emitted
     expect(product.offers).toBeUndefined();
@@ -84,8 +84,8 @@ describe("structured-data builders", () => {
     expect(post.headline).toBe("Quality Control in Modern Pharma");
     expect(post.datePublished).toBe("2026-11-01T12:00:00.000Z");
     expect(post.dateModified).toBe("2026-11-01T14:30:00.000Z");
-    expect(post.author.name).toBe("vinset Pharma");
-    expect(post.publisher.name).toBe("vinset Pharma");
+    expect(post.author.name).toBe(SITE_NAME);
+    expect(post.publisher.name).toBe(SITE_NAME);
     expect(post.mainEntityOfPage["@id"]).toBe(
       "https://vinsetpharma.com/blog/quality-control-in-modern-pharma",
     );

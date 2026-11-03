@@ -7,7 +7,11 @@ import {
   MEDIA_VIDEO_CONTENT_TYPES,
   MEDIA_VIDEO_MAX_BYTES,
 } from "@/features/storage/constants";
-import { MEDIA_CAPTION_MAX_LENGTH, MEDIA_MAX_BATCH_SIZE } from "./constants";
+import {
+  MEDIA_CAPTION_MAX_LENGTH,
+  MEDIA_MAX_BATCH_SIZE,
+  MEDIA_MAX_ITEMS,
+} from "./constants";
 
 export const mediaTypeSchema = z.enum(["image", "video"]);
 
@@ -156,6 +160,20 @@ export const reorderMediaSchema = z.object({
 export type ReorderMediaInput = z.infer<typeof reorderMediaSchema>;
 
 export const mediaIdSchema = z.string().uuid("Invalid media ID format.");
+
+export const bulkDeleteMediaSchema = z
+  .array(z.string().uuid("Invalid media ID format."))
+  .min(1, "At least one media item must be selected.")
+  .max(
+    MEDIA_MAX_ITEMS,
+    `Cannot delete more than ${MEDIA_MAX_ITEMS} media items at once.`,
+  )
+  .refine(
+    (ids) => new Set(ids).size === ids.length,
+    "IDs array must not contain duplicate items.",
+  );
+
+export type BulkDeleteMediaInput = z.infer<typeof bulkDeleteMediaSchema>;
 
 export const requestMediaUploadSchema = z
   .object({

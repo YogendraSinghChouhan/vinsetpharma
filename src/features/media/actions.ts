@@ -11,6 +11,7 @@ import { MEDIA_CACHE_TAG, MEDIA_MAX_ITEMS } from "./constants";
 import * as mediaData from "./data";
 import type { Media } from "./schema";
 import {
+  bulkDeleteMediaSchema,
   createMediaBatchSchema,
   mediaIdSchema,
   reorderMediaSchema,
@@ -206,6 +207,56 @@ export async function deleteMedia(
       };
     }
     logActionError("media.delete", error);
+    return {
+      success: false,
+      error: GENERIC_ACTION_ERROR,
+    };
+  }
+}
+
+/**
+ * Bulk deletes multiple media items from the database and removes their S3 objects.
+ */
+export async function deleteMediaItems(
+  input: unknown,
+): Promise<ActionResult<{ deleted: number; storageFailures: number }>> {
+  try {
+    await requireAdmin();
+  } catch {
+    return {
+      success: false,
+      error:
+        "Unauthorized: an admin session is required to delete media items.",
+    };
+  }
+
+  const rawIds = Array.isArray(input)
+    ? input
+    : (input as { ids?: unknown })?.ids;
+  const parseResult = bulkDeleteMediaSchema.safeParse(rawIds);
+  if (!parseResult.success) {
+    const issue = parseResult.error.issues[0];
+    return {
+      success: false,
+      error: issue ? issue.message : "Invalid media IDs for deletion.",
+    };
+  }
+
+  try {
+    const result = await mediaData.deleteMediaItems(parseResult.data);
+    updateTag(MEDIA_CACHE_TAG);
+    return {
+      success: true,
+      data: result,
+    };
+  } catch (error: unknown) {
+    if (error instanceof mediaData.MediaValidationError) {
+      return {
+        success: false,
+        error: error.message,
+      };
+    }
+    logActionError("media.bulkDelete", error);
     return {
       success: false,
       error: GENERIC_ACTION_ERROR,

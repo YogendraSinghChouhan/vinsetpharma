@@ -100,6 +100,13 @@ describe("Product Validation Schemas", () => {
       expect(result.success).toBe(false);
     });
 
+    it("rejects ids array with fewer than 2 items", () => {
+      const result = reorderProductsSchema.safeParse({
+        ids: [validUuid],
+      });
+      expect(result.success).toBe(false);
+    });
+
     it("rejects duplicate ids in array", () => {
       const result = reorderProductsSchema.safeParse({
         ids: [validUuid, validUuid],

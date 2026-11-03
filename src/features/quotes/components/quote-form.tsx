@@ -16,7 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
 import { env } from "@/config/env";
-import { ROUTES } from "@/config/site";
+import { ROUTES, SITE_NAME } from "@/config/site";
 import { submitQuoteRequest } from "../actions";
 import { QUOTE_HONEYPOT_FIELD_NAME } from "../constants";
 import { quoteSubmissionSchema } from "../validation";
@@ -306,7 +306,7 @@ export function QuoteForm({ productId }: QuoteFormProps) {
                 <FieldError id={errorId}>{String(error)}</FieldError>
               ) : (
                 <p id={helpId} className="text-[11px] text-muted-foreground">
-                  Include required batch quantities, specifications, or
+                  Include required quantities, packaging preferences, or
                   timelines.
                 </p>
               )}
@@ -335,7 +335,7 @@ export function QuoteForm({ productId }: QuoteFormProps) {
 
       {/* Consent line */}
       <p className="text-xs text-muted-foreground leading-relaxed">
-        By submitting, you agree that vinset Pharma may contact you about this
+        By submitting, you agree that {SITE_NAME} may contact you about this
         enquiry in accordance with our{" "}
         <Link
           href={ROUTES.privacyPolicy}

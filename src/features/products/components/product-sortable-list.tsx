@@ -14,48 +14,24 @@ import {
   arrayMove,
   SortableContext,
   sortableKeyboardCoordinates,
-  useSortable,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
 import {
-  IconAlertCircle,
   IconBox,
   IconGripVertical,
-  IconPencil,
   IconPlus,
-  IconStar,
   IconStarFilled,
-  IconTrash,
 } from "@tabler/icons-react";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Switch } from "@/components/ui/switch";
 import { toast } from "@/components/ui/toast";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { ROUTES } from "@/config/site";
-import { getImageUrl } from "@/features/storage/image-url";
+import { AdminPagination } from "@/features/admin-shell/components/admin-pagination";
 import { cn } from "@/lib/utils";
 import {
   deleteProduct,
@@ -63,25 +39,36 @@ import {
   setProductFeaturedAction,
   setProductPublished,
 } from "../actions";
-import { FEATURED_PRODUCTS_LIMIT } from "../constants";
+import {
+  ADMIN_PRODUCTS_PAGE_SIZE,
+  FEATURED_PRODUCTS_LIMIT,
+} from "../constants";
 import type { ProductListItem } from "../data";
 import type { Product } from "../schema";
+import { ProductSortableRow } from "./product-sortable-row";
 
-interface ProductSortableListProps {
+export interface ProductSortableListProps {
   initialProducts: ProductListItem[];
-  initialFeaturedCount?: number;
+  total: number;
+  totalPages: number;
+  currentPage: number;
+  publishedCount: number;
+  featuredCount: number;
 }
 
 export function ProductSortableList({
   initialProducts,
+  total,
+  totalPages,
+  currentPage,
+  publishedCount,
+  featuredCount,
 }: ProductSortableListProps) {
   const router = useRouter();
   const [products, setProducts] = useState<ProductListItem[]>(initialProducts);
   const [isPending, startTransition] = useTransition();
 
-  const featuredCount = products.filter(
-    (p) => p.featured && p.published,
-  ).length;
+  const draftsCount = Math.max(0, total - publishedCount);
 
   // Keep local state in sync when server data updates
   useEffect(() => {
@@ -103,7 +90,7 @@ export function ProductSortableList({
     onDragStart({ active }) {
       const item = products.find((p) => p.id === active.id);
       const index = products.findIndex((p) => p.id === active.id) + 1;
-      return `Picked up product "${item?.title ?? ""}". Position ${index} of ${products.length}. Use arrow keys to reorder, spacebar to drop.`;
+      return `Picked up product "${item?.title ?? ""}". Position ${index} of ${products.length} on page ${currentPage}. Use arrow keys to reorder, spacebar to drop.`;
     },
     onDragOver({ over }) {
       if (!over) return undefined;
@@ -154,7 +141,7 @@ export function ProductSortableList({
       } else {
         toast.add({
           title: "Order updated",
-          description: "Product list order has been saved.",
+          description: "Product arrangement on this page has been saved.",
           type: "success",
         });
         router.refresh();
@@ -256,10 +243,10 @@ export function ProductSortableList({
     });
   }
 
-  if (products.length === 0) {
+  if (total === 0) {
     return (
       <Card className="flex flex-col items-center justify-center border border-dashed border-border bg-card p-12 text-center">
-        <div className="flex size-12 items-center justify-center border border-border bg-muted text-muted-foreground mb-4">
+        <div className="flex size-12 items-center justify-center rounded-lg border border-border bg-muted text-muted-foreground mb-4">
           <IconBox className="size-6" aria-hidden="true" />
         </div>
         <h3 className="text-base font-bold text-foreground">No products yet</h3>
@@ -280,25 +267,62 @@ export function ProductSortableList({
 
   return (
     <TooltipProvider delay={200}>
-      <div className="flex flex-col gap-3">
-        {/* Featured Products Summary Header */}
-        <div className="flex flex-col gap-1.5 border border-border bg-card p-3 shadow-2xs text-xs">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
-            <span className="font-semibold text-foreground">
-              Featured on home page: {featuredCount} of{" "}
-              {FEATURED_PRODUCTS_LIMIT}
-            </span>
-            <span className="text-[11px] text-muted-foreground">
-              Featured products appear on the home page in this list order.
+      <div className="flex flex-col gap-4">
+        {/* Summary Chips & Guidance Header */}
+        <div className="flex flex-col gap-2.5 rounded-lg border border-border bg-card p-3.5 shadow-2xs">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <div className="flex flex-wrap items-center gap-1.5">
+              <Badge
+                variant="outline"
+                className="text-xs font-semibold px-2.5 py-0.5"
+              >
+                Total: <span className="ml-1 text-foreground">{total}</span>
+              </Badge>
+              <Badge
+                variant="default"
+                className="text-xs font-semibold px-2.5 py-0.5"
+              >
+                Published:{" "}
+                <span className="ml-1 text-primary-foreground">
+                  {publishedCount}
+                </span>
+              </Badge>
+              <Badge
+                variant="secondary"
+                className="text-xs font-semibold px-2.5 py-0.5"
+              >
+                Drafts:{" "}
+                <span className="ml-1 text-foreground">{draftsCount}</span>
+              </Badge>
+              <Badge
+                variant="outline"
+                className="text-xs font-semibold px-2.5 py-0.5 border-amber-300 text-amber-700 dark:border-amber-700 dark:text-amber-300 gap-1"
+              >
+                <IconStarFilled
+                  className="size-3 text-amber-500"
+                  aria-hidden="true"
+                />
+                <span>
+                  Featured: {featuredCount} of {FEATURED_PRODUCTS_LIMIT}
+                </span>
+              </Badge>
+            </div>
+
+            <span className="text-[11px] text-muted-foreground hidden lg:inline-block">
+              Page {currentPage} of {totalPages}
             </span>
           </div>
-          {featuredCount === 0 && (
-            <p className="text-[11px] text-muted-foreground">
-              No products are featured, so the home page section is hidden.
+
+          <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+            <IconGripVertical className="size-4 shrink-0 text-muted-foreground/70" />
+            <p>
+              Drag to arrange within this page. The home page and product pages
+              follow this order.
             </p>
-          )}
+          </div>
         </div>
 
+        {/* Sortable Products List (Current page subset) */}
         <DndContext
           id="product-sortable-list"
           sensors={sensors}
@@ -311,11 +335,11 @@ export function ProductSortableList({
             strategy={verticalListSortingStrategy}
           >
             <ul
-              className="flex flex-col gap-2 list-none p-0 m-0"
+              className="flex flex-col gap-2.5 list-none p-0 m-0"
               aria-label="Sortable products list"
             >
               {products.map((product) => (
-                <SortableProductRow
+                <ProductSortableRow
                   key={product.id}
                   product={product}
                   disabled={isPending}
@@ -331,237 +355,16 @@ export function ProductSortableList({
             </ul>
           </SortableContext>
         </DndContext>
-      </div>
-    </TooltipProvider>
-  );
-}
 
-interface SortableProductRowProps {
-  product: ProductListItem;
-  disabled?: boolean;
-  onTogglePublish: (checked: boolean) => void;
-  onToggleFeatured: (featured: boolean) => void;
-  onDelete: () => void;
-}
-
-function SortableProductRow({
-  product,
-  disabled,
-  onTogglePublish,
-  onToggleFeatured,
-  onDelete,
-}: SortableProductRowProps) {
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({ id: product.id });
-
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-  };
-
-  let imageUrl: string | null = null;
-  try {
-    imageUrl = getImageUrl(product.imageKey);
-  } catch {
-    imageUrl = null;
-  }
-
-  return (
-    <li
-      ref={setNodeRef}
-      style={style}
-      className={`flex items-center gap-2 sm:gap-3 border border-border bg-card p-2 sm:p-3 shadow-xs transition-opacity ${
-        isDragging ? "z-10 opacity-60 shadow-lg ring-2 ring-primary" : ""
-      }`}
-    >
-      {/* Drag handle */}
-      <button
-        type="button"
-        className="cursor-grab p-1 text-muted-foreground hover:text-foreground touch-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring shrink-0"
-        aria-label={`Drag handle to reorder ${product.title}`}
-        disabled={disabled}
-        {...attributes}
-        {...listeners}
-      >
-        <IconGripVertical className="size-4" aria-hidden="true" />
-      </button>
-
-      {/* Product Image Thumbnail */}
-      <div className="relative size-10 sm:size-12 shrink-0 overflow-hidden border border-border bg-muted">
-        {imageUrl ? (
-          <Image
-            src={imageUrl}
-            alt={product.title}
-            fill
-            sizes="48px"
-            className="object-cover"
-          />
-        ) : (
-          <div className="flex size-full items-center justify-center text-muted-foreground">
-            <IconAlertCircle className="size-4" aria-hidden="true" />
-          </div>
-        )}
-      </div>
-
-      {/* Product Info */}
-      <div className="flex flex-1 min-w-0 flex-col gap-0.5">
-        <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
-          <span className="truncate text-xs sm:text-sm font-semibold text-foreground max-w-[140px] sm:max-w-xs">
-            {product.title}
-          </span>
-          <Badge
-            variant={product.published ? "default" : "secondary"}
-            className="text-[10px]"
-          >
-            {product.published ? "Published" : "Draft"}
-          </Badge>
-          {product.featured && (
-            <Badge
-              variant="default"
-              className="hidden sm:inline-flex text-[10px] bg-amber-600 hover:bg-amber-600/90 text-white border-transparent gap-1 font-medium"
-            >
-              <IconStarFilled className="size-2.5" aria-hidden="true" />
-              <span>Featured</span>
-            </Badge>
-          )}
-          {product.categoryName ? (
-            <Badge
-              variant="outline"
-              className="text-[10px] hidden md:inline-flex"
-            >
-              {product.categoryName}
-            </Badge>
-          ) : (
-            <Badge
-              variant="secondary"
-              className="text-[10px] hidden md:inline-flex"
-            >
-              No category
-            </Badge>
-          )}
-        </div>
-        <p className="truncate text-xs text-muted-foreground">
-          {product.tagline || product.slug}
-        </p>
-      </div>
-
-      {/* Featured Star Toggle */}
-      <div className="shrink-0">
-        <Tooltip>
-          <TooltipTrigger
-            render={
-              <button
-                type="button"
-                disabled={disabled || !product.published}
-                onClick={() => onToggleFeatured(!product.featured)}
-                aria-label={
-                  product.featured
-                    ? `Remove ${product.title} from home page`
-                    : `Feature ${product.title} on home page`
-                }
-                aria-pressed={product.featured}
-                aria-describedby={
-                  !product.published
-                    ? `featured-draft-hint-${product.id}`
-                    : undefined
-                }
-                className={cn(
-                  "relative inline-flex size-11 sm:size-8 shrink-0 items-center justify-center text-muted-foreground transition-colors hover:text-amber-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-40",
-                  product.featured && "text-amber-500",
-                )}
-              >
-                {product.featured ? (
-                  <IconStarFilled
-                    className="size-4 text-amber-500"
-                    aria-hidden="true"
-                  />
-                ) : (
-                  <IconStar className="size-4" aria-hidden="true" />
-                )}
-              </button>
-            }
-          />
-          {!product.published && (
-            <TooltipContent side="top">
-              Only published products can be featured
-            </TooltipContent>
-          )}
-        </Tooltip>
-        {!product.published && (
-          <span id={`featured-draft-hint-${product.id}`} className="sr-only">
-            Only published products can be featured
-          </span>
-        )}
-      </div>
-
-      {/* Publish Switch */}
-      <div className="flex items-center gap-1.5 sm:gap-2 px-1 shrink-0">
-        <label
-          htmlFor={`publish-${product.id}`}
-          className="hidden md:inline-block text-xs text-muted-foreground select-none cursor-pointer"
-        >
-          {product.published ? "Published" : "Hidden"}
-        </label>
-        <Switch
-          id={`publish-${product.id}`}
-          checked={product.published}
-          onCheckedChange={onTogglePublish}
-          disabled={disabled}
-          aria-label={`Toggle publication for ${product.title}`}
+        {/* Shared Admin Pagination */}
+        <AdminPagination
+          page={currentPage}
+          totalPages={totalPages}
+          basePath={ROUTES.adminProducts}
+          totalItems={total}
+          pageSize={ADMIN_PRODUCTS_PAGE_SIZE}
         />
       </div>
-
-      {/* Row Actions */}
-      <div className="flex items-center gap-1 shrink-0">
-        <Link
-          href={ROUTES.adminProductEdit(product.id)}
-          className={cn(
-            buttonVariants({ variant: "outline", size: "icon-xs" }),
-          )}
-          aria-label={`Edit ${product.title}`}
-        >
-          <IconPencil className="size-3.5" aria-hidden="true" />
-        </Link>
-
-        <AlertDialog>
-          <AlertDialogTrigger
-            render={
-              <Button
-                type="button"
-                variant="destructive"
-                size="icon-xs"
-                aria-label={`Delete ${product.title}`}
-                disabled={disabled}
-              />
-            }
-          >
-            <IconTrash className="size-3.5" aria-hidden="true" />
-          </AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Delete Product</AlertDialogTitle>
-              <AlertDialogDescription>
-                Are you sure you want to delete{" "}
-                <strong className="text-foreground">{product.title}</strong>?
-                This action is permanent and will delete the product catalog
-                entry and its image from storage.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction onClick={onDelete}>
-                Delete Product
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-      </div>
-    </li>
+    </TooltipProvider>
   );
 }

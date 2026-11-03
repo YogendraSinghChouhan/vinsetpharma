@@ -1,4 +1,6 @@
 import { mock } from "bun:test";
+import fs from "node:fs";
+import path from "node:path";
 import { loadEnvConfig } from "@next/env";
 
 // Cleanly mock server-only package so production modules can be imported by bun scripts
@@ -31,10 +33,13 @@ const { db } = await import("@/db/client");
 const { categories } = await import("@/features/categories/schema");
 const { products } = await import("@/features/products/schema");
 const { posts } = await import("@/features/blogs/schema");
+const { media } = await import("@/features/media/schema");
 const { sanitizeContent } = await import("@/features/blogs/sanitize");
 const { s3Client } = await import("@/features/storage/server/client");
 const { deleteImage } = await import("@/features/storage/server/service");
+const { PutObjectCommand } = await import("@aws-sdk/client-s3");
 const { desc, eq } = await import("drizzle-orm");
+const { MEDIA_MAX_ITEMS } = await import("@/features/media/constants");
 const {
   SAMPLE_CATEGORIES,
   LEGACY_SAMPLE_CATEGORY_SLUGS,
@@ -44,6 +49,7 @@ const {
   SAMPLE_BLOG_POSTS,
   BLOG_POST_DISCLAIMER,
 } = await import("./data");
+const { SAMPLE_MEDIA_ITEMS } = await import("./media-data");
 const {
   generatePlaceholderPng,
   generateStorageKey,
@@ -320,7 +326,103 @@ for (const legacySlug of LEGACY_SAMPLE_CATEGORY_SLUGS) {
   }
 }
 
-// 5. Short summary of counts (never log secrets, env values or connection strings)
+// 5. SEED MEDIA (Idempotent: skip existing fileKey, respect MEDIA_MAX_ITEMS limit)
+const existingMediaRows = await db
+  .select({
+    id: media.id,
+    fileKey: media.fileKey,
+  })
+  .from(media);
+
+const existingMediaFileKeys = new Set(existingMediaRows.map((m) => m.fileKey));
+let totalMediaCount = existingMediaRows.length;
+
+const [maxMediaSortRow] = await db
+  .select({ sortOrder: media.sortOrder })
+  .from(media)
+  .orderBy(desc(media.sortOrder))
+  .limit(1);
+
+let currentMediaSortOrder = maxMediaSortRow?.sortOrder ?? 0;
+let mediaSeeded = 0;
+let mediaSkipped = 0;
+let mediaMissing = 0;
+
+const sharpModule = await import("sharp");
+const sharp = sharpModule.default;
+
+for (const sampleItem of SAMPLE_MEDIA_ITEMS) {
+  if (existingMediaFileKeys.has(sampleItem.key)) {
+    mediaSkipped++;
+    continue;
+  }
+
+  const localPath = path.join(
+    process.cwd(),
+    "scripts",
+    "samples",
+    "media",
+    sampleItem.file,
+  );
+
+  if (!fs.existsSync(localPath)) {
+    console.warn(`Sample media file missing on disk: ${sampleItem.file}`);
+    mediaMissing++;
+    continue;
+  }
+
+  if (totalMediaCount >= MEDIA_MAX_ITEMS) {
+    console.warn(
+      `Media item limit (${MEDIA_MAX_ITEMS}) reached. Halting sample media seed.`,
+    );
+    break;
+  }
+
+  const buffer = fs.readFileSync(localPath);
+  const metadata = await sharp(buffer).metadata();
+  const width = metadata.width ?? 1200;
+  const height = metadata.height ?? 900;
+
+  const ext = sampleItem.file.split(".").pop()?.toLowerCase();
+  const contentType =
+    ext === "png" ? "image/png" : ext === "webp" ? "image/webp" : "image/jpeg";
+
+  try {
+    await s3Client.send(
+      new PutObjectCommand({
+        Bucket: env.S3_BUCKET,
+        Key: sampleItem.key,
+        Body: buffer,
+        ContentType: contentType,
+      }),
+    );
+  } catch (err: unknown) {
+    console.error(
+      `Failed to upload sample media "${sampleItem.key}". Aborting seed. No database row was inserted.`,
+      err instanceof Error ? err.message : String(err),
+    );
+    process.exit(1);
+  }
+
+  currentMediaSortOrder += 1;
+  totalMediaCount += 1;
+
+  await db.insert(media).values({
+    type: "image",
+    fileKey: sampleItem.key,
+    posterKey: null,
+    width,
+    height,
+    durationSeconds: null,
+    caption: sampleItem.caption,
+    sortOrder: currentMediaSortOrder,
+  });
+
+  existingMediaFileKeys.add(sampleItem.key);
+  mediaSeeded++;
+}
+
+// 6. Short summary of counts (never log secrets, env values or connection strings)
 console.info("Sample seed completed:");
 console.info(
   `- Categories: ${categoriesCreated} created, ${categoriesRenamed} renamed, ${categoriesUnchanged} unchanged, ${legacyCategoriesRemoved} legacy removed`,
@@ -329,6 +431,9 @@ console.info(
   `- Products: ${productsCreated} created, ${productsAssigned} assigned, ${productsSkipped} unchanged`,
 );
 console.info(`- Blog posts: ${postsCreated} created, ${postsSkipped} skipped`);
+console.info(
+  `- Media: ${mediaSeeded} seeded, ${mediaSkipped} skipped, ${mediaMissing} missing`,
+);
 console.info(
   "Reminder: Cached public pages may be stale until the dev server restarts or something is saved once in the admin.",
 );

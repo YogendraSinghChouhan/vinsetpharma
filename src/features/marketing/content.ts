@@ -10,6 +10,7 @@ import {
   IconFlask,
   IconHeartHandshake,
   IconInfoCircle,
+  IconMapPin,
   IconPhoneCall,
   IconPill,
   IconShieldCheck,
@@ -49,10 +50,10 @@ export const FOUNDER: Founder = {
     src: "/images/about/vishnu-saini.jpg",
     width: 1086,
     height: 1448,
-    alt: "Vishnu Saini, founder of Vinsent Pharma",
+    alt: "Vishnu Saini, founder of Vinset Pharma",
   },
   intro:
-    "Vinsent Pharma was founded by Vishnu Saini. The company aims to make it simple for buyers to find the products they need, request a quote and reach the team directly by phone or email.",
+    "Vinset Pharma was founded by Vishnu Saini. The company aims to make it simple for buyers to find the products they need, request a quote and reach the team directly by phone or email.",
   principles:
     "We believe in clear communication, careful attention to every enquiry and straightforward dealings with the people we work with.",
   message: null,
@@ -92,8 +93,8 @@ export const ABOUT = {
     paragraphs: [
       "Vinset Pharma operates as a dedicated pharmaceutical supplier focused on providing dependable, carefully formulated medications to healthcare institutions, clinics, and professional procurement teams. We believe that dependable healthcare delivery begins with consistent product integrity, accurate labelling, and straightforward commercial cooperation.",
       "Our catalogue encompasses a diverse selection of solid oral dosage forms, liquid preparations, and specialized therapeutic formulations. Through this digital platform, buyers can review detailed product specifications, examine packaging formats, and submit structured quotation requests directly to our supply personnel without cumbersome administrative friction.",
-      "We believe in accessible, personal service tailored to institutional schedules. Rather than navigating automated order queues, every quotation submitted through our platform connects you directly with a representative who coordinates pricing, availability, and dispatch logistics according to your clinical requirements.",
-      "Our operations prioritize transparent dialogue, continuous batch oversight, and thorough record-keeping from initial consultation through delivery. By aligning formulation selection with regional health requirements, we support healthcare professionals with medications they can prescribe and dispense with quiet assurance.",
+      "We believe in accessible, personal service tailored to institutional schedules. Rather than navigating automated order queues, every quotation submitted through our platform connects you directly with a representative who coordinates pricing, availability, and delivery arrangements according to your clinical requirements.",
+      "Our operations prioritize transparent dialogue, continuous product oversight, and thorough record-keeping from initial consultation through delivery. By aligning formulation selection with regional health requirements, we support healthcare professionals with medications they can prescribe and dispense with quiet assurance.",
     ],
     history: COMPANY_HISTORY,
   },
@@ -103,7 +104,7 @@ export const ABOUT = {
       title: "Our Mission",
       statement: MISSION_STATEMENT,
       supporting:
-        "We focus on consistent preparation, thorough batch oversight, and clear communication with every partner to sustain healthcare delivery.",
+        "We focus on consistent preparation, thorough product oversight, and clear communication with every partner to sustain healthcare delivery.",
     },
     vision: {
       title: "Our Vision",
@@ -136,7 +137,7 @@ export const ABOUT = {
       {
         icon: "clearInformation",
         title: "Keep information clear",
-        text: "We communicate openly regarding batch availability, preparation schedules, and delivery considerations so you can plan with certainty. We provide straightforward answers regarding lead times and supply readiness.",
+        text: "We communicate openly regarding product availability, preparation schedules, and delivery considerations so you can plan with certainty. We provide straightforward answers regarding lead times and supply readiness.",
       },
     ],
   },
@@ -151,11 +152,11 @@ export const ABOUT = {
       },
       {
         title: "Quality focus",
-        text: "We apply thoughtful review and documented standards across every product formulation we supply. Careful examination of raw components and finished packs ensures consistent presentation across batches.",
+        text: "We apply thoughtful review and documented standards across every product formulation we supply. Careful examination of raw components and finished packs ensures consistent presentation across our formulations.",
       },
       {
         title: "Reliability",
-        text: "We aim for dependable availability and steady communication that supply partners can count on. Our logistics planning focuses on predictability so clinical providers receive shipments on agreed schedules.",
+        text: "We aim for dependable availability and steady communication that supply partners can count on. Our supply planning focuses on predictability so clinical providers receive shipments on agreed schedules.",
       },
       {
         title: "Transparency",
@@ -190,7 +191,7 @@ export const ABOUT = {
       {
         number: 4,
         title: "Discuss your requirements",
-        text: "We review pricing, dispatch logistics, and formal supply documentation through direct, personalized consultation. Supply agreements are formalized through separate written arrangements tailored to your needs.",
+        text: "We review pricing, dispatch schedules, and formal supply documentation through direct, personalized consultation. Supply agreements are formalized through separate written arrangements tailored to your needs.",
       },
     ],
   },
@@ -199,7 +200,7 @@ export const ABOUT = {
     subheading:
       "Direct contact points established to support regional procurement.",
     intro:
-      "vinset Pharma coordinates client enquiries through two primary contact points located in Mumbai and Jaipur. Whether discussing recurring clinic orders, wholesale shipments, or institutional procurement, our personnel provide prompt regional attention. We welcome enquiries from healthcare practitioners, institutional buyers, and distribution partners across regional markets.",
+      "Vinset Pharma coordinates client enquiries through two primary contact points located in Mumbai and Jaipur. Whether discussing recurring clinic orders, wholesale shipments, or institutional procurement, our personnel provide prompt regional attention. We welcome enquiries from healthcare practitioners, institutional buyers, and distribution partners across regional markets.",
   },
 } as const;
 
@@ -220,9 +221,9 @@ export const WHY_US_ICONS = {
 } as const;
 
 export const WHY_US = {
-  heading: "Why vinset Pharma",
+  heading: "Why Vinset Pharma",
   intro:
-    "Healthcare providers and supply managers choose vinset Pharma for our steady dedication to product consistency, open communication, and attentive service.",
+    "Healthcare providers and supply managers choose Vinset Pharma for our steady dedication to product consistency, open communication, and attentive service.",
   points: [
     {
       icon: "qualityAssurance",
@@ -230,7 +231,7 @@ export const WHY_US = {
       shortDescription:
         "Defined quality practices are applied at each preparation step.",
       detailedDescription:
-        "We aim to apply consistent, documented standards across each stage of product preparation and handling. Our approach prioritizes careful verification of specifications before any item is approved for supply. We believe that steady adherence to established guidelines is essential for every pharmaceutical formulation.",
+        "We aim to apply consistent, documented standards across each stage of product preparation and handling. Our approach prioritizes careful verification of specifications before any item is released for supply. We believe that steady adherence to established guidelines is essential for every pharmaceutical formulation.",
     },
     {
       icon: "qualityIngredients",
@@ -323,12 +324,12 @@ export const WHY_US = {
       },
       {
         question:
-          "How will vinset Pharma get in touch with me after I submit a quote?",
+          "How will Vinset Pharma get in touch with me after I submit a quote?",
         answer:
           "A member of our team will contact you directly via the telephone number or email address provided in your form, typically within standard business hours.",
       },
       {
-        question: "Where can I reach vinset Pharma directly?",
+        question: "Where can I reach Vinset Pharma directly?",
         answer:
           "You can reach us through our contact points in Mumbai and Jaipur. Phone numbers, email addresses, and map links are available on our Contact Us page and in the website footer.",
       },
@@ -352,7 +353,7 @@ export type WhyUsPoint = (typeof WHY_US.points)[number];
 
 export const CTA = {
   heading: "Browse our products and request a quote.",
-  text: "Explore the vinset Pharma product range and send a request for a quote for the products you need.",
+  text: "Explore the Vinset Pharma product range and send a request for a quote for the products you need.",
   primaryCta: {
     label: "Browse Products",
     href: ROUTES.products,
@@ -367,26 +368,60 @@ export const PAGE_META = {
   home: {
     title: "Home",
     description:
-      "vinset Pharma develops, prepares and supplies pharmaceutical products for healthcare providers and the people they serve.",
+      "Vinset Pharma develops, prepares and supplies pharmaceutical products for healthcare providers and the people they serve.",
   },
   about: {
     title: "About Us",
     description:
-      "Learn about vinset Pharma, our focus on pharmaceutical quality, mission and values, and how healthcare buyers request direct product quotes.",
+      "Learn about Vinset Pharma, our focus on pharmaceutical quality, mission and values, and how healthcare buyers request direct product quotes.",
   },
   whyUs: {
     title: "Why Us",
     description:
-      "Explore why healthcare buyers choose vinset Pharma: documented quality, careful ingredient selection, dedicated regional contact points, and direct support.",
+      "Explore why healthcare buyers choose Vinset Pharma: documented quality, careful ingredient selection, dedicated regional contact points, and direct support.",
   },
   contact: {
     title: "Contact Us",
     description:
-      "Contact vinset Pharma for address, phone, email and working hours.",
+      "Contact Vinset Pharma for address, phone, email and working hours.",
   },
   media: {
     title: "Media Showcase",
     description:
-      "Explore photos and videos of vinset Pharma's manufacturing standards, quality testing operations, and modern laboratory facilities.",
+      "Explore photos and videos of Vinset Pharma products, packaging, and facilities.",
   },
+} as const;
+
+export type FooterPillar = {
+  title: string;
+  description: string;
+  href: string;
+  icon: "requestQuote" | "talkToUs" | "locations";
+};
+
+export const FOOTER_PILLARS: readonly FooterPillar[] = [
+  {
+    title: "Request a quote",
+    description: "Send an enquiry from any product page.",
+    href: ROUTES.products,
+    icon: "requestQuote",
+  },
+  {
+    title: "Talk to us",
+    description: "Call or email the team directly.",
+    href: ROUTES.contactUs,
+    icon: "talkToUs",
+  },
+  {
+    title: "Mumbai and Jaipur",
+    description: "Find our contact details and map links.",
+    href: ROUTES.contactUs,
+    icon: "locations",
+  },
+] as const;
+
+export const FOOTER_PILLAR_ICONS = {
+  requestQuote: IconFileText,
+  talkToUs: IconPhoneCall,
+  locations: IconMapPin,
 } as const;

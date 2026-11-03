@@ -1,9 +1,9 @@
-export const SITE_NAME = "vinset Pharma";
+export const SITE_NAME = "Vinset Pharma";
 
 export const SITE_TAGLINE = "Careful science for pharmaceutical care.";
 
 export const SITE_DESCRIPTION =
-  "vinset Pharma develops, prepares and supplies pharmaceutical products for healthcare providers and the people they serve.";
+  "Vinset Pharma develops, prepares and supplies pharmaceutical products for healthcare providers and the people they serve.";
 
 /**
  * Shared brand color hex values derived directly from globals.css design tokens.

@@ -30,7 +30,7 @@ export async function FeaturedProductsSection() {
         <div className="flex flex-col gap-10">
           <SectionHeading
             title="Featured Products"
-            description="Explore our essential pharmaceutical formulations developed to meet high clinical standards."
+            description="Explore our essential pharmaceutical formulations across key therapeutic categories."
           />
 
           {/* Automatic carousel same as blogs with increased card size */}

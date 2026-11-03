@@ -1,6 +1,6 @@
-# vinset Pharma
+# Vinset Pharma
 
-A modern marketing, product showcase, and enquiry platform for vinset Pharma. Visitors can explore company information, browse pharmaceutical products, read scientific articles and news, and submit requests for quotes. A protected administration dashboard allows authorized personnel to manage products, categories, blog posts, quote enquiries, and media (photos and videos).
+A modern marketing, product showcase, and enquiry platform for Vinset Pharma. Visitors can explore company information, browse pharmaceutical products, read scientific articles and news, and submit requests for quotes. A protected administration dashboard allows authorized personnel to manage products, categories, blog posts, quote enquiries, and media (photos and videos).
 
 > **Scope Note**: This application is not an e-commerce store. It contains no shopping cart, no checkout, no payment gateways, and no public user accounts. Authentication is strictly reserved for administrators.
 
@@ -145,7 +145,7 @@ All environment variables are validated at runtime via `@t3-oss/env-nextjs`. Ens
 
 ## Recovering Admin Access
 
-Because vinset Pharma is an internal administration portal rather than a consumer web application, **there is no public or email-based password reset flow**. If an administrator loses access, use one of the verified procedures below.
+Because Vinset Pharma is an internal administration portal rather than a consumer web application, **there is no public or email-based password reset flow**. If an administrator loses access, use one of the verified procedures below.
 
 ### 1. Forgotten Admin Password (CLI Reset)
 
@@ -212,7 +212,7 @@ vercel --prod
 
 ### 5. Post-Deployment Smoke Test Checklist
 Verify the live production deployment:
-- [ ] **Home Page (`/`)**: HTTP 200, valid metadata title `vinset Pharma`, structured data JSON-LD present.
+- [ ] **Home Page (`/`)**: HTTP 200, valid metadata title `Vinset Pharma`, structured data JSON-LD present.
 - [ ] **Products Catalog (`/products`)**: Displays product cards or clean empty state; pagination works.
 - [ ] **Product Detail (`/products/[slug]`)**: Hero packaging image with LCP priority, specifications, related products, and quote form.
 - [ ] **Request Quote (`/products/[slug]#request-quote`)**: Turnstile widget loads, validation triggers, successful submission sends notification email.

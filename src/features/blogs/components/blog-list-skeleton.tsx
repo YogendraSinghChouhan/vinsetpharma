@@ -1,60 +1,58 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 
-const SKELETON_ROWS = [1, 2, 3, 4, 5];
+const SKELETON_ITEMS = [
+  "skeleton-1",
+  "skeleton-2",
+  "skeleton-3",
+  "skeleton-4",
+  "skeleton-5",
+];
 
 export function BlogListSkeleton() {
   return (
-    <div className="rounded-md border bg-card shadow-xs overflow-hidden">
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-16">Cover</TableHead>
-            <TableHead>Title</TableHead>
-            <TableHead className="w-28">Status</TableHead>
-            <TableHead className="w-36">Published Date</TableHead>
-            <TableHead className="w-24 text-center">Visible</TableHead>
-            <TableHead className="w-24 text-right">Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {SKELETON_ROWS.map((i) => (
-            <TableRow key={i}>
-              <TableCell className="p-2">
-                <Skeleton className="size-12 rounded-md" />
-              </TableCell>
-              <TableCell>
-                <div className="space-y-1.5">
-                  <Skeleton className="h-4 w-48" />
-                  <Skeleton className="h-3 w-32" />
+    <div className="flex flex-col gap-4">
+      {/* Summary chips bar skeleton */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 rounded-lg border border-border bg-card p-3.5 shadow-2xs">
+        <div className="flex flex-wrap items-center gap-2">
+          <Skeleton className="h-6 w-20 rounded-full" />
+          <Skeleton className="h-6 w-24 rounded-full" />
+          <Skeleton className="h-6 w-20 rounded-full" />
+        </div>
+        <Skeleton className="h-4 w-28" />
+      </div>
+
+      {/* Row cards skeleton */}
+      <div className="flex flex-col gap-2.5">
+        {SKELETON_ITEMS.map((itemKey) => (
+          <div
+            key={itemKey}
+            className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-lg border border-border bg-card p-3 shadow-xs"
+          >
+            <div className="flex items-center gap-3 flex-1 min-w-0">
+              <Skeleton className="size-12 shrink-0 rounded-md" />
+              <div className="flex flex-1 flex-col gap-1.5 min-w-0">
+                <div className="flex items-center gap-2">
+                  <Skeleton className="h-4 w-36 sm:w-52" />
+                  <Skeleton className="h-4 w-16 rounded-full" />
+                  <Skeleton className="h-3 w-20 hidden md:inline-block" />
                 </div>
-              </TableCell>
-              <TableCell>
-                <Skeleton className="h-5 w-16 rounded-full" />
-              </TableCell>
-              <TableCell>
-                <Skeleton className="h-4 w-24" />
-              </TableCell>
-              <TableCell className="text-center">
-                <Skeleton className="mx-auto h-5 w-9 rounded-full" />
-              </TableCell>
-              <TableCell className="text-right">
-                <div className="flex justify-end gap-1">
-                  <Skeleton className="size-8 rounded-md" />
-                  <Skeleton className="size-8 rounded-md" />
-                </div>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+                <Skeleton className="h-3 w-40 sm:w-56" />
+              </div>
+            </div>
+
+            <div className="flex items-center justify-end gap-2 shrink-0 pl-14 sm:pl-0">
+              <Skeleton className="h-5 w-9 rounded-full" />
+              <Skeleton className="size-8 rounded-md" />
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Pagination skeleton */}
+      <div className="flex items-center justify-between pt-2">
+        <Skeleton className="h-4 w-36" />
+        <Skeleton className="h-9 w-48 rounded-md" />
+      </div>
     </div>
   );
 }

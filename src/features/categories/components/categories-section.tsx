@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { SectionHeading } from "@/components/brand/section-heading";
+import { AutoCarousel } from "@/components/carousel/auto-carousel";
 import { Container } from "@/components/layout/container";
 import { ROUTES } from "@/config/site";
 import { getPublicCategories } from "../public-data";
@@ -8,7 +9,7 @@ import { CategoryCard } from "./category-card";
 export async function CategoriesSection() {
   const categories = await getPublicCategories();
 
-  if (categories.length === 0) {
+  if (!categories || categories.length === 0) {
     return null;
   }
 
@@ -18,17 +19,25 @@ export async function CategoriesSection() {
       className="py-12 sm:py-16 lg:py-20 overflow-hidden"
     >
       <Container>
-        <div className="flex flex-col gap-10">
+        <div className="flex flex-col gap-8 sm:gap-10">
           <SectionHeading
-            title="Product Categories"
+            title="Browse by category"
             description="Explore our specialized pharmaceutical portfolio organized by therapeutic dosage form."
           />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
-            {categories.map((category) => (
-              <CategoryCard key={category.id} category={category} />
+          <AutoCarousel
+            ariaLabel="Product categories showcase"
+            slideClassName="w-[82%] sm:w-[calc((100%-24px)/2)] lg:w-[calc((100%-48px)/3)]"
+            gapClassName="gap-4 sm:gap-6"
+          >
+            {categories.map((category, index) => (
+              <CategoryCard
+                key={category.id}
+                category={category}
+                priority={index === 0}
+              />
             ))}
-          </div>
+          </AutoCarousel>
 
           <div className="flex justify-center pt-2">
             <Link

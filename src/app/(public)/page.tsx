@@ -10,6 +10,7 @@ import { Hero } from "@/features/marketing/components/hero";
 import { Section } from "@/features/marketing/components/section";
 import { WhyUsGrid } from "@/features/marketing/components/why-us-grid";
 import { WHY_US } from "@/features/marketing/content";
+import { MediaCarouselSection } from "@/features/media/components/media-carousel-section";
 import { FeaturedProductsSection } from "@/features/products/components/featured-products";
 import { createPageMetadata } from "@/lib/metadata";
 import { buildOrganization, buildWebSite } from "@/lib/structured-data";
@@ -59,7 +60,15 @@ export default function HomePage() {
         <PerforationDivider />
       </Container>
 
-      {/* 5. "Why Us" asymmetric ledger composition */}
+      {/* 5. Media Gallery Carousel */}
+      <MediaCarouselSection />
+
+      {/* Structural perforation divider */}
+      <Container>
+        <PerforationDivider />
+      </Container>
+
+      {/* 6. "Why Us" asymmetric ledger composition */}
       <Section heading={WHY_US.heading}>
         <WhyUsGrid points={WHY_US.points} />
       </Section>

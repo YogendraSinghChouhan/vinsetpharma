@@ -1,6 +1,7 @@
 "use server";
 
 import { updateTag } from "next/cache";
+import { ReorderValidationError } from "@/db/reorder";
 import { requireAdmin } from "@/features/auth/data";
 import { CATEGORY_CACHE_TAGS } from "@/features/categories/constants";
 import { GENERIC_ACTION_ERROR, logActionError } from "@/lib/server-error";
@@ -255,6 +256,12 @@ export async function reorderProducts(
       data: undefined,
     };
   } catch (error: unknown) {
+    if (error instanceof ReorderValidationError) {
+      return {
+        success: false,
+        error: error.message,
+      };
+    }
     logActionError("products.reorder", error);
     return {
       success: false,

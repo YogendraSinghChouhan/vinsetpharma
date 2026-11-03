@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { Suspense } from "react";
-import { z } from "zod";
 import {
   Table,
   TableBody,
@@ -12,12 +12,16 @@ import {
 } from "@/components/ui/table";
 import { ROUTES } from "@/config/site";
 import { AdminPageHeader } from "@/features/admin-shell/components/admin-page-header";
+import { AdminPagination } from "@/features/admin-shell/components/admin-pagination";
+import {
+  getAdminPageHref,
+  parseAdminPageParam,
+} from "@/features/admin-shell/pagination-utils";
 import { QuoteListSkeleton } from "@/features/quotes/components/quote-list-skeleton";
 import {
   EmailNotSentBadge,
   QuoteStatusBadge,
 } from "@/features/quotes/components/quote-status-badge";
-import { QuotesAdminPagination } from "@/features/quotes/components/quotes-admin-pagination";
 import { ADMIN_QUOTES_PAGE_SIZE } from "@/features/quotes/constants";
 import { listQuoteRequests } from "@/features/quotes/data";
 
@@ -33,24 +37,22 @@ type AdminQuotesPageProps = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
-function parsePageParam(rawPage: string | string[] | undefined): number {
-  const value = Array.isArray(rawPage) ? rawPage[0] : rawPage;
-  const result = z.coerce.number().int().positive().safeParse(value);
-  return result.success ? result.data : 1;
-}
-
 async function QuotesContent({
   searchParams,
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const resolvedParams = await searchParams;
-  const page = parsePageParam(resolvedParams.page);
+  const page = parseAdminPageParam(resolvedParams.page);
 
   const { items, totalItems, totalPages } = await listQuoteRequests({
     page,
     pageSize: ADMIN_QUOTES_PAGE_SIZE,
   });
+
+  if (page > totalPages && totalPages > 0) {
+    redirect(getAdminPageHref(ROUTES.adminQuotes, totalPages));
+  }
 
   if (totalItems === 0) {
     return (
@@ -126,7 +128,13 @@ async function QuotesContent({
         </Table>
       </div>
 
-      <QuotesAdminPagination currentPage={page} totalPages={totalPages} />
+      <AdminPagination
+        page={page}
+        totalPages={totalPages}
+        basePath={ROUTES.adminQuotes}
+        totalItems={totalItems}
+        pageSize={ADMIN_QUOTES_PAGE_SIZE}
+      />
     </>
   );
 }

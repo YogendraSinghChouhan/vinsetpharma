@@ -87,3 +87,52 @@ export function validateMediaFile(file: File): FileValidationResult {
     type: isVideo ? "video" : "image",
   };
 }
+
+/**
+ * Toggles an item's presence in a selected ID set.
+ * Returns a new Set with the item added if absent or removed if present.
+ */
+export function toggleSelection(
+  selectedIds: Set<string>,
+  id: string,
+): Set<string> {
+  const next = new Set(selectedIds);
+  if (next.has(id)) {
+    next.delete(id);
+  } else {
+    next.add(id);
+  }
+  return next;
+}
+
+/**
+ * Selects a contiguous range of IDs between fromId and toId inclusive, based on the provided ordered list.
+ * Merges the range with previously selected IDs and returns a new Set.
+ * If either ID is not found in allIds, falls back to toggling toId.
+ */
+export function selectRange(
+  allIds: string[],
+  selectedIds: Set<string>,
+  fromId: string,
+  toId: string,
+): Set<string> {
+  const fromIndex = allIds.indexOf(fromId);
+  const toIndex = allIds.indexOf(toId);
+
+  if (fromIndex === -1 || toIndex === -1) {
+    return toggleSelection(selectedIds, toId);
+  }
+
+  const start = Math.min(fromIndex, toIndex);
+  const end = Math.max(fromIndex, toIndex);
+  const next = new Set(selectedIds);
+
+  for (let i = start; i <= end; i++) {
+    const id = allIds[i];
+    if (id) {
+      next.add(id);
+    }
+  }
+
+  return next;
+}

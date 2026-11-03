@@ -1,6 +1,8 @@
 "use client";
 
 import {
+  IconArrowBackUp,
+  IconArrowForwardUp,
   IconBold,
   IconH2,
   IconH3,
@@ -11,7 +13,7 @@ import {
   IconQuote,
   IconUnlink,
 } from "@tabler/icons-react";
-import { Link } from "@tiptap/extension-link";
+import { Link as TiptapLink } from "@tiptap/extension-link";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useEffect, useState } from "react";
@@ -25,15 +27,22 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
-interface RichTextEditorProps {
+export interface RichTextEditorProps {
   id?: string;
   value: string;
   onChange: (value: string) => void;
   "aria-describedby"?: string;
   "aria-labelledby"?: string;
   disabled?: boolean;
+  className?: string;
 }
 
 export function RichTextEditor({
@@ -43,6 +52,7 @@ export function RichTextEditor({
   "aria-describedby": ariaDescribedBy,
   "aria-labelledby": ariaLabelledBy,
   disabled = false,
+  className,
 }: RichTextEditorProps) {
   const [isLinkDialogOpen, setIsLinkDialogOpen] = useState(false);
   const [linkUrl, setLinkUrl] = useState("");
@@ -61,7 +71,7 @@ export function RichTextEditor({
         horizontalRule: false,
         strike: false,
       }),
-      Link.configure({
+      TiptapLink.configure({
         openOnClick: false,
         HTMLAttributes: {
           rel: "noopener noreferrer",
@@ -74,7 +84,7 @@ export function RichTextEditor({
       attributes: {
         id: id ?? "rich-text-editor-content",
         class:
-          "prose prose-sm dark:prose-invert max-w-none min-h-[220px] px-3 py-2.5 focus:outline-none text-foreground",
+          "prose prose-slate dark:prose-invert max-w-none text-foreground leading-relaxed sm:text-lg min-h-[320px] p-4 sm:p-6 focus:outline-none",
         ...(ariaDescribedBy ? { "aria-describedby": ariaDescribedBy } : {}),
         ...(ariaLabelledBy ? { "aria-labelledby": ariaLabelledBy } : {}),
       },
@@ -149,279 +159,426 @@ export function RichTextEditor({
 
   if (!editor) {
     return (
-      <div className="min-h-[260px] rounded-md border border-input bg-background/50 p-3 text-sm text-muted-foreground animate-pulse">
-        Loading editor...
+      <div className="min-h-[360px] rounded-xl border border-input bg-card p-6 text-sm text-muted-foreground animate-pulse flex items-center justify-center">
+        Loading editor surface...
       </div>
     );
   }
 
   const isLinkActive = editor.isActive("link");
 
+  const buttonClasses = (active: boolean) =>
+    cn(
+      "inline-flex min-h-[44px] min-w-[44px] sm:min-h-9 sm:min-w-9 items-center justify-center rounded-md text-xs font-semibold transition-colors shrink-0",
+      "hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+      active
+        ? "bg-primary text-primary-foreground hover:bg-primary/90 shadow-2xs font-bold"
+        : "text-muted-foreground",
+      disabled && "opacity-40 pointer-events-none",
+    );
+
   return (
-    <div
-      className={cn(
-        "rounded-md border border-input bg-transparent shadow-xs transition-[color,box-shadow]",
-        "focus-within:border-ring focus-within:ring-ring/50 focus-within:ring-[3px]",
-        disabled && "opacity-50 cursor-not-allowed",
-      )}
-    >
-      {/* Toolbar */}
+    <TooltipProvider delay={200}>
       <div
-        role="toolbar"
-        aria-label="Rich text formatting"
-        className="flex flex-wrap items-center gap-1 border-b border-border bg-muted/40 p-1.5"
-      >
-        <button
-          type="button"
-          onClick={() => editor.chain().focus().toggleBold().run()}
-          disabled={disabled}
-          aria-pressed={editor.isActive("bold")}
-          title="Bold (Ctrl+B)"
-          className={cn(
-            "inline-flex size-8 items-center justify-center rounded-sm text-sm font-medium transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
-            editor.isActive("bold")
-              ? "bg-muted-foreground/20 text-foreground font-bold"
-              : "text-muted-foreground",
-          )}
-        >
-          <IconBold className="size-4" aria-hidden="true" />
-          <span className="sr-only">Bold</span>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => editor.chain().focus().toggleItalic().run()}
-          disabled={disabled}
-          aria-pressed={editor.isActive("italic")}
-          title="Italic (Ctrl+I)"
-          className={cn(
-            "inline-flex size-8 items-center justify-center rounded-sm text-sm font-medium transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
-            editor.isActive("italic")
-              ? "bg-muted-foreground/20 text-foreground"
-              : "text-muted-foreground",
-          )}
-        >
-          <IconItalic className="size-4" aria-hidden="true" />
-          <span className="sr-only">Italic</span>
-        </button>
-
-        <div className="h-4 w-px bg-border mx-1" aria-hidden="true" />
-
-        <button
-          type="button"
-          onClick={() =>
-            editor.chain().focus().toggleHeading({ level: 2 }).run()
-          }
-          disabled={disabled}
-          aria-pressed={editor.isActive("heading", { level: 2 })}
-          title="Heading 2"
-          className={cn(
-            "inline-flex size-8 items-center justify-center rounded-sm text-sm font-medium transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
-            editor.isActive("heading", { level: 2 })
-              ? "bg-muted-foreground/20 text-foreground font-semibold"
-              : "text-muted-foreground",
-          )}
-        >
-          <IconH2 className="size-4" aria-hidden="true" />
-          <span className="sr-only">Heading 2</span>
-        </button>
-
-        <button
-          type="button"
-          onClick={() =>
-            editor.chain().focus().toggleHeading({ level: 3 }).run()
-          }
-          disabled={disabled}
-          aria-pressed={editor.isActive("heading", { level: 3 })}
-          title="Heading 3"
-          className={cn(
-            "inline-flex size-8 items-center justify-center rounded-sm text-sm font-medium transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
-            editor.isActive("heading", { level: 3 })
-              ? "bg-muted-foreground/20 text-foreground font-semibold"
-              : "text-muted-foreground",
-          )}
-        >
-          <IconH3 className="size-4" aria-hidden="true" />
-          <span className="sr-only">Heading 3</span>
-        </button>
-
-        <div className="h-4 w-px bg-border mx-1" aria-hidden="true" />
-
-        <button
-          type="button"
-          onClick={() => editor.chain().focus().toggleBulletList().run()}
-          disabled={disabled}
-          aria-pressed={editor.isActive("bulletList")}
-          title="Bullet List"
-          className={cn(
-            "inline-flex size-8 items-center justify-center rounded-sm text-sm font-medium transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
-            editor.isActive("bulletList")
-              ? "bg-muted-foreground/20 text-foreground"
-              : "text-muted-foreground",
-          )}
-        >
-          <IconList className="size-4" aria-hidden="true" />
-          <span className="sr-only">Bullet List</span>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => editor.chain().focus().toggleOrderedList().run()}
-          disabled={disabled}
-          aria-pressed={editor.isActive("orderedList")}
-          title="Numbered List"
-          className={cn(
-            "inline-flex size-8 items-center justify-center rounded-sm text-sm font-medium transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
-            editor.isActive("orderedList")
-              ? "bg-muted-foreground/20 text-foreground"
-              : "text-muted-foreground",
-          )}
-        >
-          <IconListNumbers className="size-4" aria-hidden="true" />
-          <span className="sr-only">Numbered List</span>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => editor.chain().focus().toggleBlockquote().run()}
-          disabled={disabled}
-          aria-pressed={editor.isActive("blockquote")}
-          title="Blockquote"
-          className={cn(
-            "inline-flex size-8 items-center justify-center rounded-sm text-sm font-medium transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
-            editor.isActive("blockquote")
-              ? "bg-muted-foreground/20 text-foreground"
-              : "text-muted-foreground",
-          )}
-        >
-          <IconQuote className="size-4" aria-hidden="true" />
-          <span className="sr-only">Blockquote</span>
-        </button>
-
-        <div className="h-4 w-px bg-border mx-1" aria-hidden="true" />
-
-        <button
-          type="button"
-          onClick={openLinkDialog}
-          disabled={disabled}
-          aria-pressed={isLinkActive}
-          title={isLinkActive ? "Edit Link" : "Insert Link"}
-          className={cn(
-            "inline-flex size-8 items-center justify-center rounded-sm text-sm font-medium transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
-            isLinkActive
-              ? "bg-muted-foreground/20 text-primary font-semibold"
-              : "text-muted-foreground",
-          )}
-        >
-          <IconLink className="size-4" aria-hidden="true" />
-          <span className="sr-only">
-            {isLinkActive ? "Edit Link" : "Insert Link"}
-          </span>
-        </button>
-
-        {isLinkActive && (
-          <button
-            type="button"
-            onClick={handleRemoveLink}
-            disabled={disabled}
-            title="Remove Link"
-            className="inline-flex size-8 items-center justify-center rounded-sm text-sm font-medium text-destructive transition-colors hover:bg-destructive/10 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-          >
-            <IconUnlink className="size-4" aria-hidden="true" />
-            <span className="sr-only">Remove Link</span>
-          </button>
+        className={cn(
+          "rounded-xl border border-input bg-card shadow-xs transition-all overflow-hidden",
+          "focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/40",
+          disabled && "opacity-50 cursor-not-allowed",
+          className,
         )}
-      </div>
-
-      {/* Editor Body */}
-      <div className="relative">
-        {editor.isEmpty ? (
-          <p className="pointer-events-none absolute left-3 top-2.5 text-sm text-muted-foreground select-none">
-            Write your post
-          </p>
-        ) : null}
-        <EditorContent editor={editor} />
-      </div>
-
-      {/* Link Dialog */}
-      <Dialog open={isLinkDialogOpen} onOpenChange={setIsLinkDialogOpen}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>
-              {isLinkActive ? "Edit Link" : "Insert Link"}
-            </DialogTitle>
-            <DialogDescription>
-              Enter a destination URL. Allowed schemes are http://, https://, or
-              mailto:.
-            </DialogDescription>
-          </DialogHeader>
-
-          <div className="space-y-3 py-2">
-            <div className="space-y-1">
-              <label
-                htmlFor="editor-link-url"
-                className="text-xs font-medium text-foreground"
-              >
-                URL
-              </label>
-              <Input
-                id="editor-link-url"
-                type="url"
-                placeholder="https://"
-                value={linkUrl}
-                onChange={(e) => {
-                  setLinkUrl(e.target.value);
-                  setLinkError(null);
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault();
-                    handleSaveLink();
-                  }
-                }}
-                aria-invalid={linkError ? "true" : undefined}
-                aria-describedby={linkError ? "editor-link-error" : undefined}
+      >
+        {/* Sticky Accessible Toolbar with Grouped Actions */}
+        <div
+          role="toolbar"
+          aria-label="Article formatting toolbar"
+          className="sticky top-0 z-20 flex items-center gap-1.5 overflow-x-auto border-b border-border bg-card/95 backdrop-blur-md p-1.5 sm:p-2 scrollbar-none"
+        >
+          {/* History Group: Undo / Redo */}
+          <div className="flex items-center gap-0.5">
+            <Tooltip>
+              <TooltipTrigger
+                render={
+                  <button
+                    type="button"
+                    onClick={() => editor.chain().focus().undo().run()}
+                    disabled={disabled || !editor.can().undo()}
+                    className={buttonClasses(false)}
+                    aria-label="Undo last change (Ctrl+Z)"
+                  >
+                    <IconArrowBackUp className="size-4" aria-hidden="true" />
+                  </button>
+                }
               />
-              {linkError && (
-                <p
-                  id="editor-link-error"
-                  className="text-xs text-destructive font-medium"
-                >
-                  {linkError}
-                </p>
-              )}
-            </div>
+              <TooltipContent side="bottom">
+                <span>Undo</span>
+                <kbd className="ml-1 text-[10px] font-mono opacity-70">
+                  Ctrl+Z
+                </kbd>
+              </TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger
+                render={
+                  <button
+                    type="button"
+                    onClick={() => editor.chain().focus().redo().run()}
+                    disabled={disabled || !editor.can().redo()}
+                    className={buttonClasses(false)}
+                    aria-label="Redo last change (Ctrl+Shift+Z)"
+                  >
+                    <IconArrowForwardUp className="size-4" aria-hidden="true" />
+                  </button>
+                }
+              />
+              <TooltipContent side="bottom">
+                <span>Redo</span>
+                <kbd className="ml-1 text-[10px] font-mono opacity-70">
+                  Ctrl+Y
+                </kbd>
+              </TooltipContent>
+            </Tooltip>
           </div>
 
-          <DialogFooter className="flex flex-row items-center justify-between sm:justify-between">
-            {isLinkActive ? (
-              <Button
-                type="button"
-                variant="destructive"
-                size="sm"
-                onClick={handleRemoveLink}
-              >
-                Remove
-              </Button>
-            ) : (
-              <div />
+          <div
+            className="h-5 w-px bg-border/60 mx-1 shrink-0"
+            aria-hidden="true"
+          />
+
+          {/* Headings Group: H2 / H3 */}
+          <div className="flex items-center gap-0.5">
+            <Tooltip>
+              <TooltipTrigger
+                render={
+                  <button
+                    type="button"
+                    onClick={() =>
+                      editor.chain().focus().toggleHeading({ level: 2 }).run()
+                    }
+                    disabled={disabled}
+                    aria-pressed={editor.isActive("heading", { level: 2 })}
+                    className={buttonClasses(
+                      editor.isActive("heading", { level: 2 }),
+                    )}
+                    aria-label="Heading 2 (H2)"
+                  >
+                    <IconH2 className="size-4" aria-hidden="true" />
+                  </button>
+                }
+              />
+              <TooltipContent side="bottom">
+                <span>Heading 2</span>
+              </TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger
+                render={
+                  <button
+                    type="button"
+                    onClick={() =>
+                      editor.chain().focus().toggleHeading({ level: 3 }).run()
+                    }
+                    disabled={disabled}
+                    aria-pressed={editor.isActive("heading", { level: 3 })}
+                    className={buttonClasses(
+                      editor.isActive("heading", { level: 3 }),
+                    )}
+                    aria-label="Heading 3 (H3)"
+                  >
+                    <IconH3 className="size-4" aria-hidden="true" />
+                  </button>
+                }
+              />
+              <TooltipContent side="bottom">
+                <span>Heading 3</span>
+              </TooltipContent>
+            </Tooltip>
+          </div>
+
+          <div
+            className="h-5 w-px bg-border/60 mx-1 shrink-0"
+            aria-hidden="true"
+          />
+
+          {/* Text Styling: Bold / Italic */}
+          <div className="flex items-center gap-0.5">
+            <Tooltip>
+              <TooltipTrigger
+                render={
+                  <button
+                    type="button"
+                    onClick={() => editor.chain().focus().toggleBold().run()}
+                    disabled={disabled}
+                    aria-pressed={editor.isActive("bold")}
+                    className={buttonClasses(editor.isActive("bold"))}
+                    aria-label="Bold text (Ctrl+B)"
+                  >
+                    <IconBold className="size-4" aria-hidden="true" />
+                  </button>
+                }
+              />
+              <TooltipContent side="bottom">
+                <span>Bold</span>
+                <kbd className="ml-1 text-[10px] font-mono opacity-70">
+                  Ctrl+B
+                </kbd>
+              </TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger
+                render={
+                  <button
+                    type="button"
+                    onClick={() => editor.chain().focus().toggleItalic().run()}
+                    disabled={disabled}
+                    aria-pressed={editor.isActive("italic")}
+                    className={buttonClasses(editor.isActive("italic"))}
+                    aria-label="Italic text (Ctrl+I)"
+                  >
+                    <IconItalic className="size-4" aria-hidden="true" />
+                  </button>
+                }
+              />
+              <TooltipContent side="bottom">
+                <span>Italic</span>
+                <kbd className="ml-1 text-[10px] font-mono opacity-70">
+                  Ctrl+I
+                </kbd>
+              </TooltipContent>
+            </Tooltip>
+          </div>
+
+          <div
+            className="h-5 w-px bg-border/60 mx-1 shrink-0"
+            aria-hidden="true"
+          />
+
+          {/* Lists Group: Bullet / Numbered */}
+          <div className="flex items-center gap-0.5">
+            <Tooltip>
+              <TooltipTrigger
+                render={
+                  <button
+                    type="button"
+                    onClick={() =>
+                      editor.chain().focus().toggleBulletList().run()
+                    }
+                    disabled={disabled}
+                    aria-pressed={editor.isActive("bulletList")}
+                    className={buttonClasses(editor.isActive("bulletList"))}
+                    aria-label="Bullet List"
+                  >
+                    <IconList className="size-4" aria-hidden="true" />
+                  </button>
+                }
+              />
+              <TooltipContent side="bottom">
+                <span>Bullet List</span>
+              </TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger
+                render={
+                  <button
+                    type="button"
+                    onClick={() =>
+                      editor.chain().focus().toggleOrderedList().run()
+                    }
+                    disabled={disabled}
+                    aria-pressed={editor.isActive("orderedList")}
+                    className={buttonClasses(editor.isActive("orderedList"))}
+                    aria-label="Numbered List"
+                  >
+                    <IconListNumbers className="size-4" aria-hidden="true" />
+                  </button>
+                }
+              />
+              <TooltipContent side="bottom">
+                <span>Numbered List</span>
+              </TooltipContent>
+            </Tooltip>
+          </div>
+
+          <div
+            className="h-5 w-px bg-border/60 mx-1 shrink-0"
+            aria-hidden="true"
+          />
+
+          {/* Quote Block */}
+          <div className="flex items-center gap-0.5">
+            <Tooltip>
+              <TooltipTrigger
+                render={
+                  <button
+                    type="button"
+                    onClick={() =>
+                      editor.chain().focus().toggleBlockquote().run()
+                    }
+                    disabled={disabled}
+                    aria-pressed={editor.isActive("blockquote")}
+                    className={buttonClasses(editor.isActive("blockquote"))}
+                    aria-label="Blockquote"
+                  >
+                    <IconQuote className="size-4" aria-hidden="true" />
+                  </button>
+                }
+              />
+              <TooltipContent side="bottom">
+                <span>Blockquote</span>
+              </TooltipContent>
+            </Tooltip>
+          </div>
+
+          <div
+            className="h-5 w-px bg-border/60 mx-1 shrink-0"
+            aria-hidden="true"
+          />
+
+          {/* Link Controls */}
+          <div className="flex items-center gap-0.5">
+            <Tooltip>
+              <TooltipTrigger
+                render={
+                  <button
+                    type="button"
+                    onClick={openLinkDialog}
+                    disabled={disabled}
+                    aria-pressed={isLinkActive}
+                    className={buttonClasses(isLinkActive)}
+                    aria-label={
+                      isLinkActive
+                        ? "Edit destination link"
+                        : "Insert destination link"
+                    }
+                  >
+                    <IconLink className="size-4" aria-hidden="true" />
+                  </button>
+                }
+              />
+              <TooltipContent side="bottom">
+                <span>{isLinkActive ? "Edit Link" : "Insert Link"}</span>
+              </TooltipContent>
+            </Tooltip>
+
+            {isLinkActive && (
+              <Tooltip>
+                <TooltipTrigger
+                  render={
+                    <button
+                      type="button"
+                      onClick={handleRemoveLink}
+                      disabled={disabled}
+                      className={cn(
+                        buttonClasses(false),
+                        "text-destructive hover:bg-destructive/10",
+                      )}
+                      aria-label="Remove link"
+                    >
+                      <IconUnlink className="size-4" aria-hidden="true" />
+                    </button>
+                  }
+                />
+                <TooltipContent side="bottom">
+                  <span>Remove Link</span>
+                </TooltipContent>
+              </Tooltip>
             )}
-            <div className="flex gap-2">
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={() => setIsLinkDialogOpen(false)}
-              >
-                Cancel
-              </Button>
-              <Button type="button" size="sm" onClick={handleSaveLink}>
-                Save
-              </Button>
+          </div>
+        </div>
+
+        {/* Calm Writing Surface with matching website prose classes */}
+        <div className="relative bg-card">
+          {editor.isEmpty && (
+            <p className="pointer-events-none absolute left-4 sm:left-6 top-4 sm:top-6 text-sm sm:text-base text-muted-foreground select-none">
+              Write your post
+            </p>
+          )}
+          <EditorContent editor={editor} />
+        </div>
+
+        {/* Link Dialog */}
+        <Dialog open={isLinkDialogOpen} onOpenChange={setIsLinkDialogOpen}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>
+                {isLinkActive ? "Edit Link" : "Insert Link"}
+              </DialogTitle>
+              <DialogDescription>
+                Enter a destination URL. Allowed schemes are http://, https://,
+                or mailto:.
+              </DialogDescription>
+            </DialogHeader>
+
+            <div className="space-y-3 py-2">
+              <div className="space-y-1">
+                <label
+                  htmlFor="editor-link-url"
+                  className="text-xs font-semibold text-foreground"
+                >
+                  Destination URL
+                </label>
+                <Input
+                  id="editor-link-url"
+                  type="url"
+                  placeholder="https://example.com"
+                  value={linkUrl}
+                  onChange={(e) => {
+                    setLinkUrl(e.target.value);
+                    setLinkError(null);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      handleSaveLink();
+                    }
+                  }}
+                  aria-invalid={linkError ? "true" : undefined}
+                  aria-describedby={linkError ? "editor-link-error" : undefined}
+                />
+                {linkError && (
+                  <p
+                    id="editor-link-error"
+                    className="text-xs text-destructive font-medium"
+                  >
+                    {linkError}
+                  </p>
+                )}
+              </div>
             </div>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    </div>
+
+            <DialogFooter className="flex flex-row items-center justify-between sm:justify-between">
+              {isLinkActive ? (
+                <Button
+                  type="button"
+                  variant="destructive"
+                  size="sm"
+                  onClick={handleRemoveLink}
+                >
+                  Remove
+                </Button>
+              ) : (
+                <div />
+              )}
+              <div className="flex gap-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setIsLinkDialogOpen(false)}
+                >
+                  Cancel
+                </Button>
+                <Button type="button" size="sm" onClick={handleSaveLink}>
+                  Save Link
+                </Button>
+              </div>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      </div>
+    </TooltipProvider>
   );
 }

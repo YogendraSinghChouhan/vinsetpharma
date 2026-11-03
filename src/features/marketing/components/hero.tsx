@@ -57,7 +57,7 @@ export function Hero() {
                   className="size-4 text-accent shrink-0"
                   aria-hidden="true"
                 />
-                <span>Direct Batch Quotations</span>
+                <span>Direct Product Quotations</span>
               </div>
               <div className="flex items-center gap-2">
                 <IconMessages

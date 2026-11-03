@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ROUTES } from "@/config/site";
+import { ROUTES, SITE_NAME } from "@/config/site";
 import { CATEGORY_ROUTES } from "@/features/categories/constants";
 import {
   getPublicCategoryBySlug,
@@ -36,7 +36,7 @@ export async function generateMetadata({
 
   return createPageMetadata({
     title: `${category.name} | Products`,
-    description: `Explore pharmaceutical formulations in ${category.name} from vinset Pharma.`,
+    description: `Explore pharmaceutical formulations in ${category.name} from ${SITE_NAME}.`,
     path: CATEGORY_ROUTES.categoryDetail(slug),
   });
 }

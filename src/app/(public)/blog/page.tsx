@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { z } from "zod";
-import { ROUTES } from "@/config/site";
+import { ROUTES, SITE_NAME } from "@/config/site";
 import { BlogGrid } from "@/features/blogs/components/blog-grid";
 import { BlogPagination } from "@/features/blogs/components/blog-pagination";
 import { PUBLIC_POSTS_PAGE_SIZE } from "@/features/blogs/constants";
@@ -44,8 +44,7 @@ export async function generateMetadata({ searchParams }: BlogPageProps) {
 
   return createPageMetadata({
     title,
-    description:
-      "Explore clinical perspectives, pharmaceutical breakthroughs, and company announcements from vinset Pharma.",
+    description: `Explore clinical perspectives, pharmaceutical breakthroughs, and company announcements from ${SITE_NAME}.`,
     path,
   });
 }
@@ -95,7 +94,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
     <>
       <PageHeader
         title="Blog & Insights"
-        description="Explore clinical perspectives, pharmaceutical breakthroughs, and company announcements from vinset Pharma."
+        description={`Explore clinical perspectives, pharmaceutical breakthroughs, and company announcements from ${SITE_NAME}.`}
         crumbs={[{ label: "Home", href: ROUTES.home }, { label: "Blog" }]}
       />
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">

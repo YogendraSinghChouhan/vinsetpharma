@@ -1,6 +1,12 @@
 import { describe, expect, it } from "bun:test";
+import fs from "node:fs";
+import path from "node:path";
+import sharp from "sharp";
 import { sanitizeContent } from "@/features/blogs/sanitize";
-import { STORAGE_KEY_REGEX } from "@/features/storage/constants";
+import {
+  isValidMediaKey,
+  STORAGE_KEY_REGEX,
+} from "@/features/storage/constants";
 import {
   BLOG_POST_DISCLAIMER,
   FEATURED_SAMPLE_PRODUCT_SLUGS,
@@ -18,6 +24,12 @@ import {
   generateStorageKey,
   PRODUCT_IMAGE_DIMENSIONS,
 } from "./images";
+import {
+  ALL_SAMPLE_MEDIA_KEYS,
+  getSampleMediaStorageKey,
+  SAMPLE_MEDIA_ENTRIES,
+  SAMPLE_MEDIA_ITEMS,
+} from "./media-data";
 
 describe("Sample Categories Data", () => {
   it("contains exactly 5 sample categories with specified slugs in order", () => {
@@ -305,5 +317,96 @@ describe("Local Environment Host Guard Logic", () => {
     expect(isAllowedHost("https://staging.vinsetpharma.com")).toBe(false);
     expect(isAllowedHost("https://example.com")).toBe(false);
     expect(isAllowedHost("not-a-url")).toBe(false);
+  });
+});
+
+describe("Sample Media Showcase Data & Files", () => {
+  it("contains exactly 20 sample media items with valid extensions", () => {
+    expect(SAMPLE_MEDIA_ENTRIES.length).toBe(20);
+    expect(SAMPLE_MEDIA_ITEMS.length).toBe(20);
+
+    for (const item of SAMPLE_MEDIA_ITEMS) {
+      expect(item.file).toMatch(/\.(jpg|jpeg|png|webp)$/i);
+    }
+  });
+
+  it("contains exactly 6 null captions and all non-null captions are <= 8 words", () => {
+    const nullCaptions = SAMPLE_MEDIA_ITEMS.filter(
+      (item) => item.caption === null,
+    );
+    expect(nullCaptions.length).toBe(6);
+
+    const nonNullCaptions = SAMPLE_MEDIA_ITEMS.filter(
+      (item) => item.caption !== null,
+    );
+    expect(nonNullCaptions.length).toBe(14);
+
+    for (const item of nonNullCaptions) {
+      const caption = item.caption as string;
+      expect(caption.trim().length).toBeGreaterThan(0);
+      const wordCount = caption.trim().split(/\s+/).length;
+      expect(wordCount).toBeLessThanOrEqual(8);
+    }
+  });
+
+  it("generates deterministic, unique, and valid media storage keys", () => {
+    expect(ALL_SAMPLE_MEDIA_KEYS.length).toBe(20);
+    const uniqueKeys = new Set(ALL_SAMPLE_MEDIA_KEYS);
+    expect(uniqueKeys.size).toBe(20);
+
+    for (const item of SAMPLE_MEDIA_ITEMS) {
+      // Must match media storage key regex (media/<uuid>.<ext>)
+      expect(isValidMediaKey(item.key)).toBe(true);
+
+      // Must be deterministic: re-generating yields the exact same key
+      const ext = item.file.split(".").pop()?.toLowerCase() || "jpg";
+      const regeneratedKey = getSampleMediaStorageKey(item.index, ext);
+      expect(regeneratedKey).toBe(item.key);
+    }
+  });
+
+  it("verifies all 20 sample photo files on disk match orientation, dimension, and size specifications", async () => {
+    const mediaDir = path.join(process.cwd(), "scripts", "samples", "media");
+    expect(fs.existsSync(mediaDir)).toBe(true);
+
+    let landscapeCount = 0;
+    let portraitCount = 0;
+    let squareCount = 0;
+
+    for (const item of SAMPLE_MEDIA_ITEMS) {
+      const filePath = path.join(mediaDir, item.file);
+      expect(fs.existsSync(filePath)).toBe(true);
+
+      const stats = fs.statSync(filePath);
+      // File size must be <= 600 KB (614,400 bytes)
+      expect(stats.size).toBeLessThanOrEqual(600 * 1024);
+
+      const buffer = fs.readFileSync(filePath);
+      const meta = await sharp(buffer).metadata();
+
+      expect(meta.width).toBeDefined();
+      expect(meta.height).toBeDefined();
+      expect(["jpeg", "png", "webp"]).toContain(meta.format ?? "");
+
+      const width = meta.width ?? 0;
+      const height = meta.height ?? 0;
+
+      // Max dimension <= 2000px
+      expect(width).toBeLessThanOrEqual(2000);
+      expect(height).toBeLessThanOrEqual(2000);
+
+      if (width > height) {
+        landscapeCount++;
+      } else if (width < height) {
+        portraitCount++;
+      } else {
+        squareCount++;
+      }
+    }
+
+    // Specification: 12 landscape, 4 portrait, 4 square
+    expect(landscapeCount).toBe(12);
+    expect(portraitCount).toBe(4);
+    expect(squareCount).toBe(4);
   });
 });

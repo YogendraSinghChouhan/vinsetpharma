@@ -11,6 +11,7 @@ import {
   Text,
 } from "@react-email/components";
 import type * as React from "react";
+import { SITE_NAME } from "@/config/site";
 
 type QuoteNotificationEmailProps = {
   quoteId: string;
@@ -43,7 +44,7 @@ export function QuoteNotificationEmail({
         <Container style={containerStyle}>
           <Heading style={headingStyle}>New Quote Request</Heading>
           <Text style={introStyle}>
-            A new quote enquiry has been submitted through the vinset Pharma
+            A new quote enquiry has been submitted through the {SITE_NAME}{" "}
             website.
           </Text>
 
@@ -96,8 +97,8 @@ export function QuoteNotificationEmail({
           <Hr style={dividerStyle} />
 
           <Text style={footerStyle}>
-            vinset Pharma automated internal notification. Reply directly to
-            this email to contact the prospective client.
+            {SITE_NAME} automated internal notification. Reply directly to this
+            email to contact the prospective client.
           </Text>
         </Container>
       </Body>

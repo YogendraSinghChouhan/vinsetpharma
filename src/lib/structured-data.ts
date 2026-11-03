@@ -152,7 +152,7 @@ export function buildWebSite(): WebSiteSchema {
 
 /**
  * Builds the Schema.org Product structured data object.
- * Intentionally does NOT include offers, price, availability, or reviews as vinset Pharma is not a retail store.
+ * Intentionally does NOT include offers, price, availability, or reviews as Vinset Pharma is not a retail store.
  */
 export function buildProduct({
   name,

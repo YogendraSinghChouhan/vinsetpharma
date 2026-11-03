@@ -33,7 +33,7 @@ export default function OpenGraphImage() {
           marginBottom: "20px",
         }}
       >
-        Pharmaceutical Excellence
+        Pharmaceutical Care
       </div>
       <div
         style={{

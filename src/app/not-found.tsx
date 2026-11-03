@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { PublicLayout } from "@/components/layout/public-layout";
-import { ROUTES } from "@/config/site";
+import { ROUTES, SITE_NAME } from "@/config/site";
 
 export default function NotFound() {
   return (
@@ -11,7 +11,7 @@ export default function NotFound() {
         </h1>
         <p className="max-w-md text-lg text-muted-foreground">
           The page you are looking for does not exist or may have been moved.
-          Visit the home page to explore vinset Pharma.
+          Visit the home page to explore {SITE_NAME}.
         </p>
         <Link
           href={ROUTES.home}

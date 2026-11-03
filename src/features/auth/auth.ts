@@ -2,12 +2,13 @@ import { drizzleAdapter } from "@better-auth/drizzle-adapter/relations-v2";
 import { betterAuth } from "better-auth";
 import { nextCookies } from "better-auth/next-js";
 import { env } from "@/config/env";
+import { SITE_NAME } from "@/config/site";
 import { db } from "@/db/client";
 import { MIN_PASSWORD_LENGTH } from "./constants";
 import * as schema from "./schema";
 
 export const auth = betterAuth({
-  appName: "vinset Pharma",
+  appName: SITE_NAME,
   baseURL: env.APP_URL,
   secret: env.BETTER_AUTH_SECRET,
   database: drizzleAdapter(db, { provider: "pg", schema }),

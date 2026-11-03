@@ -2,11 +2,14 @@ import "server-only";
 
 import { and, asc, count, eq, sql } from "drizzle-orm";
 import { db } from "@/db/client";
-import { buildReorderStatement } from "@/db/reorder";
+import {
+  buildSubsetReorderStatement,
+  ReorderValidationError,
+} from "@/db/reorder";
 import { requireAdmin } from "@/features/auth/data";
 import { categories } from "@/features/categories/schema";
 import { deleteImage } from "@/features/storage/server/service";
-import { FEATURED_PRODUCTS_LIMIT } from "./constants";
+import { ADMIN_PRODUCTS_PAGE_SIZE, FEATURED_PRODUCTS_LIMIT } from "./constants";
 import { type Product, products } from "./schema";
 import { isUniqueViolation, MAX_SLUG_RETRY_ATTEMPTS, slugify } from "./slug";
 import type {
@@ -47,15 +50,46 @@ export type ProductListItem = Product & {
   categoryName: string | null;
 };
 
+export type ListProductsOptions = {
+  page?: number;
+  pageSize?: number;
+};
+
+export type ListProductsResult = {
+  items: ProductListItem[];
+  total: number;
+  totalPages: number;
+  publishedCount: number;
+  featuredCount: number;
+};
+
 /**
- * Admin read query for all products joined with their category name.
- * Ordered by sortOrder ASC, then createdAt ASC, then id ASC for deterministic ties.
+ * Admin read query for paginated products joined with their category name.
+ * Uses a single cheap aggregate query for total, published, and featured counts.
+ * Deterministic ordering: sortOrder ASC, createdAt ASC, id ASC.
  * Uncached request-time data (no 'use cache').
  */
-export async function listProducts(): Promise<ProductListItem[]> {
+export async function listProducts({
+  page = 1,
+  pageSize = ADMIN_PRODUCTS_PAGE_SIZE,
+}: ListProductsOptions = {}): Promise<ListProductsResult> {
   await requireAdmin();
 
-  return db
+  const [aggregates] = await db
+    .select({
+      total: sql<number>`count(*)::int`,
+      publishedCount: sql<number>`count(*) filter (where ${products.published} = true)::int`,
+      featuredCount: sql<number>`count(*) filter (where ${products.published} = true and ${products.featured} = true)::int`,
+    })
+    .from(products);
+
+  const total = Number(aggregates?.total ?? 0);
+  const publishedCount = Number(aggregates?.publishedCount ?? 0);
+  const featuredCount = Number(aggregates?.featuredCount ?? 0);
+  const totalPages = Math.max(1, Math.ceil(total / pageSize));
+  const offset = Math.max(0, (page - 1) * pageSize);
+
+  const items = await db
     .select({
       id: products.id,
       slug: products.slug,
@@ -73,11 +107,17 @@ export async function listProducts(): Promise<ProductListItem[]> {
     })
     .from(products)
     .leftJoin(categories, eq(products.categoryId, categories.id))
-    .orderBy(
-      asc(products.sortOrder),
-      asc(products.createdAt),
-      asc(products.id),
-    );
+    .orderBy(asc(products.sortOrder), asc(products.createdAt), asc(products.id))
+    .limit(pageSize)
+    .offset(offset);
+
+  return {
+    items,
+    total,
+    totalPages,
+    publishedCount,
+    featuredCount,
+  };
 }
 
 /**
@@ -356,23 +396,33 @@ export async function setProductFeatured(
 }
 
 /**
- * Admin mutation to reorder products.
- * Performs ONE atomic UPDATE statement using CASE assigning 1..n to sortOrder.
+ * Admin mutation to reorder products on the current page.
+ * Uses atomic CTE/unnest subset reorder to keep sort_order integers contained
+ * strictly within the active page.
  */
 export async function reorderProducts(
   input: ReorderProductsInput,
 ): Promise<void> {
   await requireAdmin();
 
-  if (input.ids.length === 0) {
+  if (input.ids.length < 2) {
     return;
   }
 
-  await db.execute(
-    buildReorderStatement({
-      table: products,
-      ids: input.ids,
-      refreshUpdatedAt: true,
-    }),
-  );
+  const statement = buildSubsetReorderStatement({
+    table: products,
+    ids: input.ids,
+    refreshUpdatedAt: true,
+  });
+
+  const result = await db.execute(statement);
+  const rows = Array.isArray(result)
+    ? result
+    : ((result as { rows?: unknown[] }).rows ?? []);
+
+  if (rows.length !== input.ids.length) {
+    throw new ReorderValidationError(
+      "One or more product IDs were not found in the catalog.",
+    );
+  }
 }

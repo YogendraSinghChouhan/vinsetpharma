@@ -83,7 +83,7 @@ export type SetProductFeaturedInput = z.infer<typeof setProductFeaturedSchema>;
 export const reorderProductsSchema = z.object({
   ids: z
     .array(productIdSchema)
-    .min(1, "At least one product ID must be provided.")
+    .min(2, "At least two product IDs are required to reorder.")
     .refine(
       (ids) => new Set(ids).size === ids.length,
       "Product IDs must all be unique.",

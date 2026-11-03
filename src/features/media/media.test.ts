@@ -1,6 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { formatDuration, formatFileSize, validateMediaFile } from "./utils";
+import { MEDIA_CACHE_TAG, MEDIA_CAROUSEL_LIMIT } from "./constants";
 import {
+  formatDuration,
+  formatFileSize,
+  selectRange,
+  toggleSelection,
+  validateMediaFile,
+} from "./utils";
+import {
+  bulkDeleteMediaSchema,
   createMediaBatchSchema,
   mediaItemInputSchema,
   reorderMediaSchema,
@@ -348,5 +356,113 @@ describe("validateMediaFile helper", () => {
 
     const gif = new File(["dummy"], "anim.gif", { type: "image/gif" });
     expect(validateMediaFile(gif).valid).toBe(false);
+  });
+});
+
+describe("bulkDeleteMediaSchema", () => {
+  const uuid1 = "11111111-1111-4111-8111-111111111111";
+  const uuid2 = "22222222-2222-4222-8222-222222222222";
+  const uuid3 = "33333333-3333-4333-8333-333333333333";
+
+  it("accepts a non-empty array of 1 to 100 unique UUIDs", () => {
+    expect(bulkDeleteMediaSchema.safeParse([uuid1]).success).toBe(true);
+    expect(bulkDeleteMediaSchema.safeParse([uuid1, uuid2, uuid3]).success).toBe(
+      true,
+    );
+
+    const hundredUuids = Array.from(
+      { length: 100 },
+      (_, i) => `00000000-0000-4000-8000-${i.toString(16).padStart(12, "0")}`,
+    );
+    expect(bulkDeleteMediaSchema.safeParse(hundredUuids).success).toBe(true);
+  });
+
+  it("rejects an empty array", () => {
+    const res = bulkDeleteMediaSchema.safeParse([]);
+    expect(res.success).toBe(false);
+  });
+
+  it("rejects an array exceeding 100 UUIDs", () => {
+    const hundredAndOneUuids = Array.from(
+      { length: 101 },
+      (_, i) => `00000000-0000-4000-8000-${i.toString(16).padStart(12, "0")}`,
+    );
+    const res = bulkDeleteMediaSchema.safeParse(hundredAndOneUuids);
+    expect(res.success).toBe(false);
+  });
+
+  it("rejects duplicate UUIDs", () => {
+    const res = bulkDeleteMediaSchema.safeParse([uuid1, uuid2, uuid1]);
+    expect(res.success).toBe(false);
+  });
+
+  it("rejects invalid UUID formats", () => {
+    const res = bulkDeleteMediaSchema.safeParse([uuid1, "not-a-uuid"]);
+    expect(res.success).toBe(false);
+  });
+});
+
+describe("toggleSelection helper", () => {
+  it("adds an ID to the set if absent", () => {
+    const initial = new Set(["id-1"]);
+    const next = toggleSelection(initial, "id-2");
+    expect(next.has("id-1")).toBe(true);
+    expect(next.has("id-2")).toBe(true);
+    expect(next.size).toBe(2);
+    // Preserves immutability
+    expect(initial.size).toBe(1);
+  });
+
+  it("removes an ID from the set if present", () => {
+    const initial = new Set(["id-1", "id-2"]);
+    const next = toggleSelection(initial, "id-1");
+    expect(next.has("id-1")).toBe(false);
+    expect(next.has("id-2")).toBe(true);
+    expect(next.size).toBe(1);
+    expect(initial.size).toBe(2);
+  });
+});
+
+describe("selectRange helper", () => {
+  const allIds = ["a", "b", "c", "d", "e", "f"];
+
+  it("selects a forward contiguous range including boundary IDs", () => {
+    const initial = new Set<string>();
+    const next = selectRange(allIds, initial, "b", "d");
+    expect(Array.from(next)).toEqual(["b", "c", "d"]);
+  });
+
+  it("selects a backward contiguous range (reverse order)", () => {
+    const initial = new Set<string>();
+    const next = selectRange(allIds, initial, "e", "b");
+    expect(Array.from(next).sort()).toEqual(["b", "c", "d", "e"].sort());
+  });
+
+  it("preserves pre-existing selections outside the range", () => {
+    const initial = new Set(["f"]);
+    const next = selectRange(allIds, initial, "a", "c");
+    expect(Array.from(next).sort()).toEqual(["a", "b", "c", "f"].sort());
+  });
+
+  it("falls back to toggleSelection when either fromId or toId is not in allIds", () => {
+    const initial = new Set(["a"]);
+    // Unknown fromId: toggles toId "b"
+    const next1 = selectRange(allIds, initial, "unknown", "b");
+    expect(next1.has("a")).toBe(true);
+    expect(next1.has("b")).toBe(true);
+
+    // Unknown toId: toggles toId "unknown"
+    const next2 = selectRange(allIds, initial, "a", "unknown");
+    expect(next2.has("unknown")).toBe(true);
+  });
+});
+
+describe("Media Carousel Constants & Public Data Seam", () => {
+  it("exports MEDIA_CAROUSEL_LIMIT = 10 as single source of truth", () => {
+    expect(MEDIA_CAROUSEL_LIMIT).toBe(10);
+  });
+
+  it("exports MEDIA_CACHE_TAG = 'media'", () => {
+    expect(MEDIA_CACHE_TAG).toBe("media");
   });
 });
