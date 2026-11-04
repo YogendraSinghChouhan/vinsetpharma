@@ -41,7 +41,7 @@ export function AboutHero() {
               {ABOUT.header.intro}
             </p>
 
-            {/* 3. Founder intro & principles */}
+            {/* 3. Leadership introduction & principles */}
             <div className="order-4 flex flex-col gap-4">
               <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">
                 {FOUNDER.intro}
@@ -68,7 +68,7 @@ export function AboutHero() {
             </div>
           </div>
 
-          {/* Founder portrait frame with name plate */}
+          {/* Leadership portrait frame with name plate */}
           <figure className="order-3 mx-auto w-full max-w-[420px] lg:col-span-5 lg:mx-0 lg:max-w-none">
             <BlisterPocket depth="subtle" className="p-2 sm:p-2.5">
               <div className="relative aspect-4/5 w-full overflow-hidden rounded-xl bg-muted/40">

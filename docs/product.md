@@ -1,14 +1,14 @@
-# Vinset Pharma Website — Product Overview
+# Vinset pharmaceuticals Website — Product Overview
 
 ## What we're building
 
-A marketing and product-showcase website for **Vinset Pharma**, modeled on the feature set of deeparpharma.com. Visitors learn about the company, browse its pharmaceutical products, read blog articles, and send a request for quote. A single admin-only dashboard lets the company manage products and blogs.
+A marketing and product-showcase website for **Vinset pharmaceuticals**, modeled on the feature set of deeparpharma.com. Visitors learn about the company, browse its pharmaceutical products, read blog articles, and send a request for quote. A single admin-only dashboard lets the company manage products and blogs.
 
 This is not a store. There is no cart, checkout, payments, or public user accounts.
 
 ## Goals
 
-- Present Vinset Pharma as a credible pharma business
+- Present Vinset pharmaceuticals as a credible pharma business
 - Showcase the product range clearly and let buyers request a quote
 - Rank well in search through fast, SEO-friendly pages and a blog
 - Let the client manage products and blogs without developer help

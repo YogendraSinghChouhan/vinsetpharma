@@ -12,6 +12,7 @@ export type ImageSlot = {
 
 export type HomeImages = {
   hero: ImageSlot;
+  banners: readonly ImageSlot[];
 };
 
 export type AboutImages = {
@@ -32,6 +33,44 @@ export const HOME_IMAGES: HomeImages = {
     height: 988,
     alt: "Macro composition of pharmaceutical capsules and tablets arranged on a clean neutral surface",
   },
+  banners: [
+    {
+      src: "/images/home/1.png",
+      width: 1278,
+      height: 795,
+      alt: "Vinset pharmaceuticals manufacturing banner",
+    },
+    {
+      src: "/images/home/2.png",
+      width: 1276,
+      height: 792,
+      alt: "Vinset pharmaceuticals product manufacturing banner",
+    },
+    {
+      src: "/images/home/3.png",
+      width: 1258,
+      height: 792,
+      alt: "Vinset pharmaceuticals production banner",
+    },
+    {
+      src: "/images/home/4.png",
+      width: 1261,
+      height: 793,
+      alt: "Vinset pharmaceuticals quality manufacturing banner",
+    },
+    {
+      src: "/images/home/5.png",
+      width: 1259,
+      height: 793,
+      alt: "Vinset pharmaceuticals facility banner",
+    },
+    {
+      src: "/images/home/6.png",
+      width: 1263,
+      height: 794,
+      alt: "Vinset pharmaceuticals healthcare manufacturing banner",
+    },
+  ],
 };
 
 export const ABOUT_IMAGES: AboutImages = {

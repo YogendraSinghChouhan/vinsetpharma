@@ -1,4 +1,4 @@
-# Vinset Pharma Project Guidelines
+# Vinset pharmaceuticals Project Guidelines
 
 - Always read `docs/product.md` and `docs/database-auth.md` before starting any task, and follow them.
 - Follow the conventions of the installed Next.js version. Check its local documentation before coding, including `proxy.ts` vs `middleware.ts`, async `params`/`searchParams`, and current caching and revalidation APIs. Do not assume older patterns.

@@ -582,7 +582,10 @@ export function ProductForm({ product, categories = [] }: ProductFormProps) {
                           aria-describedby={isInvalid ? errorId : undefined}
                           aria-required="true"
                         >
-                          <SelectValue placeholder="Select a pharmaceutical category" />
+                          <SelectValue>
+                            {selectedCategoryName ??
+                              "Select a pharmaceutical category"}
+                          </SelectValue>
                         </SelectTrigger>
                         <SelectContent>
                           {categories.map((cat) => (

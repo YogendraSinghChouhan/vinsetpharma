@@ -32,7 +32,9 @@ export type OrganizationSchema = Thing & {
   telephone?: string;
   email?: string;
   address?: PostalAddressSchema[];
-  founder?: PersonSchema;
+  employee?: PersonSchema & {
+    jobTitle: string;
+  };
 };
 
 export type WebSiteSchema = Thing & {
@@ -110,9 +112,10 @@ export function buildOrganization(): OrganizationSchema {
     name: SITE_NAME,
     url: baseUrl,
     description: SITE_DESCRIPTION,
-    founder: {
+    employee: {
       "@type": "Person",
-      name: "Vishnu Saini",
+      name: "Dr. Vishnu Saini",
+      jobTitle: "Chief Executive Officer",
     },
   };
 
@@ -152,7 +155,7 @@ export function buildWebSite(): WebSiteSchema {
 
 /**
  * Builds the Schema.org Product structured data object.
- * Intentionally does NOT include offers, price, availability, or reviews as Vinset Pharma is not a retail store.
+ * Intentionally does NOT include offers, price, availability, or reviews as Vinset pharmaceuticals is not a retail store.
  */
 export function buildProduct({
   name,

@@ -23,20 +23,16 @@ describe("structured-data builders", () => {
     expect(org.logo).toContain("/logo.png");
     expect(org.address).toBeDefined();
     expect(Array.isArray(org.address)).toBe(true);
-    expect(org.address).toHaveLength(2);
+    expect(org.address).toHaveLength(1);
     expect(org.address?.[0]?.streetAddress).toBe(
       "Shop No. 5, Raam Bhawan, Station Road, Bhayander (W), Mumbai 401101",
     );
     expect(org.address?.[0]?.addressCountry).toBe("IN");
-    expect(org.address?.[1]?.streetAddress).toBe(
-      "1, Bohra Ji Ka Bagh, Laxmi Mandir Tiraha, Tonk Road, Jaipur",
-    );
-    expect(org.address?.[1]?.addressCountry).toBe("IN");
-
-    // Founder
-    expect(org.founder).toEqual({
+    // Chief executive officer
+    expect(org.employee).toEqual({
       "@type": "Person",
-      name: "Vishnu Saini",
+      name: "Dr. Vishnu Saini",
+      jobTitle: "Chief Executive Officer",
     });
   });
 

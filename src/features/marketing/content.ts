@@ -21,7 +21,7 @@ import { ROUTES } from "@/config/site";
 const COMPANY_HISTORY: string | null = null;
 
 const MISSION_STATEMENT =
-  "To supply dependable pharmaceutical products that support patient wellbeing and serve as a reliable partner to healthcare providers.";
+  "To manufacture dependable pharmaceutical products that support patient wellbeing and serve as a reliable partner to healthcare providers.";
 
 export type FounderMessage = {
   text: string;
@@ -44,16 +44,16 @@ export type Founder = {
 };
 
 export const FOUNDER: Founder = {
-  name: "Vishnu Saini",
-  role: "Founder",
+  name: "Dr. Vishnu Saini",
+  role: "Chief Executive Officer",
   image: {
     src: "/images/about/vishnu-saini.jpg",
     width: 1086,
     height: 1448,
-    alt: "Vishnu Saini, founder of Vinset Pharma",
+    alt: "Dr. Vishnu Saini, Chief Executive Officer of Vinset pharmaceuticals",
   },
   intro:
-    "Vinset Pharma was founded by Vishnu Saini. The company aims to make it simple for buyers to find the products they need, request a quote and reach the team directly by phone or email.",
+    "Dr. Vishnu Saini leads Vinset pharmaceuticals as Chief Executive Officer. He helps guide the company's manufacturing focus and its relationships with healthcare partners.",
   principles:
     "We believe in clear communication, careful attention to every enquiry and straightforward dealings with the people we work with.",
   message: null,
@@ -63,7 +63,7 @@ export const FOUNDER: Founder = {
 export const HERO = {
   headline: "Think about your life",
   supportingLine:
-    "Vinset Pharma develops, prepares and supplies pharmaceutical products for healthcare providers and the people they serve.",
+    "Vinset pharmaceuticals manufactures and prepares pharmaceutical products for healthcare providers and the people they serve.",
   primaryCta: {
     label: "Our Products",
     href: ROUTES.products,
@@ -76,25 +76,26 @@ export const HERO = {
 
 export const ABOUT = {
   header: {
-    title: "About Vinset Pharma",
+    title: "About Vinset pharmaceuticals",
     tagline: "Careful science for pharmaceutical care.",
     intro:
-      "Vinset Pharma develops, prepares, and supplies pharmaceutical products for healthcare providers and the communities they serve. We combine structured formulation oversight with direct, attentive customer communication to facilitate reliable product supply.",
+      "Vinset pharmaceuticals is a pharmaceutical manufacturing company that develops and prepares products for healthcare providers and the communities they serve. We combine structured formulation oversight with direct, attentive customer communication to support reliable product delivery.",
   },
   introduction: {
     heading: "About Us",
-    text: "Vinset Pharma operates as a dedicated pharmaceutical supplier focused on providing dependable, carefully formulated medications to healthcare institutions, clinics, and professional procurement teams across regional networks.",
+    text: "Vinset pharmaceuticals operates a dedicated pharmaceutical company focused on producing dependable, carefully formulated medications for healthcare institutions, clinics, and professional procurement teams across regional networks.",
     history: COMPANY_HISTORY,
     linkLabel: "More about our company",
   },
   whoWeAre: {
     heading: "Who We Are",
-    subheading: "A focused approach to pharmaceutical supply and partnership.",
+    subheading:
+      "A focused approach to pharmaceutical manufacturing and partnership.",
     paragraphs: [
-      "Vinset Pharma operates as a dedicated pharmaceutical supplier focused on providing dependable, carefully formulated medications to healthcare institutions, clinics, and professional procurement teams. We believe that dependable healthcare delivery begins with consistent product integrity, accurate labelling, and straightforward commercial cooperation.",
-      "Our catalogue encompasses a diverse selection of solid oral dosage forms, liquid preparations, and specialized therapeutic formulations. Through this digital platform, buyers can review detailed product specifications, examine packaging formats, and submit structured quotation requests directly to our supply personnel without cumbersome administrative friction.",
+      "Vinset pharmaceuticals operates a dedicated pharmaceutical company focused on producing dependable, carefully formulated medications for healthcare institutions, clinics, and professional procurement teams. We believe that dependable healthcare delivery begins with consistent product integrity, accurate labelling, and straightforward commercial cooperation.",
+      "Our catalogue encompasses a diverse selection of solid oral dosage forms, liquid preparations, and specialized therapeutic formulations. Through this digital platform, buyers can review detailed product specifications, examine packaging formats, and submit structured quotation requests directly to our team without cumbersome administrative friction.",
       "We believe in accessible, personal service tailored to institutional schedules. Rather than navigating automated order queues, every quotation submitted through our platform connects you directly with a representative who coordinates pricing, availability, and delivery arrangements according to your clinical requirements.",
-      "Our operations prioritize transparent dialogue, continuous product oversight, and thorough record-keeping from initial consultation through delivery. By aligning formulation selection with regional health requirements, we support healthcare professionals with medications they can prescribe and dispense with quiet assurance.",
+      "Our manufacturing operations prioritize transparent dialogue, continuous product oversight, and thorough record-keeping from initial consultation through delivery. By aligning formulation selection with regional health requirements, we support healthcare professionals with medications they can prescribe and dispense with quiet assurance.",
     ],
     history: COMPANY_HISTORY,
   },
@@ -132,12 +133,12 @@ export const ABOUT = {
       {
         icon: "directContact",
         title: "Stay in touch directly",
-        text: "We follow up on every enquiry by telephone or email from our Mumbai or Jaipur team to confirm details and address supply queries. We believe direct human conversation resolves procurement requirements most effectively.",
+        text: "We follow up on every enquiry by telephone or email from our Mumbai team to confirm details and address manufacturing and procurement queries. We believe direct human conversation resolves requirements most effectively.",
       },
       {
         icon: "clearInformation",
         title: "Keep information clear",
-        text: "We communicate openly regarding product availability, preparation schedules, and delivery considerations so you can plan with certainty. We provide straightforward answers regarding lead times and supply readiness.",
+        text: "We communicate openly regarding product availability, manufacturing schedules, and delivery considerations so you can plan with certainty. We provide straightforward answers regarding lead times and production readiness.",
       },
     ],
   },
@@ -148,15 +149,15 @@ export const ABOUT = {
     items: [
       {
         title: "Integrity",
-        text: "We conduct every conversation with clarity and follow through on the commitments we share. Openness about product specifications and availability underpins our daily interactions with healthcare buyers.",
+        text: "We build every professional relationship on honesty, accountability, and respect. Clear information about our products and processes helps healthcare partners make confident decisions.",
       },
       {
         title: "Quality focus",
-        text: "We apply thoughtful review and documented standards across every product formulation we supply. Careful examination of raw components and finished packs ensures consistent presentation across our formulations.",
+        text: "We apply thoughtful review and documented standards across every product formulation we manufacture. Careful examination of raw components and finished packs ensures consistent presentation across our formulations.",
       },
       {
         title: "Reliability",
-        text: "We aim for dependable availability and steady communication that supply partners can count on. Our supply planning focuses on predictability so clinical providers receive shipments on agreed schedules.",
+        text: "We aim for dependable availability and steady communication that healthcare and procurement partners can count on. Our production planning focuses on predictability so clinical providers receive shipments on agreed schedules.",
       },
       {
         title: "Transparency",
@@ -164,7 +165,7 @@ export const ABOUT = {
       },
       {
         title: "Responsibility",
-        text: "We recognize the vital role pharmaceuticals play in healthcare and approach every request with diligence. Protecting product integrity during storage and transit remains central to our supply commitments.",
+        text: "We recognize the vital role pharmaceuticals play in healthcare and approach every request with diligence. Protecting product integrity during manufacturing, storage, and transit remains central to our commitments.",
       },
     ],
   },
@@ -191,16 +192,15 @@ export const ABOUT = {
       {
         number: 4,
         title: "Discuss your requirements",
-        text: "We review pricing, dispatch schedules, and formal supply documentation through direct, personalized consultation. Supply agreements are formalized through separate written arrangements tailored to your needs.",
+        text: "We review pricing, dispatch schedules, and formal product documentation through direct, personalized consultation. Commercial agreements are formalized through separate written arrangements tailored to your needs.",
       },
     ],
   },
   contactPoints: {
     heading: "Where to Find Us",
-    subheading:
-      "Direct contact points established to support regional procurement.",
+    subheading: "Direct contact established to support procurement.",
     intro:
-      "Vinset Pharma coordinates client enquiries through two primary contact points located in Mumbai and Jaipur. Whether discussing recurring clinic orders, wholesale shipments, or institutional procurement, our personnel provide prompt regional attention. We welcome enquiries from healthcare practitioners, institutional buyers, and distribution partners across regional markets.",
+      "Vinset pharmaceuticals coordinates client enquiries from our Mumbai office. Whether discussing recurring clinic orders, wholesale shipments, or institutional procurement, our team provides prompt attention. We welcome enquiries from healthcare practitioners, institutional buyers, and distribution partners across regional markets.",
   },
 } as const;
 
@@ -221,9 +221,9 @@ export const WHY_US_ICONS = {
 } as const;
 
 export const WHY_US = {
-  heading: "Why Vinset Pharma",
+  heading: "Why Vinset pharmaceuticals",
   intro:
-    "Healthcare providers and supply managers choose Vinset Pharma for our steady dedication to product consistency, open communication, and attentive service.",
+    "Healthcare providers and procurement managers choose Vinset pharmaceuticals for our steady dedication to manufacturing consistency, open communication, and attentive service.",
   points: [
     {
       icon: "qualityAssurance",
@@ -231,7 +231,7 @@ export const WHY_US = {
       shortDescription:
         "Defined quality practices are applied at each preparation step.",
       detailedDescription:
-        "We aim to apply consistent, documented standards across each stage of product preparation and handling. Our approach prioritizes careful verification of specifications before any item is released for supply. We believe that steady adherence to established guidelines is essential for every pharmaceutical formulation.",
+        "We aim to apply consistent, documented standards across each stage of product manufacturing and handling. Our approach prioritizes careful verification of specifications before any item is released for delivery. We believe that steady adherence to established guidelines is essential for every pharmaceutical formulation.",
     },
     {
       icon: "qualityIngredients",
@@ -253,14 +253,14 @@ export const WHY_US = {
       title: "Clear Mission",
       shortDescription: "The mission guides company decisions.",
       detailedDescription:
-        "Our mission centers on supporting healthcare providers with dependable pharmaceutical solutions. We direct our attention toward therapeutic categories where consistent supply and clear information matter most. Every decision we take reflects our dedication to responsible pharmaceutical provision.",
+        "Our mission centers on supporting healthcare providers with dependable pharmaceutical solutions. We direct our attention toward therapeutic categories where consistent manufacturing and clear information matter most. Every decision we take reflects our dedication to responsible pharmaceutical production.",
     },
     {
       icon: "reach",
-      title: "Convenient Reach Through Two Contact Points",
+      title: "Convenient Reach Through Mumbai",
       shortDescription: "The company service scope is clearly defined.",
       detailedDescription:
-        "With dedicated contact points established in both Mumbai and Jaipur, we facilitate accessible communication across regional supply networks. Buyers and healthcare institutions can connect with our personnel through direct phone lines or electronic correspondence. This regional presence allows us to address enquiries with prompt attention and local awareness.",
+        "With our contact point established in Mumbai, we facilitate accessible communication across regional supply networks. Buyers and healthcare institutions can connect with our personnel through direct phone lines or electronic correspondence. Our team addresses enquiries with prompt attention and local awareness.",
     },
     {
       icon: "customerFocus",
@@ -296,7 +296,7 @@ export const WHY_US = {
     heading: "Our Commitments",
     subheading: "Guiding principles governing our everyday operations.",
     items: [
-      "We commit to honest representations of our product catalogue and supply capabilities.",
+      "We commit to honest representations of our product catalogue and manufacturing capabilities.",
       "We commit to safeguarding buyer confidentiality throughout quote consultations.",
       "We commit to respectful, prompt, and professional communication on every enquiry.",
       "We commit to continuous refinement of our handling, storage, and service practices.",
@@ -305,7 +305,7 @@ export const WHY_US = {
   faq: {
     heading: "Frequently Asked Questions",
     subheading:
-      "Answers regarding our quotation process, supply terms, and communication.",
+      "Answers regarding our quotation process, product terms, and communication.",
     items: [
       {
         question: "How do I request a quote for a product?",
@@ -324,14 +324,14 @@ export const WHY_US = {
       },
       {
         question:
-          "How will Vinset Pharma get in touch with me after I submit a quote?",
+          "How will Vinset pharmaceuticals get in touch with me after I submit a quote?",
         answer:
           "A member of our team will contact you directly via the telephone number or email address provided in your form, typically within standard business hours.",
       },
       {
-        question: "Where can I reach Vinset Pharma directly?",
+        question: "Where can I reach Vinset pharmaceuticals directly?",
         answer:
-          "You can reach us through our contact points in Mumbai and Jaipur. Phone numbers, email addresses, and map links are available on our Contact Us page and in the website footer.",
+          "You can reach us through our Mumbai office. Our phone number, email address, and map link are available on our Contact Us page and in the website footer.",
       },
       {
         question:
@@ -353,7 +353,7 @@ export type WhyUsPoint = (typeof WHY_US.points)[number];
 
 export const CTA = {
   heading: "Browse our products and request a quote.",
-  text: "Explore the Vinset Pharma product range and send a request for a quote for the products you need.",
+  text: "Explore the Vinset pharmaceuticals product range and send a request for a quote for the products you need.",
   primaryCta: {
     label: "Browse Products",
     href: ROUTES.products,
@@ -368,27 +368,27 @@ export const PAGE_META = {
   home: {
     title: "Home",
     description:
-      "Vinset Pharma develops, prepares and supplies pharmaceutical products for healthcare providers and the people they serve.",
+      "Vinset pharmaceuticals manufactures and prepares pharmaceutical products for healthcare providers and the people they serve.",
   },
   about: {
     title: "About Us",
     description:
-      "Learn about Vinset Pharma, our focus on pharmaceutical quality, mission and values, and how healthcare buyers request direct product quotes.",
+      "Learn about Vinset pharmaceuticals, our focus on pharmaceutical quality, mission and values, and how healthcare buyers request direct product quotes.",
   },
   whyUs: {
     title: "Why Us",
     description:
-      "Explore why healthcare buyers choose Vinset Pharma: documented quality, careful ingredient selection, dedicated regional contact points, and direct support.",
+      "See why healthcare buyers choose Vinset pharmaceuticals: quality, careful ingredient selection, Mumbai contact, and direct support.",
   },
   contact: {
     title: "Contact Us",
     description:
-      "Contact Vinset Pharma for address, phone, email and working hours.",
+      "Contact Vinset pharmaceuticals for address, phone, email and working hours.",
   },
   media: {
     title: "Media Showcase",
     description:
-      "Explore photos and videos of Vinset Pharma products, packaging, and facilities.",
+      "Explore photos and videos of Vinset pharmaceuticals products, packaging, and facilities.",
   },
 } as const;
 
@@ -413,7 +413,7 @@ export const FOOTER_PILLARS: readonly FooterPillar[] = [
     icon: "talkToUs",
   },
   {
-    title: "Mumbai and Jaipur",
+    title: "Mumbai",
     description: "Find our contact details and map links.",
     href: ROUTES.contactUs,
     icon: "locations",

@@ -1,9 +1,9 @@
-export const SITE_NAME = "Vinset Pharma";
+export const SITE_NAME = "Vinset pharmaceuticals";
 
 export const SITE_TAGLINE = "Careful science for pharmaceutical care.";
 
 export const SITE_DESCRIPTION =
-  "Vinset Pharma develops, prepares and supplies pharmaceutical products for healthcare providers and the people they serve.";
+  "Vinset pharmaceuticals manufactures and prepares pharmaceutical products for healthcare providers and the people they serve.";
 
 /**
  * Shared brand color hex values derived directly from globals.css design tokens.
@@ -161,14 +161,6 @@ export const CONTACT: Contact = {
       text: "Shop No. 5, Raam Bhawan, Station Road, Bhayander (W), Mumbai 401101",
       mapsUrl: buildMapsUrl(
         "Shop No. 5, Raam Bhawan, Station Road, Bhayander (W), Mumbai 401101",
-      ),
-    },
-    {
-      id: "jaipur",
-      label: "Jaipur",
-      text: "1, Bohra Ji Ka Bagh, Laxmi Mandir Tiraha, Tonk Road, Jaipur",
-      mapsUrl: buildMapsUrl(
-        "1, Bohra Ji Ka Bagh, Laxmi Mandir Tiraha, Tonk Road, Jaipur",
       ),
     },
   ],

@@ -56,7 +56,7 @@ export function MediaGallery({ items }: MediaGalleryProps) {
               >
                 <Image
                   src={item.fileUrl}
-                  alt={item.caption || "Vinset Pharma media"}
+                  alt={item.caption || "Vinset pharmaceuticals media"}
                   width={item.width}
                   height={item.height}
                   className="aspect-4/3 w-full object-cover transition-transform duration-300 group-hover:scale-105"
@@ -91,7 +91,7 @@ export function MediaGallery({ items }: MediaGalleryProps) {
               </DialogDescription>
               <Image
                 src={selectedImage.fileUrl}
-                alt={selectedImage.caption || "Vinset Pharma media"}
+                alt={selectedImage.caption || "Vinset pharmaceuticals media"}
                 width={selectedImage.width}
                 height={selectedImage.height}
                 className="max-h-[88vh] w-full object-contain"

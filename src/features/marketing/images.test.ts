@@ -65,7 +65,7 @@ describe("Marketing Images Configuration", () => {
     });
   }
 
-  describe("Founder Portrait Configuration", () => {
+  describe("Leadership Portrait Configuration", () => {
     it("FOUNDER.image points to an existing file on disk matching configured dimensions", async () => {
       expect(FOUNDER.image.src.startsWith("/images/")).toBe(true);
       const diskPath = path.join(process.cwd(), "public", FOUNDER.image.src);
@@ -89,7 +89,7 @@ describe("Marketing Images Configuration", () => {
     });
   });
 
-  describe("Founder Content & AboutHero Component Rendering", () => {
+  describe("Leadership Content & AboutHero Component Rendering", () => {
     it("FOUNDER.message and FOUNDER.bio are null by default", () => {
       expect(FOUNDER.message).toBeNull();
       expect(FOUNDER.bio).toBeNull();
@@ -101,7 +101,7 @@ describe("Marketing Images Configuration", () => {
       // No blockquote is rendered
       expect(html.includes("<blockquote")).toBe(false);
 
-      // Founder name and role are rendered in the figure caption
+      // Leadership name and role are rendered in the figure caption
       expect(html.includes(FOUNDER.name)).toBe(true);
       expect(html.includes(FOUNDER.role)).toBe(true);
 

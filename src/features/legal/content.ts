@@ -56,7 +56,7 @@ export const PRIVACY_POLICY: LegalDocument = {
       blocks: [
         {
           type: "paragraph",
-          text: `This website is operated by ${SITE_NAME}. We develop, prepare, and supply pharmaceutical products for healthcare providers and the communities they serve.`,
+          text: `This website is operated by ${SITE_NAME}. We manufacture and prepare pharmaceutical products for healthcare providers and the communities they serve.`,
         },
         {
           type: "paragraph",

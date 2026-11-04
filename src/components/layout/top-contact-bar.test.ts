@@ -11,8 +11,8 @@ describe("formatCities helper", () => {
   });
 
   test("joins two cities with 'and'", () => {
-    expect(formatCities([{ label: "Mumbai" }, { label: "Jaipur" }])).toBe(
-      "Mumbai and Jaipur",
+    expect(formatCities([{ label: "Mumbai" }, { label: "Pune" }])).toBe(
+      "Mumbai and Pune",
     );
   });
 
@@ -20,19 +20,15 @@ describe("formatCities helper", () => {
     expect(
       formatCities([
         { label: "Mumbai" },
-        { label: "Jaipur" },
+        { label: "Pune" },
         { label: "Delhi" },
       ]),
-    ).toBe("Mumbai, Jaipur and Delhi");
+    ).toBe("Mumbai, Pune and Delhi");
   });
 
   test("ignores empty or whitespace-only labels", () => {
     expect(
-      formatCities([
-        { label: "Mumbai" },
-        { label: "   " },
-        { label: "Jaipur" },
-      ]),
-    ).toBe("Mumbai and Jaipur");
+      formatCities([{ label: "Mumbai" }, { label: "   " }, { label: "Pune" }]),
+    ).toBe("Mumbai and Pune");
   });
 });

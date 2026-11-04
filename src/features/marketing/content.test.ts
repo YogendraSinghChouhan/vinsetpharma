@@ -5,7 +5,6 @@ import { ABOUT, FOUNDER, PAGE_META, WHY_US } from "./content";
 const FORBIDDEN_WORDS_CASE_INSENSITIVE = [
   "certified",
   "certification",
-  "manufacturer",
   "factory",
   "plant",
   "laboratory",
