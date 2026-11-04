@@ -83,19 +83,19 @@ export const ABOUT = {
   },
   introduction: {
     heading: "About Us",
-    text: "Vinset pharmaceuticals operates a dedicated pharmaceutical company focused on producing dependable, carefully formulated medications for healthcare institutions, clinics, and professional procurement teams across regional networks.",
+    text: "Vinset pharmaceuticals is a dedicated pharmaceutical manufacturing company focused on producing dependable, carefully formulated medications for healthcare institutions, clinics, and professional procurement teams across regional networks.",
     history: COMPANY_HISTORY,
     linkLabel: "More about our company",
   },
   whoWeAre: {
     heading: "Who We Are",
     subheading:
-      "A focused approach to pharmaceutical manufacturing and partnership.",
+      "Research-based formulation with a clear focus on pharmaceutical quality.",
     paragraphs: [
-      "Vinset pharmaceuticals operates a dedicated pharmaceutical company focused on producing dependable, carefully formulated medications for healthcare institutions, clinics, and professional procurement teams. We believe that dependable healthcare delivery begins with consistent product integrity, accurate labelling, and straightforward commercial cooperation.",
-      "Our catalogue encompasses a diverse selection of solid oral dosage forms, liquid preparations, and specialized therapeutic formulations. Through this digital platform, buyers can review detailed product specifications, examine packaging formats, and submit structured quotation requests directly to our team without cumbersome administrative friction.",
-      "We believe in accessible, personal service tailored to institutional schedules. Rather than navigating automated order queues, every quotation submitted through our platform connects you directly with a representative who coordinates pricing, availability, and delivery arrangements according to your clinical requirements.",
-      "Our manufacturing operations prioritize transparent dialogue, continuous product oversight, and thorough record-keeping from initial consultation through delivery. By aligning formulation selection with regional health requirements, we support healthcare professionals with medications they can prescribe and dispense with quiet assurance.",
+      "Vinset pharmaceuticals is a research-driven pharmaceutical manufacturing company. Our products begin with a careful study of formulation requirements, intended use, dosage presentation, ingredient suitability, and expected product performance. This research-based approach helps us develop formulations with clear purpose and practical value for healthcare institutions, clinics, and professional procurement teams.",
+      "Our formulation work connects scientific review with disciplined manufacturing planning. We consider the behaviour of active ingredients, supporting excipients, dosage forms, stability expectations, and packaging needs before a product moves through production. Every decision is made with attention to consistency, traceability, accurate labelling, and dependable presentation.",
+      "We develop and manufacture a range of solid oral dosage forms, liquid preparations, and specialized therapeutic formulations. Each product is supported by clear specifications and a defined formulation purpose, helping healthcare partners understand what they are reviewing and how it fits their professional requirements.",
+      "Research does not end when a formulation is selected. We continue to review process details, product documentation, packaging formats, and partner feedback so that our manufacturing practices remain focused and responsive. This ongoing attention supports thoughtful improvement without losing sight of consistency and responsible pharmaceutical production.",
     ],
     history: COMPANY_HISTORY,
   },
