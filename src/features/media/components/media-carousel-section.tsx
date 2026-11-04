@@ -50,7 +50,7 @@ export async function MediaCarouselSection() {
         <div className="flex flex-col gap-8 sm:gap-10">
           <SectionHeading
             title="Media gallery"
-            description="A visual look into our pharmaceutical products, packaging, and facilities."
+            description="A visual look into our pharmaceutical products, packaging, and marketing activities."
           />
 
           <AutoScrollCarousel>

@@ -62,7 +62,7 @@ export function HomeBannerCarousel({ images }: HomeBannerCarouselProps) {
         }
       }}
       aria-roledescription="carousel"
-      aria-label="Vinset pharmaceuticals manufacturing banners"
+      aria-label="Vinset pharmaceuticals product marketing banners"
     >
       <div className="relative aspect-[16/10] min-h-64 w-full bg-white sm:min-h-80 lg:min-h-[32rem]">
         {slides.map((slide, index) => (

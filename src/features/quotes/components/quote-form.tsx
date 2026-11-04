@@ -92,7 +92,7 @@ export function QuoteForm({ productId }: QuoteFormProps) {
           Quote Request Received
         </h3>
         <p className="mt-3 text-base text-emerald-800 dark:text-emerald-200">
-          Thank you for your enquiry. Our pharmaceutical manufacturing team will
+          Thank you for your enquiry. Our pharmaceutical marketing team will
           review your request and contact you promptly.
         </p>
       </div>

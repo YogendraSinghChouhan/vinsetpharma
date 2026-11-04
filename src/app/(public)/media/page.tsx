@@ -13,7 +13,7 @@ import { createPageMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = createPageMetadata({
   title: "Media Gallery",
-  description: `Explore photos and videos from ${SITE_NAME}'s pharmaceutical operations, facilities, and products.`,
+  description: `Explore photos and videos from ${SITE_NAME}'s pharmaceutical marketing activities, products, and packaging.`,
   path: ROUTES.media,
 });
 
@@ -33,7 +33,7 @@ export default async function MediaPage() {
     <>
       <PageHeader
         title="Media Gallery"
-        description={`Explore photos and videos from ${SITE_NAME}'s pharmaceutical operations, facilities, and products.`}
+        description={`Explore photos and videos from ${SITE_NAME}'s pharmaceutical marketing activities, products, and packaging.`}
         crumbs={[{ label: "Home", href: ROUTES.home }, { label: "Media" }]}
       />
       <Container className="py-12 sm:py-16 lg:py-20">

@@ -33,22 +33,22 @@ export default function HomePage() {
       {/* 1. Hero with animated capsule artwork and dual CTAs */}
       <Hero />
 
-      {/* 2. Manufacturing banner carousel */}
+      {/* 2. Product marketing banner carousel */}
       <section
-        aria-labelledby="manufacturing-banners-heading"
+        aria-labelledby="product-marketing-banners-heading"
         className="py-12 sm:py-16 lg:py-20"
       >
         <Container>
           <div className="mb-8 flex flex-col gap-2 sm:mb-10">
             <h2
-              id="manufacturing-banners-heading"
+              id="product-marketing-banners-heading"
               className="font-heading text-2xl font-bold tracking-tight text-foreground sm:text-3xl"
             >
-              Pharmaceutical manufacturing
+              Pharmaceutical product marketing
             </h2>
             <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-              Explore the products, people, and manufacturing focus behind
-              Vinset pharmaceuticals.
+              Explore the products, people, and marketing focus behind Vinset
+              pharmaceuticals.
             </p>
           </div>
           <HomeBannerCarousel images={HOME_IMAGES.banners} />

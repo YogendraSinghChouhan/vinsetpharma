@@ -77,7 +77,7 @@ describe("blog-metrics", () => {
 
     it("truncates at word boundary with ellipsis", () => {
       const text =
-        "Vinset pharmaceuticals manufactures carefully prepared pharmaceutical formulations for healthcare providers and institutions.";
+        "Vinset pharmaceuticals markets carefully presented pharmaceutical products to healthcare providers and institutions.";
       const excerpt = createClientExcerpt(text, 60);
       expect(excerpt.length).toBeLessThanOrEqual(63); // 60 + '...'
       expect(excerpt.endsWith("...")).toBe(true);

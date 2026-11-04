@@ -249,7 +249,7 @@ export function SiteFooter() {
                         href={address.mapsUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label={`View ${address.label} facility on Google Maps`}
+                        aria-label={`View ${address.label} office on Google Maps`}
                         className="inline-flex items-center gap-1 text-[11px] font-medium text-accent-light underline underline-offset-4 hover:opacity-90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent-light"
                       >
                         <span>Directions</span>
@@ -278,8 +278,8 @@ export function SiteFooter() {
               website are provided for institutional, healthcare professional,
               and informational reference only. They do not constitute
               personalized medical advice. Product specifications, packaging
-              availability, and supply agreements are subject to commercial
-              documentation.
+              information, commercial discussions, and any resulting agreements
+              are subject to separate authorized documentation.
             </p>
           </div>
 

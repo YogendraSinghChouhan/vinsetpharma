@@ -18,10 +18,11 @@ import {
 } from "@tabler/icons-react";
 import { ROUTES } from "@/config/site";
 
-const COMPANY_HISTORY: string | null = null;
+const COMPANY_HISTORY =
+  "In 2015, with a vision of making pharmaceutical product information more accessible and helping healthcare buyers connect with the right commercial partners, Vinset pharmaceuticals began its journey as a pharmaceutical marketing company.";
 
 const MISSION_STATEMENT =
-  "To manufacture dependable pharmaceutical products that support patient wellbeing and serve as a reliable partner to healthcare providers.";
+  "To make pharmaceutical product information easier to discover and help healthcare buyers connect with qualified commercial partners.";
 
 export type FounderMessage = {
   text: string;
@@ -53,7 +54,7 @@ export const FOUNDER: Founder = {
     alt: "Dr. Vishnu Saini, Chief Executive Officer of Vinset pharmaceuticals",
   },
   intro:
-    "Dr. Vishnu Saini leads Vinset pharmaceuticals as Chief Executive Officer. He helps guide the company's manufacturing focus and its relationships with healthcare partners.",
+    "Dr. Vishnu Saini leads Vinset pharmaceuticals as Chief Executive Officer. He helps guide the company's pharmaceutical marketing focus and relationships with healthcare partners.",
   principles:
     "We believe in clear communication, careful attention to every enquiry and straightforward dealings with the people we work with.",
   message: null,
@@ -63,7 +64,7 @@ export const FOUNDER: Founder = {
 export const HERO = {
   headline: "Think about your life",
   supportingLine:
-    "Vinset pharmaceuticals manufactures and prepares pharmaceutical products for healthcare providers and the people they serve.",
+    "Vinset pharmaceuticals presents pharmaceutical products clearly and helps healthcare buyers begin informed commercial conversations.",
   primaryCta: {
     label: "Our Products",
     href: ROUTES.products,
@@ -79,24 +80,24 @@ export const ABOUT = {
     title: "About Vinset pharmaceuticals",
     tagline: "Careful science for pharmaceutical care.",
     intro:
-      "Vinset pharmaceuticals is a pharmaceutical manufacturing company that develops and prepares products for healthcare providers and the communities they serve. We combine structured formulation oversight with direct, attentive customer communication to support reliable product delivery.",
+      "Vinset pharmaceuticals is a pharmaceutical marketing company that presents product information clearly and helps healthcare buyers connect with qualified commercial partners.",
   },
   introduction: {
     heading: "About Us",
-    text: "Vinset pharmaceuticals is a dedicated pharmaceutical manufacturing company focused on producing dependable, carefully formulated medications for healthcare institutions, clinics, and professional procurement teams across regional networks.",
+    text: "Vinset pharmaceuticals is a dedicated pharmaceutical marketing company focused on presenting product information to healthcare institutions, clinics, and professional procurement teams across regional networks.",
     history: COMPANY_HISTORY,
     linkLabel: "More about our company",
   },
   whoWeAre: {
     heading: "Who We Are",
     subheading:
-      "Research-based formulation with a clear focus on pharmaceutical quality.",
+      "Research-based formulation insight with a clear focus on pharmaceutical marketing.",
     paragraphs: [
-      "Vinset pharmaceuticals is a research-driven pharmaceutical manufacturing company. Our products begin with a careful study of formulation requirements, intended use, dosage presentation, ingredient suitability, and expected product performance. This research-based approach helps us develop formulations with clear purpose and practical value for healthcare institutions, clinics, and professional procurement teams.",
-      "Our formulation work connects scientific review with disciplined manufacturing planning. We consider the behaviour of active ingredients, supporting excipients, dosage forms, stability expectations, and packaging needs before a product moves through production. Every decision is made with attention to consistency, traceability, accurate labelling, and dependable presentation.",
-      "We develop and manufacture a range of solid oral dosage forms, liquid preparations, and specialized therapeutic formulations. Each product is supported by clear specifications and a defined formulation purpose, helping healthcare partners understand what they are reviewing and how it fits their professional requirements.",
-      "Research does not end when a formulation is selected. We continue to review process details, product documentation, packaging formats, and partner feedback so that our manufacturing practices remain focused and responsive. This ongoing attention supports thoughtful improvement without losing sight of consistency and responsible pharmaceutical production.",
-    ],
+      "Vinset pharmaceuticals is a pharmaceutical marketing company focused on helping healthcare institutions, clinics, and professional procurement teams discover relevant product information and begin clear commercial conversations.",
+      "Our work is informed by research-based formulation thinking. We study therapeutic categories, dosage forms, ingredient information, intended use, packaging requirements, and the practical questions healthcare buyers raise when evaluating pharmaceutical products.",
+      "This research perspective helps us organize and communicate product information with greater clarity. It also helps us identify the details that matter to clinics, procurement teams, distributors, and other professional audiences before they begin a commercial conversation.",
+      "Our catalogue presents a diverse selection of solid oral dosage forms, liquid preparations, and specialized therapeutic formulations. Through this digital platform, buyers can review product specifications, examine packaging formats, and submit structured enquiries for follow-up with the appropriate commercial partner.",
+],
     history: COMPANY_HISTORY,
   },
   missionVision: {
@@ -105,20 +106,19 @@ export const ABOUT = {
       title: "Our Mission",
       statement: MISSION_STATEMENT,
       supporting:
-        "We focus on consistent preparation, thorough product oversight, and clear communication with every partner to sustain healthcare delivery.",
+        "We focus on clear product information, responsible marketing communication, and helpful conversations with every partner.",
     },
     vision: {
       title: "Our Vision",
       statement:
-        "To build enduring relationships with healthcare professionals through honest practices and dependable product availability.",
+        "To build enduring relationships with healthcare professionals through honest marketing and useful product information.",
       supporting:
-        "We aspire to be recognized for steady reliability, transparent cooperation, and attentive service across all supply discussions.",
+        "We aspire to be recognized for reliable information, transparent cooperation, and attentive service across every commercial enquiry.",
     },
   },
   whatWeDo: {
     heading: "What We Do",
-    subheading:
-      "Supporting healthcare buyers at every step of product procurement.",
+    subheading: "Helping healthcare buyers make informed product enquiries.",
     items: [
       {
         icon: "productRange",
@@ -133,19 +133,19 @@ export const ABOUT = {
       {
         icon: "directContact",
         title: "Stay in touch directly",
-        text: "We follow up on every enquiry by telephone or email from our Mumbai team to confirm details and address manufacturing and procurement queries. We believe direct human conversation resolves requirements most effectively.",
+        text: "We follow up on every enquiry by telephone or email from our Mumbai team to clarify product information and connect buyers with the appropriate commercial contact.",
       },
       {
         icon: "clearInformation",
         title: "Keep information clear",
-        text: "We communicate openly regarding product availability, manufacturing schedules, and delivery considerations so you can plan with certainty. We provide straightforward answers regarding lead times and production readiness.",
+        text: "We communicate openly regarding product information, enquiry steps, and commercial discussions so you can proceed with clarity.",
       },
     ],
   },
   values: {
     heading: "Our Values",
     subheading:
-      "Principles guiding our formulation approach and client relationships.",
+      "Principles guiding our marketing approach and client relationships.",
     items: [
       {
         title: "Integrity",
@@ -153,19 +153,19 @@ export const ABOUT = {
       },
       {
         title: "Quality focus",
-        text: "We apply thoughtful review and documented standards across every product formulation we manufacture. Careful examination of raw components and finished packs ensures consistent presentation across our formulations.",
+        text: "We present product information thoughtfully and encourage clear documentation so buyers can review formulations and packaging with confidence.",
       },
       {
         title: "Reliability",
-        text: "We aim for dependable availability and steady communication that healthcare and procurement partners can count on. Our production planning focuses on predictability so clinical providers receive shipments on agreed schedules.",
+        text: "We aim for steady communication and organized enquiry handling that healthcare buyers and commercial partners can count on.",
       },
       {
         title: "Transparency",
-        text: "We present clear specifications, straightforward terms, and honest guidance regarding our product catalogue. We provide unambiguous documentation to ensure complete clarity before supply arrangements are finalized.",
+        text: "We present clear specifications, straightforward terms, and honest guidance regarding our product catalogue. We provide unambiguous information so every commercial discussion begins with clarity.",
       },
       {
         title: "Responsibility",
-        text: "We recognize the vital role pharmaceuticals play in healthcare and approach every request with diligence. Protecting product integrity during manufacturing, storage, and transit remains central to our commitments.",
+        text: "We recognize the vital role pharmaceuticals play in healthcare and approach every request with diligence, clarity, and respect for professional requirements.",
       },
     ],
   },
@@ -187,12 +187,12 @@ export const ABOUT = {
       {
         number: 3,
         title: "We contact you by phone or email",
-        text: "A representative reviews your enquiry and reaches out directly using your preferred channel to confirm availability. We clarify packaging details, pricing considerations, and transit schedules.",
+        text: "A representative reviews your enquiry and reaches out directly using your preferred channel to clarify product details and explain the next commercial discussion.",
       },
       {
         number: 4,
         title: "Discuss your requirements",
-        text: "We review pricing, dispatch schedules, and formal product documentation through direct, personalized consultation. Commercial agreements are formalized through separate written arrangements tailored to your needs.",
+        text: "We help clarify your requirements, product information, and next steps through direct, personalized consultation. Any commercial agreement is handled separately by the relevant authorized parties.",
       },
     ],
   },
@@ -200,7 +200,7 @@ export const ABOUT = {
     heading: "Where to Find Us",
     subheading: "Direct contact established to support procurement.",
     intro:
-      "Vinset pharmaceuticals coordinates client enquiries from our Mumbai office. Whether discussing recurring clinic orders, wholesale shipments, or institutional procurement, our team provides prompt attention. We welcome enquiries from healthcare practitioners, institutional buyers, and distribution partners across regional markets.",
+      "Vinset pharmaceuticals coordinates marketing enquiries from our Mumbai office. Whether discussing product information, wholesale requirements, or institutional procurement needs, our team provides prompt attention and helps connect interested buyers with appropriate commercial partners.",
   },
 } as const;
 
@@ -223,51 +223,51 @@ export const WHY_US_ICONS = {
 export const WHY_US = {
   heading: "Why Vinset pharmaceuticals",
   intro:
-    "Healthcare providers and procurement managers choose Vinset pharmaceuticals for our steady dedication to manufacturing consistency, open communication, and attentive service.",
+    "Healthcare providers and procurement teams choose Vinset pharmaceuticals for clear product information, open communication, and attentive enquiry support. We help visitors move from initial discovery to a well-prepared commercial enquiry.",
   points: [
     {
       icon: "qualityAssurance",
       title: "Quality Assurance",
       shortDescription:
-        "Defined quality practices are applied at each preparation step.",
+        "Product information is presented clearly and responsibly.",
       detailedDescription:
-        "We aim to apply consistent, documented standards across each stage of product manufacturing and handling. Our approach prioritizes careful verification of specifications before any item is released for delivery. We believe that steady adherence to established guidelines is essential for every pharmaceutical formulation.",
+        "We aim to present product specifications, packaging details, and category information clearly. Our approach prioritizes careful communication so healthcare buyers can review information responsibly before beginning a commercial discussion.",
     },
     {
       icon: "qualityIngredients",
-      title: "Careful Sourcing of Ingredients",
+      title: "Clear Product Information",
       shortDescription:
-        "Ingredients are identified before they are used in preparation.",
+        "Product information helps buyers understand listed ingredients.",
       detailedDescription:
-        "We select raw materials and active substances through deliberate evaluation of supplier documentation. Each constituent is reviewed to confirm its identity and suitability for the intended preparation. This disciplined selection helps maintain the integrity of our finished formulations.",
+        "Our catalogue helps buyers review listed active ingredients and product details supplied through relevant commercial channels. We encourage healthcare professionals to confirm current specifications and documentation with authorized product representatives.",
     },
     {
       icon: "trustAndCommitment",
       title: "Trust and Commitment",
       shortDescription: "Commitments are stated openly and kept visible.",
       detailedDescription:
-        "We value transparent relationships built on honest dialogue and fulfilled promises. When you contact us for quotation or product details, we share clear, straightforward information regarding availability and timelines. We believe long-term partnerships are earned through steady, predictable service.",
+        "We value transparent relationships built on honest dialogue and clear expectations. When you contact us for product details, we share straightforward information and help direct your enquiry to the appropriate commercial contact.",
     },
     {
       icon: "mission",
       title: "Clear Mission",
       shortDescription: "The mission guides company decisions.",
       detailedDescription:
-        "Our mission centers on supporting healthcare providers with dependable pharmaceutical solutions. We direct our attention toward therapeutic categories where consistent manufacturing and clear information matter most. Every decision we take reflects our dedication to responsible pharmaceutical production.",
+        "Our mission centers on helping healthcare providers discover relevant pharmaceutical products through clear information and responsible marketing communication. We aim to make the first step of every enquiry straightforward and useful.",
     },
     {
       icon: "reach",
       title: "Convenient Reach Through Mumbai",
       shortDescription: "The company service scope is clearly defined.",
       detailedDescription:
-        "With our contact point established in Mumbai, we facilitate accessible communication across regional supply networks. Buyers and healthcare institutions can connect with our personnel through direct phone lines or electronic correspondence. Our team addresses enquiries with prompt attention and local awareness.",
+        "With our contact point established in Mumbai, we facilitate accessible communication for healthcare buyers and commercial partners. Interested organizations can connect with our personnel by phone or email for prompt enquiry support and clear next steps.",
     },
     {
       icon: "customerFocus",
       title: "Customer Focus",
-      shortDescription: "Customer requirements guide preparation priorities.",
+      shortDescription: "Customer requirements guide marketing priorities.",
       detailedDescription:
-        "We listen closely to the requirements of distributors, clinics, and healthcare institutions to shape our service. Our team adapts to specific order quantities, packaging preferences, and documentation needs whenever practical. We aim to make the procurement discussion efficient, informative, and collaborative.",
+        "We listen closely to the requirements of distributors, clinics, and healthcare institutions to shape our marketing support. Our team records product interests, packaging preferences, and documentation questions to make the commercial discussion efficient and collaborative.",
     },
   ],
   expectations: {
@@ -284,7 +284,7 @@ export const WHY_US = {
       },
       {
         title: "Operational Consistency",
-        text: "We aim to maintain steady availability across our catalogue and honor the terms agreed during consultation.",
+        text: "We aim to maintain clear catalogue information and honor the communication commitments agreed during consultation.",
       },
       {
         title: "Attentive Follow-Up",
@@ -296,7 +296,7 @@ export const WHY_US = {
     heading: "Our Commitments",
     subheading: "Guiding principles governing our everyday operations.",
     items: [
-      "We commit to honest representations of our product catalogue and manufacturing capabilities.",
+      "We commit to honest representations of our product catalogue and marketing role.",
       "We commit to safeguarding buyer confidentiality throughout quote consultations.",
       "We commit to respectful, prompt, and professional communication on every enquiry.",
       "We commit to continuous refinement of our handling, storage, and service practices.",
@@ -305,7 +305,7 @@ export const WHY_US = {
   faq: {
     heading: "Frequently Asked Questions",
     subheading:
-      "Answers regarding our quotation process, product terms, and communication.",
+      "Answers regarding our enquiry process, marketing role, and communication.",
     items: [
       {
         question: "How do I request a quote for a product?",
@@ -320,7 +320,7 @@ export const WHY_US = {
       {
         question: "What information should I include in a quote request?",
         answer:
-          "We recommend providing your name, organization or practice name, phone number, email address, and the specific pack format or volume you wish to procure.",
+          "We recommend providing your name, organization or practice name, phone number, email address, and the product, pack format, or volume you wish to discuss.",
       },
       {
         question:
@@ -337,7 +337,7 @@ export const WHY_US = {
         question:
           "What should I do if a product I need is not listed in the catalogue?",
         answer:
-          "Please reach out to us directly through phone or email. Our team can discuss whether the requested formulation is currently scheduled for preparation or available through special supply arrangements.",
+          "Please reach out to us directly by phone or email. Our team can clarify the requested product information and connect your enquiry with the appropriate commercial contact.",
       },
       {
         question:
@@ -368,7 +368,7 @@ export const PAGE_META = {
   home: {
     title: "Home",
     description:
-      "Vinset pharmaceuticals manufactures and prepares pharmaceutical products for healthcare providers and the people they serve.",
+      "Vinset pharmaceuticals showcases pharmaceutical products and helps healthcare buyers begin informed commercial conversations.",
   },
   about: {
     title: "About Us",
@@ -378,7 +378,7 @@ export const PAGE_META = {
   whyUs: {
     title: "Why Us",
     description:
-      "See why healthcare buyers choose Vinset pharmaceuticals: quality, careful ingredient selection, Mumbai contact, and direct support.",
+      "Explore why healthcare buyers choose Vinset pharmaceuticals for clear product information, responsible marketing, contact support, and direct communication.",
   },
   contact: {
     title: "Contact Us",
@@ -388,7 +388,7 @@ export const PAGE_META = {
   media: {
     title: "Media Showcase",
     description:
-      "Explore photos and videos of Vinset pharmaceuticals products, packaging, and facilities.",
+      "Explore photos and videos of Vinset pharmaceuticals products, packaging, and marketing activities.",
   },
 } as const;
 

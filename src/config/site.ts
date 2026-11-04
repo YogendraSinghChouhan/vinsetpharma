@@ -3,7 +3,7 @@ export const SITE_NAME = "Vinset pharmaceuticals";
 export const SITE_TAGLINE = "Careful science for pharmaceutical care.";
 
 export const SITE_DESCRIPTION =
-  "Vinset pharmaceuticals manufactures and prepares pharmaceutical products for healthcare providers and the people they serve.";
+  "Vinset pharmaceuticals showcases pharmaceutical products and connects healthcare buyers with qualified commercial partners.";
 
 /**
  * Shared brand color hex values derived directly from globals.css design tokens.

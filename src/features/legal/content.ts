@@ -56,7 +56,7 @@ export const PRIVACY_POLICY: LegalDocument = {
       blocks: [
         {
           type: "paragraph",
-          text: `This website is operated by ${SITE_NAME}. We manufacture and prepare pharmaceutical products for healthcare providers and the communities they serve.`,
+          text: `This website is operated by ${SITE_NAME}, a pharmaceutical marketing company that presents product information and coordinates commercial enquiries with relevant authorized partners.`,
         },
         {
           type: "paragraph",
@@ -267,7 +267,7 @@ export const TERMS_AND_CONDITIONS: LegalDocument = {
         },
         {
           type: "paragraph",
-          text: "Any eventual supply of pharmaceutical products is strictly subject to customer qualification, licensing verification, and separate formal written supply agreements.",
+          text: "Any commercial transaction involving pharmaceutical products is handled separately by the relevant authorized parties and is subject to customer qualification, licensing verification, and formal written agreements.",
         },
       ],
     },
