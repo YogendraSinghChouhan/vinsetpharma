@@ -97,7 +97,7 @@ export const ABOUT = {
   },
   introduction: {
     heading: "About Us",
-    text: "Vinset Pharmaceuticals is a pharmaceutical marketing company. We market products made by our manufacturing partners and share product information with healthcare professionals and trade partners.",
+    text: "Vinset Pharmaceuticals is a pharmaceutical marketing company focused on presenting a range of pharmaceutical products and sharing product information with healthcare professionals and trade partners.",
     history: COMPANY_HISTORY,
     linkLabel: "More about our company",
   },
@@ -107,10 +107,11 @@ export const ABOUT = {
       "A pharmaceutical marketing company sharing product information with healthcare professionals.",
     paragraphs: [
       `${legalName} is a pharmaceutical marketing company. Our manufacturing partners produce the products, which are marketed under the Vinset name. The packs state “Marketed by ${legalName}”.`,
-      "Our range covers tablets, capsules, syrups and suspensions, injectables, nutraceuticals and personal care products. We share information about these products with doctors and other healthcare professionals, while trade partners can contact us to discuss their requirements. Each category represents a different part of the range we bring to professional attention.",
-      "Our work is built around clear product presentation and direct communication. We provide the product name, composition line and pack details available for professional reference, and we respond to product enquiries by phone or email. These simple touchpoints help us keep conversations focused on the product and the requirements shared with our team.",
-      "The intended audience is healthcare professionals and trade partners. This audience statement is an assumption and must be confirmed by the client. We aim to build professional relationships through clear information, thoughtful communication and consistent follow-up from our Mumbai and Jaipur contact points.",
-      "Vinset brings together a defined product range, product information, quote-request support and direct contact. We aim to be a useful marketing partner for professional conversations while keeping our role and the product information supplied with each product clear. We value steady communication and practical follow-up as part of every relationship. This is how we build trust through everyday professional contact.",
+      "Our range covers tablets, capsules, syrups and suspensions, injectables, nutraceuticals and personal care products. Each category represents a different part of the portfolio we bring to professional attention. We share information about these products with doctors and other healthcare professionals, while trade partners can contact us to discuss their requirements.",
+      "Our work centres on product presentation, responsible communication and direct follow-up. We provide the product name, composition line and pack details available for professional reference. Product pages and quote requests help start a conversation, and our team replies by phone or email using the details provided.",
+      "The intended audience is healthcare professionals and trade partners. This audience statement is an assumption and must be confirmed by the client. We aim to build professional relationships through useful information, respectful communication and consistent follow-up from our Mumbai and Jaipur contact points.",
+      "Vinset brings together a defined product range, product information, quote-request support and direct contact. We aim to keep our marketing role clear, understand the requirements shared with us and maintain steady professional relationships through thoughtful communication.",
+      "We value careful listening, clear product conversations and reliable follow-up. These principles help us understand professional requirements and keep our business relationships focused, respectful and useful over time in practice.",
     ],
     history: COMPANY_HISTORY,
   },
@@ -125,9 +126,9 @@ export const ABOUT = {
     vision: {
       title: "Our Vision",
       statement:
-        "We aim to build lasting professional relationships around the pharmaceutical products we market.",
+        "We aim to present pharmaceutical products responsibly and support useful professional conversations.",
       supporting:
-        "We aim to grow through consistency, respect and attentive follow-up.",
+        "We aim to work with consistency, respect and attentive follow-up.",
     },
   },
   whatWeDo: {
@@ -158,11 +159,11 @@ export const ABOUT = {
   },
   values: {
     heading: "Our Values",
-    subheading: "Intentions that guide how we present information.",
+    subheading: "Principles that guide our professional relationships.",
     items: [
       {
         title: "Clarity",
-        text: "We aim to present product details and quote-request steps in a clear, organised way.",
+        text: "We aim to present product details and enquiry steps in an organised way.",
       },
       {
         title: "Responsibility",
@@ -174,7 +175,7 @@ export const ABOUT = {
       },
       {
         title: "Partnership",
-        text: "We aim to build respectful working relationships with healthcare professionals, trade partners and manufacturing partners.",
+        text: "We aim to build constructive working relationships with healthcare professionals, trade partners and manufacturing partners.",
       },
       {
         title: "Follow-up",
@@ -236,7 +237,7 @@ export const WHY_US_ICONS = {
 export const WHY_US = {
   heading: "Why Vinset pharmaceuticals",
   intro:
-    "Vinset brings together a focused product range, professional product information and direct communication with healthcare professionals and trade partners. We focus on dependable conversations, useful details and a clear understanding of our marketing role. These principles guide our work.",
+    "Choosing a pharmaceutical marketing partner involves understanding its product range, communication and approach to professional relationships. Vinset brings these elements together through a focused portfolio, product information and direct follow-up.",
   reasonsIntro:
     "Six parts of the Vinset approach to product marketing and professional communication.",
   points: [
@@ -246,7 +247,7 @@ export const WHY_US = {
       shortDescription:
         "Product pages show the key information available on the site.",
       detailedDescription:
-        "Each product listing presents the name, composition line and pack details available for professional reference. These details give a clear starting point for a product conversation.",
+        "Each product listing presents the name, composition line and pack details available for professional reference. These details help healthcare professionals and trade partners begin a focused product conversation.",
     },
     {
       icon: "range",
@@ -260,14 +261,14 @@ export const WHY_US = {
       title: "Quote Requests From Product Pages",
       shortDescription: "Start an enquiry where you find a product.",
       detailedDescription:
-        "A quote request gives healthcare professionals and trade partners a direct way to discuss a product and share the details needed for a reply. It helps the team understand the enquiry before following up.",
+        "A quote request gives healthcare professionals and trade partners a direct way to discuss a product and share the details needed for a reply. It helps the team understand the enquiry and respond to the specific requirement.",
     },
     {
       icon: "directContact",
       title: "Direct Contact by Phone and Email",
       shortDescription: "Two contact points are available.",
       detailedDescription:
-        "Our configured contact points in Mumbai and Jaipur give professional visitors direct ways to reach the team. We reply by phone or email.",
+        "Our configured contact points in Mumbai and Jaipur give professional visitors direct ways to reach the team. We reply by phone or email and keep the conversation connected to the original enquiry.",
     },
     {
       icon: "healthcareProfessionals",
@@ -286,8 +287,7 @@ export const WHY_US = {
   ],
   expectations: {
     heading: "What to Expect",
-    subheading:
-      "Communication, clarity, consistency and follow-up shape our approach.",
+    subheading: "Communication, clarity, consistency and follow-up shape our approach.",
     items: [
       {
         title: "Communication",
