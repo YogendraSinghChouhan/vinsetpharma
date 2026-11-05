@@ -1,4 +1,4 @@
-import { CONTACT, LEGAL, SITE_NAME } from "@/config/site";
+import { CONTACT, LEGAL, legalName } from "@/config/site";
 
 export type LegalBlock =
   | { type: "paragraph"; text: string }
@@ -47,7 +47,7 @@ export const SERVICE_PROVIDERS = [
 
 export const PRIVACY_POLICY: LegalDocument = {
   title: "Privacy Policy",
-  description: `Information on how ${SITE_NAME} collects, handles, and protects details submitted through this website.`,
+  description: `Information on how ${legalName} collects, handles, and protects details submitted through this website.`,
   lastUpdated: LEGAL_LAST_UPDATED,
   sections: [
     {
@@ -56,7 +56,7 @@ export const PRIVACY_POLICY: LegalDocument = {
       blocks: [
         {
           type: "paragraph",
-          text: `This website is operated by ${SITE_NAME}, a pharmaceutical marketing company that presents product information and coordinates commercial enquiries with relevant authorized partners.`,
+          text: `This website is operated by ${legalName}, a pharmaceutical marketing company. Products are made by our manufacturing partners and marketed under the Vinset name.`,
         },
         {
           type: "paragraph",
@@ -206,7 +206,7 @@ export const PRIVACY_POLICY: LegalDocument = {
 
 export const TERMS_AND_CONDITIONS: LegalDocument = {
   title: "Terms & Conditions",
-  description: `Terms and conditions governing your access and use of the ${SITE_NAME} website.`,
+  description: `Terms and conditions governing your access and use of the ${legalName} website.`,
   lastUpdated: LEGAL_LAST_UPDATED,
   sections: [
     {
@@ -215,7 +215,7 @@ export const TERMS_AND_CONDITIONS: LegalDocument = {
       blocks: [
         {
           type: "paragraph",
-          text: `These terms and conditions govern your access to and use of the website provided by ${SITE_NAME}. By visiting or using this website, you agree to comply with and be bound by these terms. If you do not agree, please discontinue using the website.`,
+          text: `These terms and conditions govern your access to and use of the website provided by ${legalName}. By visiting or using this website, you agree to comply with and be bound by these terms. If you do not agree, please discontinue using the website.`,
         },
       ],
     },
@@ -241,15 +241,25 @@ export const TERMS_AND_CONDITIONS: LegalDocument = {
     },
     {
       id: "information-on-this-website",
-      heading: "Information on This Website",
+      heading: "Product Information",
       blocks: [
         {
           type: "paragraph",
-          text: "Content published on this website is provided for general informational and product presentation purposes only. It does not constitute medical advice, diagnosis, treatment, or professional pharmaceutical consultation.",
+          text: "Information on this website is for healthcare professionals, general and illustrative. It is not medical advice.",
         },
         {
           type: "paragraph",
-          text: "Product descriptions, specifications, taglines, and package renderings are illustrative and subject to modification. Healthcare professionals and patients should rely on qualified clinical practitioners and official product packaging documentation for clinical determinations.",
+          text: "Always refer to the product label and the prescribing information supplied with the product.",
+        },
+      ],
+    },
+    {
+      id: "prescription-medicines",
+      heading: "Prescription Medicines",
+      blocks: [
+        {
+          type: "paragraph",
+          text: "Some products are prescription medicines that may be supplied only as permitted by applicable law and used only as directed by a registered medical practitioner.",
         },
       ],
     },
@@ -267,7 +277,7 @@ export const TERMS_AND_CONDITIONS: LegalDocument = {
         },
         {
           type: "paragraph",
-          text: "Any commercial transaction involving pharmaceutical products is handled separately by the relevant authorized parties and is subject to customer qualification, licensing verification, and formal written agreements.",
+          text: "Any commercial transaction involving pharmaceutical products is handled separately from this website by the relevant parties.",
         },
       ],
     },
@@ -277,7 +287,7 @@ export const TERMS_AND_CONDITIONS: LegalDocument = {
       blocks: [
         {
           type: "paragraph",
-          text: `All content, branding, designs, graphics, icons, text, and layout on this website are owned by ${SITE_NAME} or its licensors and are protected under intellectual property rights.`,
+          text: `All content, branding, designs, graphics, icons, text, and layout on this website are owned by ${legalName} or its licensors and are protected under intellectual property rights.`,
         },
         {
           type: "paragraph",
@@ -315,7 +325,7 @@ export const TERMS_AND_CONDITIONS: LegalDocument = {
       blocks: [
         {
           type: "paragraph",
-          text: `To the extent permitted by applicable law, ${SITE_NAME} and its personnel shall not be liable for any indirect, consequential, special, or incidental damages arising out of your access to, use of, or inability to use this website.`,
+          text: `To the extent permitted by applicable law, ${legalName} and its personnel shall not be liable for any indirect, consequential, special, or incidental damages arising out of your access to, use of, or inability to use this website.`,
         },
       ],
     },

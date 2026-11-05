@@ -125,8 +125,7 @@ export default async function ProductDetailPage({
             Request a quote for {product.title}
           </h2>
           <p className="mb-8 text-sm text-muted-foreground sm:text-base">
-            Submit your enquiry below and our sales specialists will respond
-            with custom packaging and volume pricing.
+            Submit your enquiry below. Our team will reply by phone or email.
           </p>
           <QuoteForm productId={product.id} />
         </div>

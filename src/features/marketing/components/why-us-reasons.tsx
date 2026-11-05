@@ -20,8 +20,7 @@ export function WhyUsReasons({ points = WHY_US.points }: WhyUsReasonsProps) {
               {WHY_US.heading}
             </h2>
             <p className="text-sm font-medium text-muted-foreground leading-relaxed max-w-[45ch]">
-              Six deliberate commitments in product verification, transparent
-              communication, and regional reach.
+              {WHY_US.reasonsIntro}
             </p>
           </div>
 

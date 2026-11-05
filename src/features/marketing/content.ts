@@ -4,25 +4,20 @@
  */
 
 import {
-  IconCheck,
-  IconCompass,
   IconFileText,
-  IconFlask,
   IconHeartHandshake,
   IconInfoCircle,
   IconMapPin,
   IconPhoneCall,
   IconPill,
   IconShieldCheck,
-  IconTarget,
 } from "@tabler/icons-react";
-import { ROUTES } from "@/config/site";
+import { legalName, ROUTES } from "@/config/site";
 
-const COMPANY_HISTORY =
-  "In 2015, with a vision of making pharmaceutical product information more accessible and helping healthcare buyers connect with the right commercial partners, Vinset pharmaceuticals began its journey as a pharmaceutical marketing company.";
+const COMPANY_HISTORY = `${legalName} is a pharmaceutical marketing company. Products are made by our manufacturing partners and marketed under the Vinset name. The packs state “Marketed by ${legalName}”.`;
 
 const MISSION_STATEMENT =
-  "To make pharmaceutical product information easier to discover and help healthcare buyers connect with qualified commercial partners.";
+  "We aim to make pharmaceutical product information clear for healthcare professionals and trade partners.";
 
 export type FounderMessage = {
   text: string;
@@ -37,6 +32,8 @@ export type Founder = {
     width: number;
     height: number;
     alt: string;
+    personName: string;
+    personRole: string;
   };
   intro: string;
   principles: string;
@@ -45,16 +42,18 @@ export type Founder = {
 };
 
 export const FOUNDER: Founder = {
-  name: "Dr. Vishnu Saini",
-  role: "Chief Executive Officer",
+  name: "Dr. Anand Saini",
+  role: "Founder",
   image: {
     src: "/images/about/vishnu-saini.jpg",
     width: 1086,
     height: 1448,
     alt: "Dr. Vishnu Saini, Chief Executive Officer of Vinset pharmaceuticals",
+    personName: "Dr. Vishnu Saini",
+    personRole: "Chief Executive Officer",
   },
   intro:
-    "Dr. Vishnu Saini leads Vinset pharmaceuticals as Chief Executive Officer. He helps guide the company's pharmaceutical marketing focus and relationships with healthcare partners.",
+    "Vinset pharmaceuticals was founded by Dr. Anand Saini. Dr. Vishnu Saini serves as Chief Executive Officer, helping lead the company's pharmaceutical marketing focus and relationships with healthcare partners.",
   principles:
     "We believe in clear communication, careful attention to every enquiry and straightforward dealings with the people we work with.",
   message: null,
@@ -64,7 +63,7 @@ export const FOUNDER: Founder = {
 export const HERO = {
   headline: "Think about your life",
   supportingLine:
-    "Vinset pharmaceuticals presents pharmaceutical products clearly and helps healthcare buyers begin informed commercial conversations.",
+    "Vinset Pharmaceuticals is a pharmaceutical marketing company sharing clear information about pharmaceutical products with healthcare professionals and trade partners.",
   primaryCta: {
     label: "Our Products",
     href: ROUTES.products,
@@ -75,29 +74,45 @@ export const HERO = {
   },
 } as const;
 
+export const HOME_COPY = {
+  bannerTitle: "Pharmaceutical product marketing",
+  bannerIntro:
+    "Browse pharmaceutical products marketed under the Vinset name and learn how to contact our team.",
+  aboutTeaser:
+    "Read how Vinset markets products and shares product information.",
+  categoryIntro: "Browse pharmaceutical products by category.",
+  featuredProductsIntro:
+    "Browse selected pharmaceutical products marketed under the Vinset name.",
+  mediaIntro:
+    "A visual look at pharmaceutical products, packaging and marketing information.",
+  blogIntro:
+    "Read product information and company updates shared for healthcare professionals and trade partners.",
+} as const;
+
 export const ABOUT = {
   header: {
     title: "About Vinset pharmaceuticals",
-    tagline: "Careful science for pharmaceutical care.",
-    intro:
-      "Vinset pharmaceuticals is a pharmaceutical marketing company that presents product information clearly and helps healthcare buyers connect with qualified commercial partners.",
+    tagline: "Clear information from a pharmaceutical marketing company.",
+    intro: `${legalName} is a pharmaceutical marketing company. Products are made by our manufacturing partners and marketed under the Vinset name.`,
   },
   introduction: {
     heading: "About Us",
-    text: "Vinset pharmaceuticals is a dedicated pharmaceutical marketing company focused on presenting product information to healthcare institutions, clinics, and professional procurement teams across regional networks.",
+    text: "We share information about our pharmaceutical products with healthcare professionals and trade partners. The website supports product browsing and quote requests; it does not sell products or take payments online.",
     history: COMPANY_HISTORY,
     linkLabel: "More about our company",
   },
   whoWeAre: {
     heading: "Who We Are",
     subheading:
-      "Research-based formulation insight with a clear focus on pharmaceutical marketing.",
+      "A pharmaceutical marketing company sharing product information with healthcare professionals.",
     paragraphs: [
-      "Vinset pharmaceuticals is a pharmaceutical marketing company focused on helping healthcare institutions, clinics, and professional procurement teams discover relevant product information and begin clear commercial conversations.",
-      "Our work is informed by research-based formulation thinking. We study therapeutic categories, dosage forms, ingredient information, intended use, packaging requirements, and the practical questions healthcare buyers raise when evaluating pharmaceutical products.",
-      "This research perspective helps us organize and communicate product information with greater clarity. It also helps us identify the details that matter to clinics, procurement teams, distributors, and other professional audiences before they begin a commercial conversation.",
-      "Our catalogue presents a diverse selection of solid oral dosage forms, liquid preparations, and specialized therapeutic formulations. Through this digital platform, buyers can review product specifications, examine packaging formats, and submit structured enquiries for follow-up with the appropriate commercial partner.",
-],
+      `${legalName} is a pharmaceutical marketing company. We do not manufacture products. Our manufacturing partners produce the products, which are marketed under the Vinset name. The packs state “Marketed by ${legalName}”.`,
+      "Our role is to present product information in a clear, plain and useful way. We share information about tablets, capsules, syrups and suspensions, injectables, nutraceuticals and personal care products with doctors and other healthcare professionals. Trade partners can also browse the range and contact us about a product.",
+      "The website is a product information and enquiry platform. Visitors can browse categories, open product pages and request a quote from a product page. A quote request is an enquiry, not an online order. There are no online sales or payments. Our team replies by phone or email so the next conversation can be handled directly.",
+      "We keep the distinction between marketing and manufacturing clear. Product pages are intended to help a professional visitor find the product name, composition line and pack details available on the site. Always refer to the product label and the prescribing information supplied with the product. The website gives general information and no medical advice.",
+      "The intended audience is healthcare professionals and trade partners. This audience statement is an assumption and must be confirmed by the client. We aim to write for professional readers without overstating what the website or Vinset does. When a visitor needs more information, the contact page provides the configured Mumbai and Jaipur contact points, together with the configured phone and email details.",
+      "Vinset's work is therefore straightforward: market a range of pharmaceutical products, share product information with healthcare professionals, receive quote requests and stay in touch by phone and email. We aim to make each step easy to understand while leaving clinical decisions to registered medical practitioners and the product information supplied with the product.",
+    ],
     history: COMPANY_HISTORY,
   },
   missionVision: {
@@ -106,101 +121,100 @@ export const ABOUT = {
       title: "Our Mission",
       statement: MISSION_STATEMENT,
       supporting:
-        "We focus on clear product information, responsible marketing communication, and helpful conversations with every partner.",
+        "We aim to keep product information, quote requests and contact steps straightforward.",
     },
     vision: {
       title: "Our Vision",
       statement:
-        "To build enduring relationships with healthcare professionals through honest marketing and useful product information.",
+        "We aim to be a clear and useful point of contact for pharmaceutical product information.",
       supporting:
-        "We aspire to be recognized for reliable information, transparent cooperation, and attentive service across every commercial enquiry.",
+        "We aim to communicate modestly and follow up directly when a professional visitor contacts us.",
     },
   },
   whatWeDo: {
     heading: "What We Do",
-    subheading: "Helping healthcare buyers make informed product enquiries.",
+    subheading: "Four practical parts of our marketing role.",
     items: [
       {
         icon: "productRange",
-        title: "Showcase our product range",
-        text: "We maintain an up-to-date online catalogue detailing formulations, active strengths, packaging configurations, and therapeutic categories. Each product entry provides clear, verified facts regarding presentation and composition.",
+        title: "Market a range of pharmaceutical products",
+        text: "We market tablets, capsules, syrups and suspensions, injectables, nutraceuticals and personal care products under the Vinset name.",
       },
       {
         icon: "quoteRequests",
-        title: "Handle your quote requests",
-        text: "We provide an intuitive quotation system allowing buyers to specify order requirements, pack preferences, and delivery destinations. Every submission generates a dedicated enquiry record reviewed promptly by our team.",
+        title: "Share product information",
+        text: "We share product information with doctors and other healthcare professionals.",
       },
       {
         icon: "directContact",
-        title: "Stay in touch directly",
-        text: "We follow up on every enquiry by telephone or email from our Mumbai team to clarify product information and connect buyers with the appropriate commercial contact.",
+        title: "Handle quote requests",
+        text: "We receive quote requests from product pages. A request is an enquiry, not an online order.",
       },
       {
         icon: "clearInformation",
-        title: "Keep information clear",
-        text: "We communicate openly regarding product information, enquiry steps, and commercial discussions so you can proceed with clarity.",
+        title: "Stay in touch by phone and email",
+        text: "We reply directly by phone or email using the contact details provided by the visitor.",
       },
     ],
   },
   values: {
     heading: "Our Values",
-    subheading:
-      "Principles guiding our marketing approach and client relationships.",
+    subheading: "Intentions that guide how we present information.",
     items: [
       {
-        title: "Integrity",
-        text: "We build every professional relationship on honesty, accountability, and respect. Clear information about our products and processes helps healthcare partners make confident decisions.",
+        title: "Clarity",
+        text: "We aim to use plain language and keep product and enquiry information easy to follow.",
       },
       {
-        title: "Quality focus",
-        text: "We present product information thoughtfully and encourage clear documentation so buyers can review formulations and packaging with confidence.",
+        title: "Honesty",
+        text: "We aim to describe Vinset's marketing role accurately and not present it as manufacturing.",
       },
       {
-        title: "Reliability",
-        text: "We aim for steady communication and organized enquiry handling that healthcare buyers and commercial partners can count on.",
+        title: "Respect",
+        text: "We aim to respect healthcare professionals, trade partners and the decisions they make.",
       },
       {
-        title: "Transparency",
-        text: "We present clear specifications, straightforward terms, and honest guidance regarding our product catalogue. We provide unambiguous information so every commercial discussion begins with clarity.",
+        title: "Consistency",
+        text: "We aim to keep the website, product pages and contact steps consistent.",
       },
       {
-        title: "Responsibility",
-        text: "We recognize the vital role pharmaceuticals play in healthcare and approach every request with diligence, clarity, and respect for professional requirements.",
+        title: "Follow-up",
+        text: "We aim to respond directly by phone or email when a visitor sends an enquiry.",
       },
     ],
   },
   workflow: {
     heading: "How Working With Us Looks",
     subheading:
-      "A straightforward four-step process from enquiry to consultation.",
+      "A straightforward sequence from product information to follow-up.",
     steps: [
       {
         number: 1,
-        title: "Browse the products",
-        text: "Explore our online catalogue to review available formulations, strengths, and pack formats suited to your clinical needs. Filter by category or search by active ingredients to locate appropriate options.",
+        title: "Manufacturing partners produce the products",
+        text: "Our manufacturing partners produce the products.",
       },
       {
         number: 2,
-        title: "Request a quote on the product you need",
-        text: "Submit a concise quotation enquiry specifying your requested volume, organization details, and contact preferences. The form is straightforward and takes only moments to complete.",
+        title: "Vinset markets them under its name",
+        text: "Vinset markets the products under the Vinset name, and the pack states “Marketed by Vinset Pharmaceuticals”.",
       },
       {
         number: 3,
-        title: "We contact you by phone or email",
-        text: "A representative reviews your enquiry and reaches out directly using your preferred channel to clarify product details and explain the next commercial discussion.",
+        title: "Enquiries reach us",
+        text: "Enquiries reach us through the website, phone or email.",
       },
       {
         number: 4,
-        title: "Discuss your requirements",
-        text: "We help clarify your requirements, product information, and next steps through direct, personalized consultation. Any commercial agreement is handled separately by the relevant authorized parties.",
+        title: "We follow up directly",
+        text: "We follow up directly by phone or email.",
       },
     ],
   },
   contactPoints: {
     heading: "Where to Find Us",
-    subheading: "Direct contact established to support procurement.",
+    subheading: "Two contact points are shown from site configuration.",
     intro:
-      "Vinset pharmaceuticals coordinates marketing enquiries from our Mumbai office. Whether discussing product information, wholesale requirements, or institutional procurement needs, our team provides prompt attention and helps connect interested buyers with appropriate commercial partners.",
+      "Use the configured Mumbai or Jaipur contact point. For product information or a quote enquiry, our team replies by phone or email.",
   },
 } as const;
 
@@ -212,138 +226,135 @@ export const ABOUT_ICONS = {
 } as const;
 
 export const WHY_US_ICONS = {
-  qualityAssurance: IconCheck,
-  qualityIngredients: IconFlask,
-  trustAndCommitment: IconShieldCheck,
-  mission: IconTarget,
-  reach: IconCompass,
-  customerFocus: IconHeartHandshake,
+  clearInformation: IconInfoCircle,
+  range: IconPill,
+  quoteRequests: IconFileText,
+  directContact: IconPhoneCall,
+  healthcareProfessionals: IconHeartHandshake,
+  marketingRole: IconShieldCheck,
 } as const;
 
 export const WHY_US = {
   heading: "Why Vinset pharmaceuticals",
   intro:
-    "Healthcare providers and procurement teams choose Vinset pharmaceuticals for clear product information, open communication, and attentive enquiry support. We help visitors move from initial discovery to a well-prepared commercial enquiry.",
+    "We aim to make product information and quote enquiries clear for healthcare professionals and trade partners. The page explains what visitors can expect from the website.",
+  reasonsIntro:
+    "Six reasons to use the website for product information and quote enquiries.",
   points: [
     {
-      icon: "qualityAssurance",
-      title: "Quality Assurance",
-      shortDescription:
-        "Product information is presented clearly and responsibly.",
-      detailedDescription:
-        "We aim to present product specifications, packaging details, and category information clearly. Our approach prioritizes careful communication so healthcare buyers can review information responsibly before beginning a commercial discussion.",
-    },
-    {
-      icon: "qualityIngredients",
+      icon: "clearInformation",
       title: "Clear Product Information",
       shortDescription:
-        "Product information helps buyers understand listed ingredients.",
+        "Product pages show the key information available on the site.",
       detailedDescription:
-        "Our catalogue helps buyers review listed active ingredients and product details supplied through relevant commercial channels. We encourage healthcare professionals to confirm current specifications and documentation with authorized product representatives.",
+        "Each product page lists the name, composition line and pack details. This gives a visitor a straightforward place to review the information shown on the site before sending an enquiry.",
     },
     {
-      icon: "trustAndCommitment",
-      title: "Trust and Commitment",
-      shortDescription: "Commitments are stated openly and kept visible.",
+      icon: "range",
+      title: "A Range Across Dosage Forms",
+      shortDescription: "Browse the range by category.",
       detailedDescription:
-        "We value transparent relationships built on honest dialogue and clear expectations. When you contact us for product details, we share straightforward information and help direct your enquiry to the appropriate commercial contact.",
+        "The range includes tablets, capsules, syrups and suspensions, injectables, nutraceuticals and personal care. These categories help visitors browse the products shown on the website without implying a clinical use.",
     },
     {
-      icon: "mission",
-      title: "Clear Mission",
-      shortDescription: "The mission guides company decisions.",
+      icon: "quoteRequests",
+      title: "Quote Requests From Product Pages",
+      shortDescription: "Start an enquiry where you find a product.",
       detailedDescription:
-        "Our mission centers on helping healthcare providers discover relevant pharmaceutical products through clear information and responsible marketing communication. We aim to make the first step of every enquiry straightforward and useful.",
+        "You can request a quote from any product page. A quote request is an enquiry, not an online order. Include the product and contact details you want the team to use when replying.",
     },
     {
-      icon: "reach",
-      title: "Convenient Reach Through Mumbai",
-      shortDescription: "The company service scope is clearly defined.",
+      icon: "directContact",
+      title: "Direct Contact by Phone and Email",
+      shortDescription: "Two contact points are available.",
       detailedDescription:
-        "With our contact point established in Mumbai, we facilitate accessible communication for healthcare buyers and commercial partners. Interested organizations can connect with our personnel by phone or email for prompt enquiry support and clear next steps.",
+        "The website shows contact points in Mumbai and Jaipur from site configuration. Our team replies by phone or email. The configured details give professional visitors a direct way to continue a product conversation.",
     },
     {
-      icon: "customerFocus",
-      title: "Customer Focus",
-      shortDescription: "Customer requirements guide marketing priorities.",
+      icon: "healthcareProfessionals",
+      title: "Written for Healthcare Professionals",
+      shortDescription: "Plain information without medical advice.",
       detailedDescription:
-        "We listen closely to the requirements of distributors, clinics, and healthcare institutions to shape our marketing support. Our team records product interests, packaging preferences, and documentation questions to make the commercial discussion efficient and collaborative.",
+        "We share plain product information with healthcare professionals. The website does not provide medical advice, diagnose a condition or replace the label and prescribing information supplied with a product.",
+    },
+    {
+      icon: "marketingRole",
+      title: "Clear About Who We Are",
+      shortDescription: "Our marketing role is stated plainly.",
+      detailedDescription: `Vinset markets the products, our manufacturing partners produce them, and the pack says “Marketed by ${legalName}”. Keeping this role clear helps visitors understand what Vinset does and what the website is for.`,
     },
   ],
   expectations: {
-    heading: "What to Expect When You Work With Us",
-    subheading: "A collaborative partnership built on four foundational aims.",
+    heading: "What to Expect",
+    subheading:
+      "Communication, clarity, consistency and follow-up are our aims.",
     items: [
       {
-        title: "Clear Communication",
-        text: "We aim to respond promptly to your enquiries and keep discussions direct, polite, and transparent.",
+        title: "Communication",
+        text: "We aim to keep contact direct, polite and easy to follow when a professional visitor asks about a product.",
       },
       {
-        title: "Formulation Clarity",
-        text: "We aim to provide comprehensive product sheets, accurate ingredient disclosures, and clear packaging descriptions.",
+        title: "Clarity",
+        text: "We aim to present product and enquiry information plainly, with the product page as the starting point for the conversation.",
       },
       {
-        title: "Operational Consistency",
-        text: "We aim to maintain clear catalogue information and honor the communication commitments agreed during consultation.",
+        title: "Consistency",
+        text: "We aim to keep the same marketing role clear across the website, from the product catalogue through the contact page.",
       },
       {
-        title: "Attentive Follow-Up",
-        text: "We aim to verify your satisfaction following order fulfilment and assist with subsequent replenishment needs.",
+        title: "Follow-up",
+        text: "We aim to reply by phone or email after an enquiry and keep the next step connected to the information requested.",
       },
     ],
   },
   commitments: {
     heading: "Our Commitments",
-    subheading: "Guiding principles governing our everyday operations.",
+    subheading: "How we aim to communicate.",
     items: [
-      "We commit to honest representations of our product catalogue and marketing role.",
-      "We commit to safeguarding buyer confidentiality throughout quote consultations.",
-      "We commit to respectful, prompt, and professional communication on every enquiry.",
-      "We commit to continuous refinement of our handling, storage, and service practices.",
+      "We aim to describe Vinset as a pharmaceutical marketing company and keep that description consistent.",
+      "We aim to share product information in plain language for healthcare professionals and trade partners.",
+      "We aim to keep quote requests separate from online sales or payments, because the website is an enquiry platform.",
+      "We aim to follow up directly by phone or email using the contact details provided in the enquiry.",
     ],
   },
   faq: {
     heading: "Frequently Asked Questions",
     subheading:
-      "Answers regarding our enquiry process, marketing role, and communication.",
+      "Answers about products, quote requests and our marketing role.",
     items: [
       {
         question: "How do I request a quote for a product?",
         answer:
-          "Navigate to the Our Products page, select the specific product you require, and complete the quotation request form with your estimated quantity and contact details.",
+          "Open the product page and use the quote request form. You can request a quote from any product page, then provide the contact details the team should use.",
       },
       {
-        question: "Can I purchase products or place orders directly online?",
+        question: "Can I buy products online?",
         answer:
-          "No. The website is an informational catalogue and enquiry platform. We do not process online transactions, take credit card payments, or conclude binding sales online. All orders are finalised through separate written agreement and direct consultation.",
+          "No. This website does not sell products or take payments online. A quote request is an enquiry, not an online order, and our team replies by phone or email directly.",
       },
       {
-        question: "What information should I include in a quote request?",
+        question: "What should I include in a quote request?",
         answer:
-          "We recommend providing your name, organization or practice name, phone number, email address, and the product, pack format, or volume you wish to discuss.",
+          "Include your name, organisation or practice, phone number, email address and the product or pack details you want to discuss. A clear message helps us understand your enquiry.",
       },
       {
-        question:
-          "How will Vinset pharmaceuticals get in touch with me after I submit a quote?",
-        answer:
-          "A member of our team will contact you directly via the telephone number or email address provided in your form, typically within standard business hours.",
+        question: "Who makes the products?",
+        answer: `Our manufacturing partners make the products. Vinset markets them under the Vinset name, and the pack states “Marketed by ${legalName}”. Vinset is not the manufacturer.`,
       },
       {
-        question: "Where can I reach Vinset pharmaceuticals directly?",
+        question: "Where can I reach Vinset pharmaceuticals?",
         answer:
-          "You can reach us through our Mumbai office. Our phone number, email address, and map link are available on our Contact Us page and in the website footer.",
+          "Use the Mumbai or Jaipur contact point shown on the Contact Us page. Our configured phone and email details are also shown there for direct follow-up.",
       },
       {
-        question:
-          "What should I do if a product I need is not listed in the catalogue?",
+        question: "Are these prescription medicines?",
         answer:
-          "Please reach out to us directly by phone or email. Our team can clarify the requested product information and connect your enquiry with the appropriate commercial contact.",
+          "Many products are prescription medicines. Use prescription medicines only as directed by a registered medical practitioner. This website gives no medical advice.",
       },
       {
-        question:
-          "Does this website provide medical advice or patient diagnoses?",
+        question: "What if I cannot find a product?",
         answer:
-          "No. Information presented on this website is intended solely for healthcare professionals and commercial buyers. It is not medical advice. Patients seeking medical guidance should always consult a qualified healthcare professional.",
+          "Contact us by phone or email and tell us what product information you need. We can then reply directly about the enquiry.",
       },
     ],
   },
@@ -353,42 +364,46 @@ export type WhyUsPoint = (typeof WHY_US.points)[number];
 
 export const CTA = {
   heading: "Browse our products and request a quote.",
-  text: "Explore the Vinset pharmaceuticals product range and send a request for a quote for the products you need.",
-  primaryCta: {
-    label: "Browse Products",
-    href: ROUTES.products,
-  },
-  secondaryCta: {
-    label: "Contact Us",
-    href: ROUTES.contactUs,
-  },
+  text: "Browse the range and send a quote enquiry from any product page.",
+  primaryCta: { label: "Browse Products", href: ROUTES.products },
+  secondaryCta: { label: "Contact Us", href: ROUTES.contactUs },
 } as const;
+
+export const FOOTER_COPY = {
+  blurb:
+    "Vinset Pharmaceuticals markets pharmaceutical products and shares product information with healthcare professionals.",
+  disclaimer:
+    "Information on this website is intended for healthcare professionals and trade partners. It is general information and not medical advice.",
+} as const;
+
+export const PRODUCT_NOTICE =
+  "Always refer to the product label. Prescription medicines are to be used only as directed by a registered medical practitioner. Images are for representation only.";
 
 export const PAGE_META = {
   home: {
     title: "Home",
     description:
-      "Vinset pharmaceuticals showcases pharmaceutical products and helps healthcare buyers begin informed commercial conversations.",
+      "Vinset Pharmaceuticals markets pharmaceutical products and shares product information with healthcare professionals.",
   },
   about: {
     title: "About Us",
     description:
-      "Learn about Vinset pharmaceuticals, our focus on pharmaceutical quality, mission and values, and how healthcare buyers request direct product quotes.",
+      "Learn how Vinset Pharmaceuticals markets products made by manufacturing partners and shares product information.",
   },
   whyUs: {
     title: "Why Us",
     description:
-      "Explore why healthcare buyers choose Vinset pharmaceuticals for clear product information, responsible marketing, contact support, and direct communication.",
+      "See how Vinset Pharmaceuticals presents products, handles quote enquiries and stays in touch.",
   },
   contact: {
     title: "Contact Us",
     description:
-      "Contact Vinset pharmaceuticals for address, phone, email and working hours.",
+      "Find Vinset Pharmaceuticals contact points in Mumbai and Jaipur and send a product enquiry.",
   },
   media: {
     title: "Media Showcase",
     description:
-      "Explore photos and videos of Vinset pharmaceuticals products, packaging, and marketing activities.",
+      "View product and packaging media shared by Vinset Pharmaceuticals.",
   },
 } as const;
 
@@ -413,8 +428,8 @@ export const FOOTER_PILLARS: readonly FooterPillar[] = [
     icon: "talkToUs",
   },
   {
-    title: "Mumbai",
-    description: "Find our contact details and map links.",
+    title: "Mumbai and Jaipur",
+    description: "Find our configured contact points.",
     href: ROUTES.contactUs,
     icon: "locations",
   },

@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
-import { BRAND_COLORS, SITE_NAME, SITE_TAGLINE } from "@/config/site";
+import { BRAND_COLORS, SITE_DESCRIPTION, SITE_NAME } from "@/config/site";
 
-export const alt = `${SITE_NAME} - ${SITE_TAGLINE}`;
+export const alt = `${SITE_NAME} - ${SITE_DESCRIPTION}`;
 export const size = {
   width: 1200,
   height: 630,
@@ -33,7 +33,7 @@ export default function OpenGraphImage() {
           marginBottom: "20px",
         }}
       >
-        Pharmaceutical Care
+        Pharmaceutical marketing
       </div>
       <div
         style={{
@@ -55,7 +55,7 @@ export default function OpenGraphImage() {
           lineHeight: 1.4,
         }}
       >
-        {SITE_TAGLINE}
+        {SITE_DESCRIPTION}
       </div>
     </div>,
     {

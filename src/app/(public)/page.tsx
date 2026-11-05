@@ -10,7 +10,7 @@ import { Hero } from "@/features/marketing/components/hero";
 import { HomeBannerCarousel } from "@/features/marketing/components/home-banner-carousel";
 import { Section } from "@/features/marketing/components/section";
 import { WhyUsGrid } from "@/features/marketing/components/why-us-grid";
-import { WHY_US } from "@/features/marketing/content";
+import { HOME_COPY, WHY_US } from "@/features/marketing/content";
 import { HOME_IMAGES } from "@/features/marketing/images";
 import { MediaCarouselSection } from "@/features/media/components/media-carousel-section";
 import { FeaturedProductsSection } from "@/features/products/components/featured-products";
@@ -44,11 +44,10 @@ export default function HomePage() {
               id="product-marketing-banners-heading"
               className="font-heading text-2xl font-bold tracking-tight text-foreground sm:text-3xl"
             >
-              Pharmaceutical product marketing
+              {HOME_COPY.bannerTitle}
             </h2>
             <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-              Explore the products, people, and marketing focus behind Vinset
-              pharmaceuticals.
+              {HOME_COPY.bannerIntro}
             </p>
           </div>
           <HomeBannerCarousel images={HOME_IMAGES.banners} />

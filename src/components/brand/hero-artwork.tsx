@@ -26,7 +26,7 @@ export function HeroArtwork({ className }: HeroArtworkProps) {
         className="w-full max-w-full h-auto drop-shadow-sm"
         aria-hidden="true"
       >
-        <title>Pharmaceutical capsule formulation artwork</title>
+        <title>Pharmaceutical capsule artwork</title>
         <defs>
           {/* Subtle cavity depth gradient for the blister well */}
           <radialGradient

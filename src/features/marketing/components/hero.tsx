@@ -1,4 +1,3 @@
-import { IconStarFilled } from "@tabler/icons-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/components/layout/container";
@@ -6,50 +5,6 @@ import { HeroSlideshow } from "@/features/hero/components/hero-slideshow";
 import { getHeroSlides } from "@/features/hero/public-data";
 import { HERO } from "../content";
 import { HOME_IMAGES } from "../images";
-
-function SocialProof() {
-  return (
-    <div className="flex flex-wrap items-center gap-3.5 sm:gap-5 pt-5 sm:pt-6 border-t border-white/10 w-full">
-      {/* Overlapping customer avatars */}
-      <div className="flex -space-x-2">
-        <div className="inline-flex size-8 sm:size-9 items-center justify-center rounded-full bg-[#0e2a56] text-[11px] sm:text-xs font-semibold text-white ring-2 ring-brand-dark">
-          DR
-        </div>
-        <div className="inline-flex size-8 sm:size-9 items-center justify-center rounded-full bg-[#00388d] text-[11px] sm:text-xs font-semibold text-white ring-2 ring-brand-dark">
-          MK
-        </div>
-        <div className="inline-flex size-8 sm:size-9 items-center justify-center rounded-full bg-primary text-[11px] sm:text-xs font-semibold text-white ring-2 ring-brand-dark">
-          AP
-        </div>
-        <div className="inline-flex size-8 sm:size-9 items-center justify-center rounded-full bg-accent-light text-[10px] sm:text-[11px] font-bold text-brand-dark ring-2 ring-brand-dark">
-          +10k
-        </div>
-      </div>
-
-      {/* Rating & Trust Statement */}
-      <div className="flex flex-col gap-0.5">
-        <div className="flex items-center gap-1.5">
-          <div className="flex items-center text-amber-400">
-            {[1, 2, 3, 4, 5].map((i) => (
-              <IconStarFilled
-                key={i}
-                className="size-3.5 sm:size-4"
-                aria-hidden="true"
-              />
-            ))}
-          </div>
-          <span className="font-bold text-white text-xs sm:text-sm">5.0</span>
-          <span className="text-white/60 text-xs sm:text-sm font-medium">
-            Rating
-          </span>
-        </div>
-        <p className="text-xs sm:text-sm font-medium text-white/80">
-          Trusted by 10,000+ healthcare clinics &amp; buyers
-        </p>
-      </div>
-    </div>
-  );
-}
 
 export async function Hero() {
   const slides = await getHeroSlides().catch(() => []);
@@ -101,9 +56,6 @@ export async function Hero() {
                 {HERO.secondaryCta.label}
               </Link>
             </div>
-
-            {/* Social proof section */}
-            <SocialProof />
           </div>
 
           {/* Right Column (Desktop) / Lower Section (Mobile) */}

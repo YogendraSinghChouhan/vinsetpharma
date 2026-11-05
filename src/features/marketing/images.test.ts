@@ -101,9 +101,9 @@ describe("Marketing Images Configuration", () => {
       // No blockquote is rendered
       expect(html.includes("<blockquote")).toBe(false);
 
-      // Leadership name and role are rendered in the figure caption
-      expect(html.includes(FOUNDER.name)).toBe(true);
-      expect(html.includes(FOUNDER.role)).toBe(true);
+      // The portrait caption identifies the person shown, separately from the founder.
+      expect(html.includes(FOUNDER.image.personName)).toBe(true);
+      expect(html.includes(FOUNDER.image.personRole)).toBe(true);
 
       // Exactly one h1 is rendered: "About Us"
       const h1Matches = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/gi);

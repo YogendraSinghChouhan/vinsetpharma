@@ -7,6 +7,7 @@ import { AutoScrollCarousel } from "@/components/carousel/auto-scroll-carousel";
 import { Container } from "@/components/layout/container";
 import { CarouselItem } from "@/components/ui/carousel";
 import { ROUTES } from "@/config/site";
+import { HOME_COPY } from "@/features/marketing/content";
 import { getImageUrl } from "@/features/storage/image-url";
 import { MEDIA_CAROUSEL_LIMIT } from "../constants";
 import { getTopMedia, type PublicMediaItem } from "../public-data";
@@ -50,7 +51,7 @@ export async function MediaCarouselSection() {
         <div className="flex flex-col gap-8 sm:gap-10">
           <SectionHeading
             title="Media gallery"
-            description="A visual look into our pharmaceutical products, packaging, and marketing activities."
+            description={HOME_COPY.mediaIntro}
           />
 
           <AutoScrollCarousel>

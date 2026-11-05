@@ -4,6 +4,7 @@ import { AutoScrollCarousel } from "@/components/carousel/auto-scroll-carousel";
 import { Container } from "@/components/layout/container";
 import { CarouselItem } from "@/components/ui/carousel";
 import { ROUTES } from "@/config/site";
+import { HOME_COPY } from "@/features/marketing/content";
 import { getPublicCategories } from "../public-data";
 import { CategoryCard } from "./category-card";
 
@@ -26,7 +27,7 @@ export async function CategoriesSection() {
         <div className="flex flex-col gap-8 sm:gap-10">
           <SectionHeading
             title="Browse by category"
-            description="Explore our specialized pharmaceutical portfolio organized by therapeutic dosage form."
+            description={HOME_COPY.categoryIntro}
           />
 
           <AutoScrollCarousel>

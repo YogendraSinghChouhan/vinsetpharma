@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
+import { PRODUCT_NOTICE } from "@/features/marketing/content";
 import { getImageUrl } from "@/features/storage/image-url";
 import { cn } from "@/lib/utils";
 import type { PublicProduct } from "../public-data";
@@ -49,6 +50,9 @@ export function ProductDetail({ product }: ProductDetailProps) {
           <div className="mt-4 whitespace-pre-line text-base leading-relaxed text-muted-foreground sm:text-lg">
             {product.description}
           </div>
+          <p className="mt-5 rounded-lg border border-border/70 bg-muted/40 p-3 text-sm leading-relaxed text-muted-foreground">
+            {PRODUCT_NOTICE}
+          </p>
         </div>
       </div>
     </article>

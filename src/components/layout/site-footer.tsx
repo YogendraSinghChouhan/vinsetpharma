@@ -14,11 +14,11 @@ import {
   CONTACT,
   COPYRIGHT_YEAR,
   LEGAL_NAV,
+  legalName,
   ROUTES,
-  SITE_DESCRIPTION,
-  SITE_NAME,
 } from "@/config/site";
 import {
+  FOOTER_COPY,
   FOOTER_PILLAR_ICONS,
   FOOTER_PILLARS,
 } from "@/features/marketing/content";
@@ -68,7 +68,7 @@ export function SiteFooter() {
             <div className="lg:col-span-4 flex flex-col gap-5">
               <Logo inverted />
               <p className="text-sm text-brand-dark-muted leading-relaxed pr-2">
-                {SITE_DESCRIPTION}
+                {FOOTER_COPY.blurb}
               </p>
 
               {/* Direct Enquiry CTA Button */}
@@ -125,7 +125,7 @@ export function SiteFooter() {
                       href={ROUTES.products}
                       className="inline-flex min-h-[40px] items-center text-sm text-brand-dark-muted transition-colors hover:text-accent-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-light"
                     >
-                      All Formulations
+                      All Products
                     </Link>
                   </li>
                   <li>
@@ -133,7 +133,7 @@ export function SiteFooter() {
                       href={ROUTES.products}
                       className="inline-flex min-h-[40px] items-center text-sm text-brand-dark-muted transition-colors hover:text-accent-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-light"
                     >
-                      Tablets & Capsules
+                      Tablets and Capsules
                     </Link>
                   </li>
                   <li>
@@ -141,7 +141,7 @@ export function SiteFooter() {
                       href={ROUTES.products}
                       className="inline-flex min-h-[40px] items-center text-sm text-brand-dark-muted transition-colors hover:text-accent-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-light"
                     >
-                      Oral Syrups
+                      Syrups and Suspensions
                     </Link>
                   </li>
                   <li>
@@ -149,7 +149,7 @@ export function SiteFooter() {
                       href={ROUTES.products}
                       className="inline-flex min-h-[40px] items-center text-sm text-brand-dark-muted transition-colors hover:text-accent-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-light"
                     >
-                      Sterile Injections
+                      Injectables
                     </Link>
                   </li>
                   <li>
@@ -157,7 +157,7 @@ export function SiteFooter() {
                       href={ROUTES.products}
                       className="inline-flex min-h-[40px] items-center text-sm text-brand-dark-muted transition-colors hover:text-accent-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-light"
                     >
-                      Dry Powders & Sachets
+                      Nutraceuticals and Personal Care
                     </Link>
                   </li>
                 </ul>
@@ -274,19 +274,14 @@ export function SiteFooter() {
               <strong className="text-brand-dark-foreground/90 font-medium">
                 Healthcare Disclaimer:
               </strong>{" "}
-              The pharmaceutical details and educational articles on this
-              website are provided for institutional, healthcare professional,
-              and informational reference only. They do not constitute
-              personalized medical advice. Product specifications, packaging
-              information, commercial discussions, and any resulting agreements
-              are subject to separate authorized documentation.
+              {FOOTER_COPY.disclaimer}
             </p>
           </div>
 
           {/* 4. Bottom Utility Bar */}
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between pt-2 text-xs text-brand-dark-muted">
             <p className="text-xs">
-              © {COPYRIGHT_YEAR} {SITE_NAME}. All rights reserved.
+              © {COPYRIGHT_YEAR} {legalName}. All rights reserved.
             </p>
 
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-6">

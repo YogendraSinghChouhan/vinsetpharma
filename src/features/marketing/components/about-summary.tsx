@@ -3,7 +3,7 @@ import { BlisterPocket } from "@/components/brand/blister-pocket";
 import { SectionHeading } from "@/components/brand/section-heading";
 import { Container } from "@/components/layout/container";
 import { ROUTES } from "@/config/site";
-import { ABOUT } from "../content";
+import { ABOUT, HOME_COPY } from "../content";
 
 export function AboutSummary() {
   return (
@@ -32,8 +32,7 @@ export function AboutSummary() {
 
             <div className="pt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <p className="text-sm text-muted-foreground max-w-xl">
-                Explore our documented operating standards, quality verification
-                protocols, and pharmaceutical care approach.
+                {HOME_COPY.aboutTeaser}
               </p>
               <Link
                 href={ROUTES.aboutUs}

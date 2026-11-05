@@ -2,6 +2,7 @@ import { env } from "@/config/env";
 import {
   CONTACT,
   LOGO_ASSET,
+  legalName,
   SITE_DESCRIPTION,
   SITE_NAME,
 } from "@/config/site";
@@ -26,6 +27,7 @@ export type PersonSchema = {
 export type OrganizationSchema = Thing & {
   "@type": "Organization";
   name: string;
+  legalName: string;
   url: string;
   description: string;
   logo?: string;
@@ -110,6 +112,7 @@ export function buildOrganization(): OrganizationSchema {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: SITE_NAME,
+    legalName,
     url: baseUrl,
     description: SITE_DESCRIPTION,
     employee: {
@@ -179,7 +182,7 @@ export function buildProduct({
     ...(image ? { image } : {}),
     brand: {
       "@type": "Organization",
-      name: SITE_NAME,
+      name: legalName,
       url: baseUrl,
     },
   };

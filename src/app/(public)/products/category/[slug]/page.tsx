@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ROUTES, SITE_NAME } from "@/config/site";
+import { ROUTES } from "@/config/site";
 import { CATEGORY_ROUTES } from "@/features/categories/constants";
 import {
   getPublicCategoryBySlug,
@@ -36,7 +36,7 @@ export async function generateMetadata({
 
   return createPageMetadata({
     title: `${category.name} | Products`,
-    description: `Explore pharmaceutical formulations in ${category.name} from ${SITE_NAME}.`,
+    description: `Browse ${category.name} products marketed under the Vinset name.`,
     path: CATEGORY_ROUTES.categoryDetail(slug),
   });
 }
@@ -55,7 +55,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     <>
       <PageHeader
         title={category.name}
-        description={`Explore our quality formulations in ${category.name.toLowerCase()}.`}
+        description={`Browse ${category.name.toLowerCase()} products marketed under the Vinset name.`}
         crumbs={[
           { label: "Home", href: ROUTES.home },
           { label: "Our Products", href: ROUTES.products },
@@ -66,10 +66,10 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         {products.length === 0 ? (
           <div className="rounded-lg border border-dashed p-12 text-center text-muted-foreground">
             <p className="text-lg font-medium">
-              No products found in this category yet.
+              No products are currently listed in this category.
             </p>
             <p className="mt-2 text-sm">
-              Please check back soon or browse all products in our catalog.
+              Browse all products or contact us for product information.
             </p>
           </div>
         ) : (

@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { z } from "zod";
 import { ROUTES } from "@/config/site";
 import { PageHeader } from "@/features/marketing/components/page-header";
+import { PAGE_META } from "@/features/marketing/content";
 import { ProductGrid } from "@/features/products/components/product-grid";
 import { ProductsPagination } from "@/features/products/components/products-pagination";
 import { PUBLIC_PRODUCTS_PAGE_SIZE } from "@/features/products/constants";
@@ -44,8 +45,7 @@ export async function generateMetadata({ searchParams }: ProductsPageProps) {
 
   return createPageMetadata({
     title,
-    description:
-      "Explore our comprehensive portfolio of high-quality pharmaceutical formulations and healthcare solutions.",
+    description: PAGE_META.home.description,
     path,
   });
 }
@@ -59,11 +59,9 @@ async function ProductsCatalog({ page }: { page: number }) {
   if (totalItems === 0) {
     return (
       <div className="rounded-lg border border-dashed p-12 text-center text-muted-foreground">
-        <p className="text-lg font-medium">
-          Products will be listed here soon.
-        </p>
+        <p className="text-lg font-medium">No products are currently listed.</p>
         <p className="mt-2 text-sm">
-          Please check back later or contact us directly for product inquiries.
+          Contact us by phone or email for product information.
         </p>
       </div>
     );
@@ -98,7 +96,7 @@ export default async function ProductsPage({
     <>
       <PageHeader
         title="Our Products"
-        description="Explore our comprehensive portfolio of high-quality pharmaceutical formulations and healthcare solutions."
+        description={PAGE_META.home.description}
         crumbs={[
           { label: "Home", href: ROUTES.home },
           { label: "Our Products" },

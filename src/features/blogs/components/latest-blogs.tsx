@@ -3,13 +3,17 @@ import { SectionHeading } from "@/components/brand/section-heading";
 import { Container } from "@/components/layout/container";
 import { CarouselItem } from "@/components/ui/carousel";
 import { ROUTES } from "@/config/site";
+import { HOME_COPY } from "@/features/marketing/content";
 import { HOME_LATEST_POSTS_LIMIT } from "../constants";
+import { isSuitableForPublicCopy } from "../public-copy";
 import { getLatestPosts } from "../public-data";
 import { BlogCard } from "./blog-card";
 import { BlogCarousel } from "./blog-carousel";
 
 export async function LatestBlogsSection() {
-  const posts = await getLatestPosts(HOME_LATEST_POSTS_LIMIT);
+  const posts = (await getLatestPosts(HOME_LATEST_POSTS_LIMIT)).filter(
+    isSuitableForPublicCopy,
+  );
 
   if (posts.length === 0) {
     return null;
@@ -28,7 +32,7 @@ export async function LatestBlogsSection() {
         <div className="flex flex-col gap-10">
           <SectionHeading
             title="Latest Articles & Insights"
-            description="Read our latest pharmaceutical discoveries, industry perspectives, and scientific updates."
+            description={HOME_COPY.blogIntro}
           />
 
           <BlogCarousel>

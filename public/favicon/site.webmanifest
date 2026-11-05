@@ -1,6 +1,7 @@
 {
-  "name": "Vinset Pharma",
-  "short_name": "Vinset Pharma",
+  "name": "Vinset Pharmaceuticals",
+  "short_name": "Vinset",
+  "description": "Vinset Pharmaceuticals markets pharmaceutical products and shares product information with healthcare professionals.",
   "icons": [
     {
       "src": "/favicon/web-app-manifest-192x192.png",

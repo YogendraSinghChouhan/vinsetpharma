@@ -1,11 +1,13 @@
 import { notFound } from "next/navigation";
 import { z } from "zod";
-import { ROUTES, SITE_NAME } from "@/config/site";
+import { ROUTES } from "@/config/site";
 import { BlogGrid } from "@/features/blogs/components/blog-grid";
 import { BlogPagination } from "@/features/blogs/components/blog-pagination";
 import { PUBLIC_POSTS_PAGE_SIZE } from "@/features/blogs/constants";
+import { isSuitableForPublicCopy } from "@/features/blogs/public-copy";
 import { getPublishedPostsPage } from "@/features/blogs/public-data";
 import { PageHeader } from "@/features/marketing/components/page-header";
+import { HOME_COPY } from "@/features/marketing/content";
 import { createPageMetadata } from "@/lib/metadata";
 
 type BlogPageProps = {
@@ -44,24 +46,28 @@ export async function generateMetadata({ searchParams }: BlogPageProps) {
 
   return createPageMetadata({
     title,
-    description: `Explore clinical perspectives, pharmaceutical breakthroughs, and company announcements from ${SITE_NAME}.`,
+    description: HOME_COPY.blogIntro,
     path,
   });
 }
 
 async function BlogCatalog({ page }: { page: number }) {
-  const { items, totalItems, totalPages } = await getPublishedPostsPage({
+  const { items, totalPages } = await getPublishedPostsPage({
     page,
     pageSize: PUBLIC_POSTS_PAGE_SIZE,
   });
 
-  if (totalItems === 0) {
+  const publicItems = items.filter(isSuitableForPublicCopy);
+
+  if (publicItems.length === 0) {
     return (
       <div className="rounded-lg border border-dashed p-12 text-center text-muted-foreground">
-        <p className="text-lg font-medium">Articles will be published soon.</p>
+        <p className="text-lg font-medium">
+          {" "}
+          No articles are currently published.
+        </p>
         <p className="mt-2 text-sm">
-          Please check back later for pharmaceutical research insights and
-          company updates.
+          Please check back later for product information and company updates.
         </p>
       </div>
     );
@@ -69,7 +75,7 @@ async function BlogCatalog({ page }: { page: number }) {
 
   return (
     <>
-      <BlogGrid posts={items} />
+      <BlogGrid posts={publicItems} />
       <BlogPagination currentPage={page} totalPages={totalPages} />
     </>
   );
@@ -94,7 +100,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
     <>
       <PageHeader
         title="Blog & Insights"
-        description={`Explore clinical perspectives, pharmaceutical breakthroughs, and company announcements from ${SITE_NAME}.`}
+        description={HOME_COPY.blogIntro}
         crumbs={[{ label: "Home", href: ROUTES.home }, { label: "Blog" }]}
       />
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">

@@ -1,9 +1,10 @@
 export const SITE_NAME = "Vinset pharmaceuticals";
 
-export const SITE_TAGLINE = "Careful science for pharmaceutical care.";
+/** The legal name must be confirmed by the client before launch. */
+export const legalName = "Vinset Pharmaceuticals";
 
 export const SITE_DESCRIPTION =
-  "Vinset pharmaceuticals showcases pharmaceutical products and connects healthcare buyers with qualified commercial partners.";
+  "Vinset Pharmaceuticals markets pharmaceutical products and shares product information with healthcare professionals.";
 
 /**
  * Shared brand color hex values derived directly from globals.css design tokens.
@@ -162,6 +163,12 @@ export const CONTACT: Contact = {
       mapsUrl: buildMapsUrl(
         "Shop No. 5, Raam Bhawan, Station Road, Bhayander (W), Mumbai 401101",
       ),
+    },
+    {
+      id: "jaipur",
+      label: "Jaipur",
+      text: "Jaipur contact point",
+      mapsUrl: buildMapsUrl("Jaipur"),
     },
   ],
   workingHours: null,

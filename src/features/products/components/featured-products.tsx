@@ -3,6 +3,7 @@ import { SectionHeading } from "@/components/brand/section-heading";
 import { Container } from "@/components/layout/container";
 import { CarouselItem } from "@/components/ui/carousel";
 import { ROUTES } from "@/config/site";
+import { HOME_COPY } from "@/features/marketing/content";
 import { FEATURED_PRODUCTS_LIMIT } from "../constants";
 import { getFeaturedProducts } from "../public-data";
 import { ProductCard } from "./product-card";
@@ -30,7 +31,7 @@ export async function FeaturedProductsSection() {
         <div className="flex flex-col gap-10">
           <SectionHeading
             title="Featured Products"
-            description="Explore our essential pharmaceutical formulations across key therapeutic categories."
+            description={HOME_COPY.featuredProductsIntro}
           />
 
           {/* Automatic carousel same as blogs with increased card size */}

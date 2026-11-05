@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/layout/container";
-import { ROUTES, SITE_NAME } from "@/config/site";
+import { ROUTES } from "@/config/site";
 import { PageHeader } from "@/features/marketing/components/page-header";
+import { PAGE_META } from "@/features/marketing/content";
 import {
   MediaGallery,
   type MediaGalleryItem,
@@ -13,7 +14,7 @@ import { createPageMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = createPageMetadata({
   title: "Media Gallery",
-  description: `Explore photos and videos from ${SITE_NAME}'s pharmaceutical marketing activities, products, and packaging.`,
+  description: PAGE_META.media.description,
   path: ROUTES.media,
 });
 
@@ -33,7 +34,7 @@ export default async function MediaPage() {
     <>
       <PageHeader
         title="Media Gallery"
-        description={`Explore photos and videos from ${SITE_NAME}'s pharmaceutical marketing activities, products, and packaging.`}
+        description={PAGE_META.media.description}
         crumbs={[{ label: "Home", href: ROUTES.home }, { label: "Media" }]}
       />
       <Container className="py-12 sm:py-16 lg:py-20">
@@ -43,8 +44,7 @@ export default async function MediaPage() {
           <div className="rounded-lg border border-dashed p-12 text-center text-muted-foreground">
             <p className="text-lg font-medium">Media will be published soon.</p>
             <p className="mt-2 text-sm">
-              Please check back later for photos and videos from our
-              pharmaceutical operations.
+              Please check back later for product and packaging media.
             </p>
           </div>
         )}

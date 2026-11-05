@@ -12,3 +12,4 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - read @docs to understand the project.
 - dynamic features are products, categories, blogs, quote requests, media, hero banner.
 - use single source of truth feature based architecture.
+- Follow [docs/content-guidelines.md](docs/content-guidelines.md) for all public copy.

@@ -84,10 +84,10 @@ export function AboutHero() {
               </div>
               <figcaption className="px-3 pt-3 pb-2 text-left">
                 <div className="font-heading text-lg font-semibold tracking-tight text-foreground sm:text-xl">
-                  {FOUNDER.name}
+                  {FOUNDER.image.personName}
                 </div>
                 <div className="text-sm font-medium text-muted-foreground">
-                  {FOUNDER.role}
+                  {FOUNDER.image.personRole}
                 </div>
               </figcaption>
             </BlisterPocket>

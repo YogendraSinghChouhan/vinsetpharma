@@ -1,5 +1,10 @@
 import { describe, expect, it } from "bun:test";
-import { buildMapsUrl, buildTelHref, SITE_NAME } from "@/config/site";
+import {
+  buildMapsUrl,
+  buildTelHref,
+  legalName,
+  SITE_NAME,
+} from "@/config/site";
 import {
   buildBlogPosting,
   buildBreadcrumbList,
@@ -14,6 +19,7 @@ describe("structured-data builders", () => {
     expect(org["@context"]).toBe("https://schema.org");
     expect(org["@type"]).toBe("Organization");
     expect(org.name).toBe(SITE_NAME);
+    expect(org.legalName).toBe(legalName);
     expect(org.url).toBeDefined();
     expect(org.description).toBeDefined();
 
@@ -23,11 +29,12 @@ describe("structured-data builders", () => {
     expect(org.logo).toContain("/logo.png");
     expect(org.address).toBeDefined();
     expect(Array.isArray(org.address)).toBe(true);
-    expect(org.address).toHaveLength(1);
+    expect(org.address).toHaveLength(2);
     expect(org.address?.[0]?.streetAddress).toBe(
       "Shop No. 5, Raam Bhawan, Station Road, Bhayander (W), Mumbai 401101",
     );
     expect(org.address?.[0]?.addressCountry).toBe("IN");
+    expect(org.address?.[1]?.streetAddress).toBe("Jaipur contact point");
     // Chief executive officer
     expect(org.employee).toEqual({
       "@type": "Person",
@@ -56,7 +63,8 @@ describe("structured-data builders", () => {
     expect(product["@type"]).toBe("Product");
     expect(product.name).toBe("Amoxicillin 500mg");
     expect(product.brand["@type"]).toBe("Organization");
-    expect(product.brand.name).toBe(SITE_NAME);
+    expect(product.brand.name).toBe(legalName);
+    expect(product.manufacturer).toBeUndefined();
 
     // Strictly ensure no eCommerce or rating fields are emitted
     expect(product.offers).toBeUndefined();
