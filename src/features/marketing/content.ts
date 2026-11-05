@@ -14,7 +14,7 @@ import {
 } from "@tabler/icons-react";
 import { legalName, ROUTES } from "@/config/site";
 
-const COMPANY_HISTORY = `${legalName} is a pharmaceutical marketing company. Products are made by our manufacturing partners and marketed under the Vinset name. The packs state “Marketed by ${legalName}”.`;
+const COMPANY_HISTORY = `${legalName} is a pharmaceutical marketing company. The packs state “Marketed by ${legalName}”.`;
 
 const MISSION_STATEMENT =
   "We aim to connect healthcare professionals and trade partners with information about pharmaceutical products marketed under the Vinset name.";
@@ -95,7 +95,7 @@ export const ABOUT = {
   header: {
     title: "About Vinset pharmaceuticals",
     tagline: "Committed to healthcare. Focused on product information. Driven by relationships.",
-    intro: `${legalName} is a pharmaceutical marketing company. Our manufacturing partners produce the products, which are marketed under the Vinset name and shared with healthcare professionals and trade partners.`,
+    intro: `${legalName} is a pharmaceutical marketing company.`,
   },
   introduction: {
     heading: "About Us",
@@ -106,16 +106,15 @@ export const ABOUT = {
   whoWeAre: {
     heading: "Who We Are",
     subheading:
-      "A pharmaceutical marketing company sharing product information with healthcare professionals.",
+      "A pharmaceutical marketing company focused on clear product information and professional relationships.",
     paragraphs: [
-      `${legalName} is a pharmaceutical marketing company. Our manufacturing partners produce the products, which are marketed under the Vinset name. The packs state “Marketed by ${legalName}”.`,
+      `${legalName} is a pharmaceutical marketing company.`,
       "Our range covers tablets, capsules, syrups and suspensions, injectables, nutraceuticals and personal care products. Each category represents a different part of the portfolio we bring to professional attention. We share information about these products with doctors and other healthcare professionals, while trade partners can contact us to discuss their requirements.",
       "Our work centres on product presentation, responsible communication and direct follow-up. We provide the product name, composition line and pack details available for professional reference. Product pages and quote requests help start a conversation, and our team replies by phone or email using the details provided.",
       "The intended audience is healthcare professionals and trade partners. This audience statement is an assumption and must be confirmed by the client. We aim to build professional relationships through useful information, respectful communication and consistent follow-up from our Mumbai contact point.",
       "Vinset brings together a defined product range, product information, quote-request support and direct contact. We aim to keep our marketing role clear, understand the requirements shared with us and maintain steady professional relationships through thoughtful communication.",
       "We value careful listening, clear product conversations and reliable follow-up. These principles help us understand professional requirements and keep our business relationships focused, respectful and useful over time in practice.",
     ],
-    history: COMPANY_HISTORY,
   },
   missionVision: {
     heading: "Mission & Vision",

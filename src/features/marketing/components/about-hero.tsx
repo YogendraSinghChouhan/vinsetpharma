@@ -37,7 +37,7 @@ export function AboutHero() {
             </h1>
 
             {/* 2. Intro sentence */}
-            <p className="order-2 text-base leading-relaxed text-foreground/90 font-medium sm:text-lg">
+            <p className="order-2 text-justify text-base leading-relaxed text-foreground/90 font-medium sm:text-lg">
               {ABOUT.header.intro}
             </p>
 
@@ -46,7 +46,7 @@ export function AboutHero() {
               {FOUNDER.intro.map((paragraph) => (
                 <p
                   key={paragraph}
-                  className="text-base leading-relaxed text-muted-foreground sm:text-lg"
+                  className="text-justify text-base leading-relaxed text-muted-foreground sm:text-lg"
                 >
                   {paragraph
                     .split(/(Anand Saini|Dr\. Vishnu Saini)/g)
@@ -59,7 +59,7 @@ export function AboutHero() {
                     )}
                 </p>
               ))}
-              <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">
+              <p className="text-justify text-base leading-relaxed text-muted-foreground sm:text-lg">
                 {FOUNDER.principles}
               </p>
 
@@ -74,7 +74,7 @@ export function AboutHero() {
               ) : null}
 
               {FOUNDER.bio ? (
-                <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">
+                <p className="text-justify text-base leading-relaxed text-muted-foreground sm:text-lg">
                   {FOUNDER.bio}
                 </p>
               ) : null}
