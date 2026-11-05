@@ -17,7 +17,7 @@ import { legalName, ROUTES } from "@/config/site";
 const COMPANY_HISTORY = `${legalName} is a pharmaceutical marketing company. Products are made by our manufacturing partners and marketed under the Vinset name. The packs state “Marketed by ${legalName}”.`;
 
 const MISSION_STATEMENT =
-  "We aim to make pharmaceutical product information clear for healthcare professionals and trade partners.";
+  "We aim to connect healthcare professionals and trade partners with information about pharmaceutical products marketed under the Vinset name.";
 
 export type FounderMessage = {
   text: string;
@@ -97,7 +97,7 @@ export const ABOUT = {
   },
   introduction: {
     heading: "About Us",
-    text: "We share information about our pharmaceutical products with healthcare professionals and trade partners. The website supports product browsing and quote requests, with our team available to reply by phone or email.",
+    text: "Vinset Pharmaceuticals is a pharmaceutical marketing company. We market products made by our manufacturing partners and share product information with healthcare professionals and trade partners.",
     history: COMPANY_HISTORY,
     linkLabel: "More about our company",
   },
@@ -107,11 +107,10 @@ export const ABOUT = {
       "A pharmaceutical marketing company sharing product information with healthcare professionals.",
     paragraphs: [
       `${legalName} is a pharmaceutical marketing company. Our manufacturing partners produce the products, which are marketed under the Vinset name. The packs state “Marketed by ${legalName}”.`,
-      "Our role is to present product information in a clear, plain and useful way. We share information about tablets, capsules, syrups and suspensions, injectables, nutraceuticals and personal care products with doctors and other healthcare professionals. Trade partners can also browse the range and contact us about a product.",
-      "The website is a product information and enquiry platform. Visitors can browse categories, open product pages and request a quote from a product page. Our team replies by phone or email so the next conversation can be handled directly.",
-      "We keep the distinction between marketing and manufacturing clear. Product pages help professional visitors find the product name, composition line and pack details available on the site. Always refer to the product label and the prescribing information supplied with the product. The website provides general product information.",
-      "The intended audience is healthcare professionals and trade partners. This audience statement is an assumption and must be confirmed by the client. We aim to write for professional readers with clear descriptions of the website and Vinset. When a visitor needs more information, the contact page provides the configured Mumbai and Jaipur contact points, together with the configured phone and email details.",
-      "Vinset's work is therefore straightforward: market a range of pharmaceutical products, share product information with healthcare professionals, receive quote requests and stay in touch by phone and email. We aim to make each step easy to understand while leaving clinical decisions to registered medical practitioners and the product information supplied with the product.",
+      "Our range covers tablets, capsules, syrups and suspensions, injectables, nutraceuticals and personal care products. We share information about these products with doctors and other healthcare professionals, while trade partners can contact us to discuss their requirements. Each category represents a different part of the range we bring to professional attention.",
+      "Our work is built around clear product presentation and direct communication. We provide the product name, composition line and pack details available for professional reference, and we respond to product enquiries by phone or email. These simple touchpoints help us keep conversations focused on the product and the requirements shared with our team.",
+      "The intended audience is healthcare professionals and trade partners. This audience statement is an assumption and must be confirmed by the client. We aim to build professional relationships through clear information, thoughtful communication and consistent follow-up from our Mumbai and Jaipur contact points.",
+      "Vinset brings together a defined product range, product information, quote-request support and direct contact. We aim to be a useful marketing partner for professional conversations while keeping our role and the product information supplied with each product clear. We value steady communication and practical follow-up as part of every relationship. This is how we build trust through everyday professional contact.",
     ],
     history: COMPANY_HISTORY,
   },
@@ -121,14 +120,14 @@ export const ABOUT = {
       title: "Our Mission",
       statement: MISSION_STATEMENT,
       supporting:
-        "We aim to keep product information, quote requests and contact steps straightforward.",
+        "We aim to support professional conversations with clear information and direct communication.",
     },
     vision: {
       title: "Our Vision",
       statement:
-        "We aim to be a clear and useful point of contact for pharmaceutical product information.",
+        "We aim to build lasting professional relationships around the pharmaceutical products we market.",
       supporting:
-        "We aim to communicate modestly and follow up directly when a professional visitor contacts us.",
+        "We aim to grow through consistency, respect and attentive follow-up.",
     },
   },
   whatWeDo: {
@@ -163,23 +162,23 @@ export const ABOUT = {
     items: [
       {
         title: "Clarity",
-        text: "We aim to use plain language and keep product and enquiry information easy to follow.",
+        text: "We aim to present product details and quote-request steps in a clear, organised way.",
       },
       {
-        title: "Honesty",
-        text: "We aim to describe Vinset's marketing role accurately and distinguish it from the manufacturing role of our partners.",
+        title: "Responsibility",
+        text: "We aim to present our marketing role accurately and keep product information connected to the details supplied with each product.",
       },
       {
         title: "Respect",
         text: "We aim to respect healthcare professionals, trade partners and the decisions they make.",
       },
       {
-        title: "Consistency",
-        text: "We aim to keep the website, product pages and contact steps consistent.",
+        title: "Partnership",
+        text: "We aim to build respectful working relationships with healthcare professionals, trade partners and manufacturing partners.",
       },
       {
         title: "Follow-up",
-        text: "We aim to respond directly by phone or email when a visitor sends an enquiry.",
+        text: "We aim to respond directly by phone or email and keep conversations moving.",
       },
     ],
   },
@@ -237,9 +236,9 @@ export const WHY_US_ICONS = {
 export const WHY_US = {
   heading: "Why Vinset pharmaceuticals",
   intro:
-    "We aim to make product information and quote enquiries clear for healthcare professionals and trade partners. The page explains what visitors can expect from the website.",
+    "Vinset brings together a focused product range, professional product information and direct communication with healthcare professionals and trade partners. We focus on dependable conversations, useful details and a clear understanding of our marketing role. These principles guide our work.",
   reasonsIntro:
-    "Six reasons to use the website for product information and quote enquiries.",
+    "Six parts of the Vinset approach to product marketing and professional communication.",
   points: [
     {
       icon: "clearInformation",
@@ -247,28 +246,28 @@ export const WHY_US = {
       shortDescription:
         "Product pages show the key information available on the site.",
       detailedDescription:
-        "Each product page lists the name, composition line and pack details. This gives a visitor a straightforward place to review the information shown on the site before sending an enquiry.",
+        "Each product listing presents the name, composition line and pack details available for professional reference. These details give a clear starting point for a product conversation.",
     },
     {
       icon: "range",
       title: "A Range Across Dosage Forms",
       shortDescription: "Browse the range by category.",
       detailedDescription:
-        "The range includes tablets, capsules, syrups and suspensions, injectables, nutraceuticals and personal care. These categories help visitors browse the products shown on the website.",
+        "Our range includes tablets, capsules, syrups and suspensions, injectables, nutraceuticals and personal care products. The categories reflect the different dosage forms and product areas marketed under the Vinset name.",
     },
     {
       icon: "quoteRequests",
       title: "Quote Requests From Product Pages",
       shortDescription: "Start an enquiry where you find a product.",
       detailedDescription:
-        "You can request a quote from any product page. Include the product and contact details you want the team to use when replying.",
+        "A quote request gives healthcare professionals and trade partners a direct way to discuss a product and share the details needed for a reply. It helps the team understand the enquiry before following up.",
     },
     {
       icon: "directContact",
       title: "Direct Contact by Phone and Email",
       shortDescription: "Two contact points are available.",
       detailedDescription:
-        "The website shows contact points in Mumbai and Jaipur from site configuration. Our team replies by phone or email. The configured details give professional visitors a direct way to continue a product conversation.",
+        "Our configured contact points in Mumbai and Jaipur give professional visitors direct ways to reach the team. We reply by phone or email.",
     },
     {
       icon: "healthcareProfessionals",
@@ -276,48 +275,48 @@ export const WHY_US = {
       shortDescription:
         "Plain product information for healthcare professionals.",
       detailedDescription:
-        "We share plain product information with healthcare professionals. Always refer to the product label and the prescribing information supplied with the product.",
+        "We share product information with healthcare professionals and keep the discussion connected to the product label and prescribing information supplied with the product.",
     },
     {
       icon: "marketingRole",
       title: "Clear About Who We Are",
       shortDescription: "Our marketing role is stated plainly.",
-      detailedDescription: `Vinset markets the products, our manufacturing partners produce them, and the pack says “Marketed by ${legalName}”. Keeping this role clear helps visitors understand what Vinset does and what the website is for.`,
+      detailedDescription: `Vinset markets the products, our manufacturing partners produce them, and the pack says “Marketed by ${legalName}”. This clear distinction is central to how we present the company and communicate with professional contacts.`,
     },
   ],
   expectations: {
     heading: "What to Expect",
     subheading:
-      "Communication, clarity, consistency and follow-up are our aims.",
+      "Communication, clarity, consistency and follow-up shape our approach.",
     items: [
       {
         title: "Communication",
-        text: "We aim to keep contact direct, polite and easy to follow when a professional visitor asks about a product.",
+        text: "We aim to keep contact direct, respectful and useful when a professional asks about a product.",
       },
       {
         title: "Clarity",
-        text: "We aim to present product and enquiry information plainly, with the product page as the starting point for the conversation.",
+        text: "We aim to present product information and enquiry details in an organised way.",
       },
       {
         title: "Consistency",
-        text: "We aim to keep the same marketing role clear across the website, from the product catalogue through the contact page.",
+        text: "We aim to keep Vinset's marketing role consistent across our product information and conversations.",
       },
       {
         title: "Follow-up",
-        text: "We aim to reply by phone or email after an enquiry and keep the next step connected to the information requested.",
+        text: "We aim to reply by phone or email and keep the next step connected to the enquiry.",
       },
     ],
   },
   commitments: {
     heading: "Our Commitments",
-    subheading: "How we aim to communicate.",
+    subheading: "How we aim to work with professional contacts.",
     items: [
       "We aim to describe Vinset as a pharmaceutical marketing company and keep that description consistent.",
-      "We aim to share product information in plain language for healthcare professionals and trade partners.",
-      "We aim to make quote requests a clear starting point for direct conversations with our team.",
+      "We aim to share product information with healthcare professionals and trade partners.",
+      "We aim to make quote requests a useful starting point for direct conversations with our team.",
       "We aim to follow up directly by phone or email using the contact details provided in the enquiry.",
-      "We aim to keep each conversation connected to the product information and contact details shared by the visitor.",
-      "We aim to make the website a clear starting point for professional product conversations.",
+      "We aim to connect each conversation to the product information and requirements shared with us.",
+      "We aim to build professional relationships through consistency, respect and attentive communication.",
     ],
   },
   faq: {
