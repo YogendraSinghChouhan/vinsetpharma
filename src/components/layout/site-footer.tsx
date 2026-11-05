@@ -211,14 +211,6 @@ export function SiteFooter() {
                       Contact & Inquiries
                     </Link>
                   </li>
-                  <li>
-                    <Link
-                      href={ROUTES.adminLogin}
-                      className="inline-flex min-h-[40px] items-center text-sm text-brand-dark-muted/70 transition-colors hover:text-brand-dark-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-light"
-                    >
-                      Staff Portal
-                    </Link>
-                  </li>
                 </ul>
               </nav>
             </div>
@@ -280,9 +272,22 @@ export function SiteFooter() {
 
           {/* 4. Bottom Utility Bar */}
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between pt-2 text-xs text-brand-dark-muted">
-            <p className="text-xs">
-              © {COPYRIGHT_YEAR} {legalName}. All rights reserved.
-            </p>
+            <div className="flex flex-col gap-1">
+              <p className="text-xs">
+                © {COPYRIGHT_YEAR} {legalName}. All rights reserved.
+              </p>
+              <p className="text-xs">
+                Designed and developed by{" "}
+                <a
+                  href="https://vedbit.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline underline-offset-4 transition-colors hover:text-accent-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-light"
+                >
+                  Vedbit
+                </a>
+              </p>
+            </div>
 
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-6">
               <nav aria-label="Legal Navigation">
