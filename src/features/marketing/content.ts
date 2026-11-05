@@ -42,7 +42,7 @@ export type Founder = {
 };
 
 export const FOUNDER: Founder = {
-  name: "Dr. Anand Saini",
+  name: "Anand Saini",
   role: "Founder",
   image: {
     src: "/images/about/vishnu-saini.jpg",
@@ -53,7 +53,7 @@ export const FOUNDER: Founder = {
     personRole: "Chief Executive Officer",
   },
   intro:
-    "Vinset pharmaceuticals was founded by Dr. Anand Saini. Dr. Vishnu Saini serves as Chief Executive Officer, helping lead the company's pharmaceutical marketing focus and relationships with healthcare partners.",
+    "Vinset pharmaceuticals was founded by Anand Saini. Dr. Vishnu Saini serves as Chief Executive Officer, helping lead the company's pharmaceutical marketing focus and relationships with healthcare partners.",
   principles:
     "We believe in clear communication, careful attention to every enquiry and straightforward dealings with the people we work with.",
   message: null,
@@ -106,7 +106,7 @@ export const ABOUT = {
     subheading:
       "A pharmaceutical marketing company sharing product information with healthcare professionals.",
     paragraphs: [
-      `${legalName} is a pharmaceutical marketing company. We do not manufacture products. Our manufacturing partners produce the products, which are marketed under the Vinset name. The packs state “Marketed by ${legalName}”.`,
+      `${legalName} is a pharmaceutical marketing company. Our manufacturing partners produce the products, which are marketed under the Vinset name. The packs state “Marketed by ${legalName}”.`,
       "Our role is to present product information in a clear, plain and useful way. We share information about tablets, capsules, syrups and suspensions, injectables, nutraceuticals and personal care products with doctors and other healthcare professionals. Trade partners can also browse the range and contact us about a product.",
       "The website is a product information and enquiry platform. Visitors can browse categories, open product pages and request a quote from a product page. A quote request is an enquiry, not an online order. There are no online sales or payments. Our team replies by phone or email so the next conversation can be handled directly.",
       "We keep the distinction between marketing and manufacturing clear. Product pages are intended to help a professional visitor find the product name, composition line and pack details available on the site. Always refer to the product label and the prescribing information supplied with the product. The website gives general information and no medical advice.",
