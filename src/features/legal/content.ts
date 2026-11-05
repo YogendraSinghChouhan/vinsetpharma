@@ -80,7 +80,7 @@ export const PRIVACY_POLICY: LegalDocument = {
         },
         {
           type: "paragraph",
-          text: "For authorized administrative staff who log in to the management dashboard, we store login credentials (work email and hashed password) and session identifiers. Public visitor registration and customer accounts are not provided on this site.",
+          text: "For authorized administrative staff who log in to the management dashboard, we store login credentials (work email and hashed password) and session identifiers.",
         },
       ],
     },
@@ -245,7 +245,7 @@ export const TERMS_AND_CONDITIONS: LegalDocument = {
       blocks: [
         {
           type: "paragraph",
-          text: "Information on this website is for healthcare professionals, general and illustrative. It is not medical advice.",
+          text: "Information on this website is general and illustrative product information for healthcare professionals.",
         },
         {
           type: "paragraph",
@@ -269,11 +269,11 @@ export const TERMS_AND_CONDITIONS: LegalDocument = {
       blocks: [
         {
           type: "paragraph",
-          text: "This website is not an eCommerce store. We do not sell pharmaceutical products directly through the website or collect payments online.",
+          text: "This website provides pharmaceutical product information and quote enquiries for professional visitors. Our team replies by phone or email with quotation information.",
         },
         {
           type: "paragraph",
-          text: "Submitting a quote request is an expression of interest to receive quotation information. It does not constitute a purchase order, an acceptance of an offer, or a binding agreement of sale.",
+          text: "Submitting a quote request expresses interest in receiving quotation information. Our team reviews the enquiry and follows up directly with the details provided.",
         },
         {
           type: "paragraph",

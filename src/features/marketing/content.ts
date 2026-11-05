@@ -97,7 +97,7 @@ export const ABOUT = {
   },
   introduction: {
     heading: "About Us",
-    text: "We share information about our pharmaceutical products with healthcare professionals and trade partners. The website supports product browsing and quote requests; it does not sell products or take payments online.",
+    text: "We share information about our pharmaceutical products with healthcare professionals and trade partners. The website supports product browsing and quote requests, with our team available to reply by phone or email.",
     history: COMPANY_HISTORY,
     linkLabel: "More about our company",
   },
@@ -108,9 +108,9 @@ export const ABOUT = {
     paragraphs: [
       `${legalName} is a pharmaceutical marketing company. Our manufacturing partners produce the products, which are marketed under the Vinset name. The packs state “Marketed by ${legalName}”.`,
       "Our role is to present product information in a clear, plain and useful way. We share information about tablets, capsules, syrups and suspensions, injectables, nutraceuticals and personal care products with doctors and other healthcare professionals. Trade partners can also browse the range and contact us about a product.",
-      "The website is a product information and enquiry platform. Visitors can browse categories, open product pages and request a quote from a product page. A quote request is an enquiry, not an online order. There are no online sales or payments. Our team replies by phone or email so the next conversation can be handled directly.",
-      "We keep the distinction between marketing and manufacturing clear. Product pages are intended to help a professional visitor find the product name, composition line and pack details available on the site. Always refer to the product label and the prescribing information supplied with the product. The website gives general information and no medical advice.",
-      "The intended audience is healthcare professionals and trade partners. This audience statement is an assumption and must be confirmed by the client. We aim to write for professional readers without overstating what the website or Vinset does. When a visitor needs more information, the contact page provides the configured Mumbai and Jaipur contact points, together with the configured phone and email details.",
+      "The website is a product information and enquiry platform. Visitors can browse categories, open product pages and request a quote from a product page. Our team replies by phone or email so the next conversation can be handled directly.",
+      "We keep the distinction between marketing and manufacturing clear. Product pages help professional visitors find the product name, composition line and pack details available on the site. Always refer to the product label and the prescribing information supplied with the product. The website provides general product information.",
+      "The intended audience is healthcare professionals and trade partners. This audience statement is an assumption and must be confirmed by the client. We aim to write for professional readers with clear descriptions of the website and Vinset. When a visitor needs more information, the contact page provides the configured Mumbai and Jaipur contact points, together with the configured phone and email details.",
       "Vinset's work is therefore straightforward: market a range of pharmaceutical products, share product information with healthcare professionals, receive quote requests and stay in touch by phone and email. We aim to make each step easy to understand while leaving clinical decisions to registered medical practitioners and the product information supplied with the product.",
     ],
     history: COMPANY_HISTORY,
@@ -148,7 +148,7 @@ export const ABOUT = {
       {
         icon: "directContact",
         title: "Handle quote requests",
-        text: "We receive quote requests from product pages. A request is an enquiry, not an online order.",
+        text: "We receive quote requests from product pages and follow up directly with the details provided.",
       },
       {
         icon: "clearInformation",
@@ -167,7 +167,7 @@ export const ABOUT = {
       },
       {
         title: "Honesty",
-        text: "We aim to describe Vinset's marketing role accurately and not present it as manufacturing.",
+        text: "We aim to describe Vinset's marketing role accurately and distinguish it from the manufacturing role of our partners.",
       },
       {
         title: "Respect",
@@ -254,14 +254,14 @@ export const WHY_US = {
       title: "A Range Across Dosage Forms",
       shortDescription: "Browse the range by category.",
       detailedDescription:
-        "The range includes tablets, capsules, syrups and suspensions, injectables, nutraceuticals and personal care. These categories help visitors browse the products shown on the website without implying a clinical use.",
+        "The range includes tablets, capsules, syrups and suspensions, injectables, nutraceuticals and personal care. These categories help visitors browse the products shown on the website.",
     },
     {
       icon: "quoteRequests",
       title: "Quote Requests From Product Pages",
       shortDescription: "Start an enquiry where you find a product.",
       detailedDescription:
-        "You can request a quote from any product page. A quote request is an enquiry, not an online order. Include the product and contact details you want the team to use when replying.",
+        "You can request a quote from any product page. Include the product and contact details you want the team to use when replying.",
     },
     {
       icon: "directContact",
@@ -273,9 +273,10 @@ export const WHY_US = {
     {
       icon: "healthcareProfessionals",
       title: "Written for Healthcare Professionals",
-      shortDescription: "Plain information without medical advice.",
+      shortDescription:
+        "Plain product information for healthcare professionals.",
       detailedDescription:
-        "We share plain product information with healthcare professionals. The website does not provide medical advice, diagnose a condition or replace the label and prescribing information supplied with a product.",
+        "We share plain product information with healthcare professionals. Always refer to the product label and the prescribing information supplied with the product.",
     },
     {
       icon: "marketingRole",
@@ -313,8 +314,10 @@ export const WHY_US = {
     items: [
       "We aim to describe Vinset as a pharmaceutical marketing company and keep that description consistent.",
       "We aim to share product information in plain language for healthcare professionals and trade partners.",
-      "We aim to keep quote requests separate from online sales or payments, because the website is an enquiry platform.",
+      "We aim to make quote requests a clear starting point for direct conversations with our team.",
       "We aim to follow up directly by phone or email using the contact details provided in the enquiry.",
+      "We aim to keep each conversation connected to the product information and contact details shared by the visitor.",
+      "We aim to make the website a clear starting point for professional product conversations.",
     ],
   },
   faq: {
@@ -328,9 +331,9 @@ export const WHY_US = {
           "Open the product page and use the quote request form. You can request a quote from any product page, then provide the contact details the team should use.",
       },
       {
-        question: "Can I buy products online?",
+        question: "How are product enquiries handled?",
         answer:
-          "No. This website does not sell products or take payments online. A quote request is an enquiry, not an online order, and our team replies by phone or email directly.",
+          "Product enquiries begin with a quote request from a product page. Our team replies by phone or email using the contact details provided.",
       },
       {
         question: "What should I include in a quote request?",
@@ -339,7 +342,7 @@ export const WHY_US = {
       },
       {
         question: "Who makes the products?",
-        answer: `Our manufacturing partners make the products. Vinset markets them under the Vinset name, and the pack states “Marketed by ${legalName}”. Vinset is not the manufacturer.`,
+        answer: `Our manufacturing partners make the products. Vinset markets them under the Vinset name, and the pack states “Marketed by ${legalName}”.`,
       },
       {
         question: "Where can I reach Vinset pharmaceuticals?",
@@ -349,12 +352,12 @@ export const WHY_US = {
       {
         question: "Are these prescription medicines?",
         answer:
-          "Many products are prescription medicines. Use prescription medicines only as directed by a registered medical practitioner. This website gives no medical advice.",
+          "Many products are prescription medicines. Use prescription medicines only as directed by a registered medical practitioner. Always refer to the product label and the prescribing information supplied with the product.",
       },
       {
-        question: "What if I cannot find a product?",
+        question: "How can I ask about a product?",
         answer:
-          "Contact us by phone or email and tell us what product information you need. We can then reply directly about the enquiry.",
+          "Contact us by phone or email and tell us what product information you need. Our team can then reply directly about the enquiry.",
       },
     ],
   },
@@ -373,7 +376,7 @@ export const FOOTER_COPY = {
   blurb:
     "Vinset Pharmaceuticals markets pharmaceutical products and shares product information with healthcare professionals.",
   disclaimer:
-    "Information on this website is intended for healthcare professionals and trade partners. It is general information and not medical advice.",
+    "Information on this website is intended for healthcare professionals and trade partners. It provides general product information for professional reference.",
 } as const;
 
 export const PRODUCT_NOTICE =
