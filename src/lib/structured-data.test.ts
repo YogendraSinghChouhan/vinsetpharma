@@ -34,7 +34,9 @@ describe("structured-data builders", () => {
       "Shop No. 5, Raam Bhawan, Station Road, Bhayander (W), Mumbai 401101",
     );
     expect(org.address?.[0]?.addressCountry).toBe("IN");
-    expect(org.address?.[1]?.streetAddress).toBe("Jaipur contact point");
+    expect(org.address?.[1]?.streetAddress).toBe(
+      "Bohra Ji Ka Bagh, Laxmi Mandir Tiraha, Tonk Road, Jaipur, Rajasthan",
+    );
     // Chief executive officer
     expect(org.employee).toEqual({
       "@type": "Person",

@@ -167,8 +167,10 @@ export const CONTACT: Contact = {
     {
       id: "jaipur",
       label: "Jaipur",
-      text: "Jaipur contact point",
-      mapsUrl: buildMapsUrl("Jaipur"),
+      text: "Bohra Ji Ka Bagh, Laxmi Mandir Tiraha, Tonk Road, Jaipur, Rajasthan",
+      mapsUrl: buildMapsUrl(
+        "Bohra Ji Ka Bagh, Laxmi Mandir Tiraha, Tonk Road, Jaipur, Rajasthan",
+      ),
     },
   ],
   workingHours: null,

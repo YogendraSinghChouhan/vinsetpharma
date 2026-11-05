@@ -30,7 +30,7 @@ export function TopContactBar() {
     return null;
   }
 
-  const citiesText = addresses.length > 0 ? formatCities(addresses) : "";
+  const locationsText = addresses.length > 0 ? formatCities(addresses) : "";
 
   return (
     <div className="top-contact-bar-root w-full bg-brand-dark text-brand-dark-foreground">
@@ -69,7 +69,7 @@ export function TopContactBar() {
             </div>
 
             {/* Right side: Location link (only if addresses configured) */}
-            {citiesText ? (
+            {locationsText ? (
               <Link
                 href={ROUTES.contactUs}
                 className="inline-flex items-center gap-1.5 text-brand-dark-muted transition-colors hover:text-brand-dark-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-light rounded-xs"
@@ -78,7 +78,7 @@ export function TopContactBar() {
                   className="size-3.5 shrink-0 text-accent-light"
                   aria-hidden="true"
                 />
-                <span>{citiesText}</span>
+                <span>{locationsText}</span>
               </Link>
             ) : null}
           </div>

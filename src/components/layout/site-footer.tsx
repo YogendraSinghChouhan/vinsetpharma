@@ -1,5 +1,4 @@
 import {
-  IconArrowRight,
   IconArrowUp,
   IconExternalLink,
   IconMail,
@@ -7,62 +6,19 @@ import {
   IconPhone,
 } from "@tabler/icons-react";
 import Link from "next/link";
-import { PerforationDivider } from "@/components/brand/perforation-divider";
 import { Container } from "@/components/layout/container";
 import { Logo } from "@/components/layout/logo";
-import {
-  CONTACT,
-  COPYRIGHT_YEAR,
-  LEGAL_NAV,
-  legalName,
-  ROUTES,
-} from "@/config/site";
-import {
-  FOOTER_COPY,
-  FOOTER_PILLAR_ICONS,
-  FOOTER_PILLARS,
-} from "@/features/marketing/content";
+import { CONTACT, COPYRIGHT_YEAR, legalName, ROUTES } from "@/config/site";
+import { FOOTER_COPY } from "@/features/marketing/content";
 
 export function SiteFooter() {
   const primaryPhone = CONTACT.phones[0];
 
   return (
     <footer className="relative mt-auto">
-      {/* Structural blister foil perforation edge transitioning into dark surface */}
-      <PerforationDivider variant="transition-to-dark" />
-
       <div className="bg-brand-dark text-brand-dark-foreground pt-12 pb-14 sm:pt-16 sm:pb-16 lg:pt-20 lg:pb-20">
         <Container>
-          {/* 1. Verified Site Quick Action Pillars */}
-          <div className="mb-14 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 pb-12 border-b border-[oklch(1_0_0/10%)]">
-            {FOOTER_PILLARS.map((pillar, idx) => {
-              const IconComponent = FOOTER_PILLAR_ICONS[pillar.icon];
-              const isLast = idx === 2;
-              return (
-                <Link
-                  key={pillar.title}
-                  href={pillar.href}
-                  className={`group flex items-start gap-3.5 rounded-2xl bg-[oklch(1_0_0/3%)] p-4 border border-[oklch(1_0_0/8%)] transition-colors hover:border-accent-light/40 hover:bg-[oklch(1_0_0/5%)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-light ${
-                    isLast ? "sm:col-span-2 lg:col-span-1" : ""
-                  }`}
-                >
-                  <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/20 text-accent-light border border-primary/30 transition-colors group-hover:bg-primary/30 group-hover:text-white">
-                    <IconComponent className="size-5" aria-hidden="true" />
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-sm font-semibold tracking-tight text-brand-dark-foreground group-hover:text-accent-light transition-colors">
-                      {pillar.title}
-                    </span>
-                    <span className="text-xs text-brand-dark-muted leading-relaxed mt-0.5">
-                      {pillar.description}
-                    </span>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-
-          {/* 2. Main 12-Column Responsive Information Grid */}
+          {/* Main 12-Column Responsive Information Grid */}
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-8 pb-14 border-b border-[oklch(1_0_0/10%)]">
             {/* Column 1: Brand identity, blurb & Quick Actions (4 cols) */}
             <div className="lg:col-span-4 flex flex-col gap-5">
@@ -70,20 +26,6 @@ export function SiteFooter() {
               <p className="text-sm text-brand-dark-muted leading-relaxed pr-2">
                 {FOOTER_COPY.blurb}
               </p>
-
-              {/* Direct Enquiry CTA Button */}
-              <div className="pt-2">
-                <Link
-                  href={ROUTES.contactUs}
-                  className="group inline-flex min-h-[44px] items-center justify-between gap-3 rounded-full bg-accent-light px-5 py-2.5 text-xs font-semibold tracking-wider text-brand-dark uppercase shadow-sm transition-all hover:bg-white hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-light"
-                >
-                  <span>Request Product Quote</span>
-                  <IconArrowRight
-                    className="size-4 transition-transform group-hover:translate-x-1"
-                    aria-hidden="true"
-                  />
-                </Link>
-              </div>
 
               {/* Instant Contact Badges */}
               <div className="flex flex-col gap-2 pt-2 text-xs">
@@ -113,59 +55,8 @@ export function SiteFooter() {
               </div>
             </div>
 
-            {/* Column 2: Products & Categories (2 cols) */}
-            <div className="lg:col-span-2 sm:col-span-6 flex flex-col gap-4">
-              <p className="font-heading text-xs font-semibold tracking-widest text-brand-dark-foreground uppercase">
-                Products
-              </p>
-              <nav aria-label="Products Navigation">
-                <ul className="flex flex-col gap-1.5">
-                  <li>
-                    <Link
-                      href={ROUTES.products}
-                      className="inline-flex min-h-[40px] items-center text-sm text-brand-dark-muted transition-colors hover:text-accent-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-light"
-                    >
-                      All Products
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href={ROUTES.products}
-                      className="inline-flex min-h-[40px] items-center text-sm text-brand-dark-muted transition-colors hover:text-accent-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-light"
-                    >
-                      Tablets and Capsules
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href={ROUTES.products}
-                      className="inline-flex min-h-[40px] items-center text-sm text-brand-dark-muted transition-colors hover:text-accent-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-light"
-                    >
-                      Syrups and Suspensions
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href={ROUTES.products}
-                      className="inline-flex min-h-[40px] items-center text-sm text-brand-dark-muted transition-colors hover:text-accent-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-light"
-                    >
-                      Injectables
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href={ROUTES.products}
-                      className="inline-flex min-h-[40px] items-center text-sm text-brand-dark-muted transition-colors hover:text-accent-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-light"
-                    >
-                      Nutraceuticals and Personal Care
-                    </Link>
-                  </li>
-                </ul>
-              </nav>
-            </div>
-
-            {/* Column 3: Company & Quick Links (2 cols) */}
-            <div className="lg:col-span-2 sm:col-span-6 flex flex-col gap-4">
+            {/* Column 2: Company & Quick Links */}
+            <div className="lg:col-span-4 sm:col-span-6 flex flex-col gap-4">
               <p className="font-heading text-xs font-semibold tracking-widest text-brand-dark-foreground uppercase">
                 Company
               </p>
@@ -189,29 +80,28 @@ export function SiteFooter() {
                   </li>
                   <li>
                     <Link
-                      href={ROUTES.media}
-                      className="inline-flex min-h-[40px] items-center text-sm text-brand-dark-muted transition-colors hover:text-accent-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-light"
-                    >
-                      Media
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href={ROUTES.blog}
-                      className="inline-flex min-h-[40px] items-center text-sm text-brand-dark-muted transition-colors hover:text-accent-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-light"
-                    >
-                      Articles & Insights
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
                       href={ROUTES.contactUs}
                       className="inline-flex min-h-[40px] items-center text-sm text-brand-dark-muted transition-colors hover:text-accent-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-light"
                     >
-                      Contact & Inquiries
+                      Contact
                     </Link>
                   </li>
-                </ul>
+                  <li>
+                    <Link
+                      href={ROUTES.privacyPolicy}
+                      className="inline-flex min-h-[40px] items-center text-sm text-brand-dark-muted transition-colors hover:text-accent-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-light"
+                    >
+                      Privacy Policy
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href={ROUTES.termsAndConditions}
+                      className="inline-flex min-h-[40px] items-center text-sm text-brand-dark-muted transition-colors hover:text-accent-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-light"
+                    >
+                      Terms & Conditions
+                    </Link>
+                  </li>                </ul>
               </nav>
             </div>
 
@@ -290,21 +180,6 @@ export function SiteFooter() {
             </div>
 
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-6">
-              <nav aria-label="Legal Navigation">
-                <ul className="flex items-center gap-6">
-                  {LEGAL_NAV.map((item) => (
-                    <li key={item.href}>
-                      <Link
-                        href={item.href}
-                        className="inline-flex min-h-[44px] items-center text-xs text-brand-dark-muted transition-colors hover:text-accent-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-light"
-                      >
-                        {item.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
-
               {/* Smooth Back to Top Link */}
               <a
                 href="#top"
