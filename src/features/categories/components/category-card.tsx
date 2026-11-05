@@ -1,8 +1,6 @@
 import { IconArrowRight, IconPackage } from "@tabler/icons-react";
 import Image from "next/image";
 import Link from "next/link";
-import { BlisterPocket } from "@/components/brand/blister-pocket";
-import { SHOWCASE_CARD_STYLES } from "@/components/brand/showcase-card";
 import { getImageUrl } from "@/features/storage/image-url";
 import { cn } from "@/lib/utils";
 import { CATEGORY_ROUTES } from "../constants";
@@ -37,46 +35,43 @@ export function CategoryCard({
     <Link
       href={CATEGORY_ROUTES.categoryDetail(category.slug)}
       aria-label={`Browse ${category.name} (${productCountLabel})`}
-      className={cn(SHOWCASE_CARD_STYLES.container, className)}
+      className={cn(
+        "group flex h-full flex-col overflow-hidden rounded-xl border border-border/70 bg-white p-3 shadow-sm transition-transform duration-200 hover:-translate-y-1 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 sm:p-4",
+        className,
+      )}
     >
-      {/* Blister Pocket: Softly inset recessed cavity */}
-      <BlisterPocket
-        depth="subtle"
-        interactive
-        className={SHOWCASE_CARD_STYLES.pocket}
-      >
+      <div className="relative aspect-[1.35/1] w-full overflow-hidden rounded-lg bg-surface-tint">
         {imageUrl ? (
           <Image
             src={imageUrl}
             alt={category.name}
             fill
             priority={priority}
-            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-            className={SHOWCASE_CARD_STYLES.image}
+            sizes="(min-width: 1024px) 42vw, 88vw"
+            className="object-contain p-5 transition-transform duration-300 group-hover:scale-105"
           />
         ) : (
           <div className="flex size-full flex-col items-center justify-center text-muted-foreground/70">
             <IconPackage className="size-10" aria-hidden="true" />
           </div>
         )}
-      </BlisterPocket>
+      </div>
 
-      <div className={SHOWCASE_CARD_STYLES.content}>
-        <h3 className={SHOWCASE_CARD_STYLES.title}>{category.name}</h3>
-
-        <div className="mt-4 flex flex-1 flex-col justify-end pt-3 border-t border-border/40">
-          <div className="flex items-center justify-between gap-2">
-            <span className="text-xs font-medium text-muted-foreground">
-              {productCountLabel}
-            </span>
-            <span className="inline-flex min-h-[32px] items-center gap-1 rounded-full border border-border bg-surface-tint px-3 py-1 text-xs font-semibold text-primary transition-colors group-hover:border-primary/50 group-hover:bg-primary group-hover:text-primary-foreground">
-              <span>View products</span>
-              <IconArrowRight
-                className="size-3.5 transition-transform duration-200 group-hover:translate-x-0.5"
-                aria-hidden="true"
-              />
-            </span>
-          </div>
+      <div className="flex flex-1 flex-col gap-4 px-2 pb-2 pt-5">
+        <h3 className="font-heading text-xl font-semibold tracking-tight text-foreground transition-colors group-hover:text-primary">
+          {category.name}
+        </h3>
+        <div className="mt-auto flex items-center justify-between gap-3 border-t border-border/60 pt-4">
+          <span className="text-xs text-muted-foreground">
+            {productCountLabel}
+          </span>
+          <span className="inline-flex items-center gap-1 text-sm font-semibold text-primary">
+            Read More
+            <IconArrowRight
+              className="size-4 transition-transform duration-200 group-hover:translate-x-1"
+              aria-hidden="true"
+            />
+          </span>
         </div>
       </div>
     </Link>
