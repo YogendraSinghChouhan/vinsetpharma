@@ -54,7 +54,7 @@ export const FOUNDER: Founder = {
   },
   intro: [
     "VINSET Pharmaceuticals focuses on pharmaceutical marketing, developing business relationships and presenting a range of products through its marketing activities. Our products are manufactured by our manufacturing partners and marketed under the VINSET name.",
-    "Founded by Anand Saini, VINSET Pharmaceuticals is led by Dr. Vishnu Saini, who serves as Chief Executive Officer. The leadership guides the company's pharmaceutical marketing activities, professional relationships and continued growth.",
+    "VINSET Pharmaceuticals is led by Co-Founder Anand Saini, along with Dr. Vishnu Saini, who serves as Chief Executive Officer. The leadership guides the company's pharmaceutical marketing activities, professional relationships and continued growth.",
   ],
   principles:
     "Our approach is shaped by clear communication, responsible business relationships and careful attention to the product information and enquiries shared with us.",
@@ -111,7 +111,7 @@ export const ABOUT = {
       `${legalName} is a pharmaceutical marketing company. Our manufacturing partners produce the products, which are marketed under the Vinset name. The packs state “Marketed by ${legalName}”.`,
       "Our range covers tablets, capsules, syrups and suspensions, injectables, nutraceuticals and personal care products. Each category represents a different part of the portfolio we bring to professional attention. We share information about these products with doctors and other healthcare professionals, while trade partners can contact us to discuss their requirements.",
       "Our work centres on product presentation, responsible communication and direct follow-up. We provide the product name, composition line and pack details available for professional reference. Product pages and quote requests help start a conversation, and our team replies by phone or email using the details provided.",
-      "The intended audience is healthcare professionals and trade partners. This audience statement is an assumption and must be confirmed by the client. We aim to build professional relationships through useful information, respectful communication and consistent follow-up from our Mumbai and Jaipur contact points.",
+      "The intended audience is healthcare professionals and trade partners. This audience statement is an assumption and must be confirmed by the client. We aim to build professional relationships through useful information, respectful communication and consistent follow-up from our Mumbai contact point.",
       "Vinset brings together a defined product range, product information, quote-request support and direct contact. We aim to keep our marketing role clear, understand the requirements shared with us and maintain steady professional relationships through thoughtful communication.",
       "We value careful listening, clear product conversations and reliable follow-up. These principles help us understand professional requirements and keep our business relationships focused, respectful and useful over time in practice.",
     ],
@@ -214,9 +214,9 @@ export const ABOUT = {
   },
   contactPoints: {
     heading: "Where to Find Us",
-    subheading: "Two contact points are shown from site configuration.",
+    subheading: "Our contact point is shown from site configuration.",
     intro:
-      "Use the configured Mumbai or Jaipur contact point. For product information or a quote enquiry, our team replies by phone or email.",
+      "Use the configured Mumbai contact point. For product information or a quote enquiry, our team replies by phone or email.",
   },
 } as const;
 
@@ -270,7 +270,7 @@ export const WHY_US = {
       title: "Direct Contact by Phone and Email",
       shortDescription: "Two contact points are available.",
       detailedDescription:
-        "Our configured contact points in Mumbai and Jaipur give professional visitors direct ways to reach the team. We reply by phone or email and keep the conversation connected to the original enquiry.",
+        "Our configured Mumbai contact point gives professional visitors a direct way to reach the team. We reply by phone or email and keep the conversation connected to the original enquiry.",
     },
     {
       icon: "healthcareProfessionals",
@@ -348,7 +348,7 @@ export const WHY_US = {
       {
         question: "Where can I reach Vinset pharmaceuticals?",
         answer:
-          "Use the Mumbai or Jaipur contact point shown on the Contact Us page. Our configured phone and email details are also shown there for direct follow-up.",
+          "Use the Mumbai contact point shown on the Contact Us page. Our configured phone and email details are also shown there for direct follow-up.",
       },
       {
         question: "Are these prescription medicines?",
@@ -402,7 +402,7 @@ export const PAGE_META = {
   contact: {
     title: "Contact Us",
     description:
-      "Find Vinset Pharmaceuticals contact points in Mumbai and Jaipur and send a product enquiry.",
+      "Find the Vinset Pharmaceuticals contact point in Mumbai and send a product enquiry.",
   },
   media: {
     title: "Media Showcase",
@@ -432,7 +432,7 @@ export const FOOTER_PILLARS: readonly FooterPillar[] = [
     icon: "talkToUs",
   },
   {
-    title: "Mumbai and Jaipur",
+    title: "Mumbai",
     description: "Find our configured contact points.",
     href: ROUTES.contactUs,
     icon: "locations",

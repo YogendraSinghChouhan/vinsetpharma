@@ -9,7 +9,7 @@
 - The range is tablets, capsules, syrups and suspensions, injectables, nutraceuticals and personal care.
 - The website lets visitors browse products and request a quote from any product page.
 - There are no online sales or payments; the team replies by phone or email.
-- Contact points are Mumbai and Jaipur and must be read from site configuration.
+- The Mumbai contact point must be read from site configuration.
 - The logo tagline is “Think about your life”.
 - Intended audience: healthcare professionals and trade partners. This is an assumption and must be confirmed by the client.
 

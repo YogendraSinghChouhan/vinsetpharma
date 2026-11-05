@@ -1,6 +1,5 @@
 import {
   IconArrowUp,
-  IconExternalLink,
   IconMail,
   IconMapPin,
   IconPhone,
@@ -127,19 +126,9 @@ export function SiteFooter() {
                           {address.label}
                         </span>
                       </div>
-                      <a
-                        href={address.mapsUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`View ${address.label} office on Google Maps`}
-                        className="inline-flex items-center gap-1 text-[11px] font-medium text-accent-light underline underline-offset-4 hover:opacity-90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent-light"
-                      >
-                        <span>Directions</span>
-                        <IconExternalLink
-                          className="size-3"
-                          aria-hidden="true"
-                        />
-                      </a>
+                      <span className="text-[11px] font-medium text-brand-dark-muted">
+                        Contact point
+                      </span>
                     </div>
                     <p className="text-xs text-brand-dark-muted leading-relaxed">
                       {address.text}

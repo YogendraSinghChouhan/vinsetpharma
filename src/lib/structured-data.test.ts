@@ -1,6 +1,5 @@
 import { describe, expect, it } from "bun:test";
 import {
-  buildMapsUrl,
   buildTelHref,
   legalName,
   SITE_NAME,
@@ -29,14 +28,11 @@ describe("structured-data builders", () => {
     expect(org.logo).toContain("/logo.png");
     expect(org.address).toBeDefined();
     expect(Array.isArray(org.address)).toBe(true);
-    expect(org.address).toHaveLength(2);
+    expect(org.address).toHaveLength(1);
     expect(org.address?.[0]?.streetAddress).toBe(
       "Shop No. 5, Raam Bhawan, Station Road, Bhayander (W), Mumbai 401101",
     );
     expect(org.address?.[0]?.addressCountry).toBe("IN");
-    expect(org.address?.[1]?.streetAddress).toBe(
-      "Bohra Ji Ka Bagh, Laxmi Mandir Tiraha, Tonk Road, Jaipur, Rajasthan",
-    );
     // Chief executive officer
     expect(org.employee).toEqual({
       "@type": "Person",
@@ -120,14 +116,6 @@ describe("contact helpers", () => {
     expect(buildTelHref("+919829437525")).toBe("tel:+919829437525");
   });
 
-  it("buildMapsUrl generates encoded Google Maps search URL with India suffix", () => {
-    const address =
-      "Shop No. 5, Raam Bhawan, Station Road, Bhayander (W), Mumbai 401101";
-    const expected = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-      `${address}, India`,
-    )}`;
-    expect(buildMapsUrl(address)).toBe(expected);
-  });
 });
 
 describe("JSON-LD serialization safety", () => {

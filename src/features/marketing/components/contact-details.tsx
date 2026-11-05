@@ -31,17 +31,6 @@ export function ContactDetails() {
               </div>
               <p className="text-foreground leading-relaxed">{address.text}</p>
             </div>
-            <div>
-              <a
-                href={address.mapsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`View ${address.label} office on Google Maps`}
-                className="inline-flex min-h-[44px] items-center text-sm font-medium text-primary underline underline-offset-4 hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-xs"
-              >
-                View on map
-              </a>
-            </div>
           </div>
         ))}
 

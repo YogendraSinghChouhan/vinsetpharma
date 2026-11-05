@@ -49,17 +49,6 @@ export function AboutContactPoints() {
                   </p>
                 </div>
 
-                <div className="mt-6 flex flex-wrap items-center gap-4 pt-4 border-t border-border/60">
-                  <a
-                    href={address.mapsUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex min-h-[44px] items-center text-xs font-semibold text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded"
-                    aria-label={`View ${address.label} contact point on Google Maps (opens in new tab)`}
-                  >
-                    View on Google Maps &rarr;
-                  </a>
-                </div>
               </div>
             ))}
           </div>

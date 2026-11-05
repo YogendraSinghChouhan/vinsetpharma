@@ -15,7 +15,7 @@ Every statement below should be signed off by the client before launch.
 | About | A quote request is an enquiry, not an online order. | Client brief; website behaviour |
 | About | There are no online sales or payments. | Client brief; website behaviour |
 | About | The team replies by phone or email. | Client brief; website behaviour |
-| About | Contact points are Mumbai and Jaipur. | Client brief; site configuration |
+| About | The contact point is Mumbai. | Client brief; site configuration |
 | Why Us | Product pages list the name, composition line and pack details. | Website behaviour |
 | Why Us | Visitors can request a quote from any product page. | Website behaviour |
 | Why Us | The website is written for healthcare professionals and trade partners. | Client brief; client confirmation required |

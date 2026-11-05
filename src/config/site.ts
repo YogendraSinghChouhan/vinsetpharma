@@ -102,13 +102,6 @@ export function buildTelHref(e164: string): string {
   return `tel:${e164}`;
 }
 
-/**
- * Small helper to build Google Maps query URL from address string.
- */
-export function buildMapsUrl(addressText: string): string {
-  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${addressText}, India`)}`;
-}
-
 export type PhoneContact = {
   e164: string;
   display: string;
@@ -119,7 +112,6 @@ export type AddressContact = {
   id: string;
   label: string;
   text: string;
-  mapsUrl: string;
 };
 
 export type EmailContact = {
@@ -160,17 +152,6 @@ export const CONTACT: Contact = {
       id: "mumbai",
       label: "Mumbai",
       text: "Shop No. 5, Raam Bhawan, Station Road, Bhayander (W), Mumbai 401101",
-      mapsUrl: buildMapsUrl(
-        "Shop No. 5, Raam Bhawan, Station Road, Bhayander (W), Mumbai 401101",
-      ),
-    },
-    {
-      id: "jaipur",
-      label: "Jaipur",
-      text: "Bohra Ji Ka Bagh, Laxmi Mandir Tiraha, Tonk Road, Jaipur, Rajasthan",
-      mapsUrl: buildMapsUrl(
-        "Bohra Ji Ka Bagh, Laxmi Mandir Tiraha, Tonk Road, Jaipur, Rajasthan",
-      ),
     },
   ],
   workingHours: null,
