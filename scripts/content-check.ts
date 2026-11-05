@@ -1,5 +1,4 @@
 import { CONTACT, LEGAL, LOGO_ASSET, SOCIAL_LINKS } from "../src/config/site";
-import { ABOUT } from "../src/features/marketing/content";
 
 interface CheckItem {
   key: string;
@@ -33,12 +32,6 @@ const items: CheckItem[] = [
     label: "Working Hours",
     isSet: Boolean(CONTACT.workingHours?.value),
     value: CONTACT.workingHours?.value,
-  },
-  {
-    key: "companyHistory",
-    label: "Company History",
-    isSet: Boolean(ABOUT.introduction.history),
-    value: ABOUT.introduction.history,
   },
   {
     key: "jurisdiction",

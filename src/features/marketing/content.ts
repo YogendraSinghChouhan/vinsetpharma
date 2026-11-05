@@ -14,7 +14,6 @@ import {
 } from "@tabler/icons-react";
 import { legalName, ROUTES } from "@/config/site";
 
-const COMPANY_HISTORY = `${legalName} is a pharmaceutical marketing company. The packs state “Marketed by ${legalName}”.`;
 
 const MISSION_STATEMENT =
   "We aim to connect healthcare professionals and trade partners with information about pharmaceutical products marketed under the Vinset name.";
@@ -100,7 +99,6 @@ export const ABOUT = {
   introduction: {
     heading: "About Us",
     text: "Vinset Pharmaceuticals is a pharmaceutical marketing company focused on presenting a range of pharmaceutical products and sharing product information with healthcare professionals and trade partners.",
-    history: COMPANY_HISTORY,
     linkLabel: "More about our company",
   },
   whoWeAre: {

@@ -60,17 +60,6 @@ export function AboutWhoWeAre() {
                 </p>
               ))}
             </div>
-
-            {ABOUT.whoWeAre.history ? (
-              <div className="rounded-2xl border border-border/80 bg-surface-tint p-5 sm:flex sm:items-start sm:gap-5 sm:p-6">
-                <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.16em] text-primary sm:mb-0 sm:min-w-32 sm:pt-1">
-                  Company background
-                </span>
-                <p className="text-justify text-sm leading-relaxed text-foreground">
-                  {ABOUT.whoWeAre.history}
-                </p>
-              </div>
-            ) : null}
           </div>
         </div>
       </Container>

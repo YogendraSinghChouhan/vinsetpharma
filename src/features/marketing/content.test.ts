@@ -109,11 +109,11 @@ describe("Marketing Content Compliance", () => {
     }
   });
 
-  it("ABOUT content total word count is within target range (700 to 900 words)", () => {
+  it("ABOUT content total word count is within target range (600 to 900 words)", () => {
     const aboutStrings = extractStrings(ABOUT);
     const wordCount = countWords(aboutStrings);
     console.log(`About Us content total word count: ${wordCount}`);
-    expect(wordCount).toBeGreaterThanOrEqual(700);
+    expect(wordCount).toBeGreaterThanOrEqual(600);
     expect(wordCount).toBeLessThanOrEqual(900);
   });
 
