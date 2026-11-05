@@ -35,7 +35,7 @@ export type Founder = {
     personName: string;
     personRole: string;
   };
-  intro: string;
+  intro: string[];
   principles: string;
   message: FounderMessage;
   bio: string | null;
@@ -52,10 +52,12 @@ export const FOUNDER: Founder = {
     personName: "Dr. Vishnu Saini",
     personRole: "Chief Executive Officer",
   },
-  intro:
-    "Vinset pharmaceuticals was founded by Anand Saini. Dr. Vishnu Saini serves as Chief Executive Officer, helping lead the company's pharmaceutical marketing focus and relationships with healthcare partners.",
+  intro: [
+    "VINSET Pharmaceuticals focuses on pharmaceutical marketing, developing business relationships and presenting a range of products through its marketing activities. Our products are manufactured by our manufacturing partners and marketed under the VINSET name.",
+    "Founded by Anand Saini, VINSET Pharmaceuticals is led by Dr. Vishnu Saini, who serves as Chief Executive Officer. The leadership guides the company's pharmaceutical marketing activities, professional relationships and continued growth.",
+  ],
   principles:
-    "We believe in clear communication, careful attention to every enquiry and straightforward dealings with the people we work with.",
+    "Our approach is shaped by clear communication, responsible business relationships and careful attention to the product information and enquiries shared with us.",
   message: null,
   bio: null,
 };
@@ -92,8 +94,8 @@ export const HOME_COPY = {
 export const ABOUT = {
   header: {
     title: "About Vinset pharmaceuticals",
-    tagline: "Clear information from a pharmaceutical marketing company.",
-    intro: `${legalName} is a pharmaceutical marketing company. Products are made by our manufacturing partners and marketed under the Vinset name.`,
+    tagline: "Committed to healthcare. Focused on product information. Driven by relationships.",
+    intro: `${legalName} is a pharmaceutical marketing company. Our manufacturing partners produce the products, which are marketed under the Vinset name and shared with healthcare professionals and trade partners.`,
   },
   introduction: {
     heading: "About Us",

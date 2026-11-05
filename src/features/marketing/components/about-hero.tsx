@@ -43,9 +43,22 @@ export function AboutHero() {
 
             {/* 3. Leadership introduction & principles */}
             <div className="order-4 flex flex-col gap-4">
-              <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">
-                {FOUNDER.intro}
-              </p>
+              {FOUNDER.intro.map((paragraph) => (
+                <p
+                  key={paragraph}
+                  className="text-base leading-relaxed text-muted-foreground sm:text-lg"
+                >
+                  {paragraph
+                    .split(/(Anand Saini|Dr\. Vishnu Saini)/g)
+                    .map((part, index) =>
+                      part === "Anand Saini" || part === "Dr. Vishnu Saini" ? (
+                        <strong key={`${part}-${index}`}>{part}</strong>
+                      ) : (
+                        part
+                      ),
+                    )}
+                </p>
+              ))}
               <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">
                 {FOUNDER.principles}
               </p>
